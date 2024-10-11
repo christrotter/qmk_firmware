@@ -1,0 +1,168 @@
+// Copyright 2023 Chris Trotter (@christrotter)
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+#include "print.h"
+
+// this is a ridiculous waste of time; how often do i actually need to change functionality other than layers?
+// never.  the answser is never.
+
+
+/*
+
+I want to be able to press the encoder button to cycle the pressed encoder's functionality and led colour.
+- encoder does X functionality
+- press encoder button
+- encoder cycles to next functionality; 'go to next functionality in functionality list; roll over'
+
+This file should enable 'toggling encoders'.
+- press encoder button, cycle functionality
+
+blue = gdoc zoom
+purple = spaces
+magenta = tabs
+green = volume
+cyan = vertical scroll
+orange = horizontal scroll
+
+so you'd use a ...what? to toggle this....
+one function
+
+keymap.c/encoder_map by index position, layer
+
+keymap.c/process_record_user/switch (keycode) {}
+ KC_ENC0_TOG = encoder0_toggle; // so pressing the button cycles the value
+
+encoder_update_user // action by index/clockwise bool, or, index/which direction turned
+for each index;
+
+    is the cycle_position value changed?
+        yes: update the encoder functionality
+        no: skip
+    is clockwise?
+        yes: act based on map
+        no: act otherwise based on map
+
+*/
+
+static uint8_t encoder0_state;
+static uint8_t encoder1_state;
+static uint8_t encoder2_state;
+static uint8_t encoder3_state;
+static uint8_t encoder0_last_state; // why do we even need this...
+static uint8_t encoder1_last_state; // why do we even need this...
+static uint8_t encoder2_last_state; // why do we even need this...
+static uint8_t encoder3_last_state; // why do we even need this...
+static int encoder_reset_point = 3; // use a config define?
+
+// why do we even need this...
+bool encoder_state_changed(uint8_t index) {
+    if (index == 0) {
+        current_state   = encoder0_state
+        last_state      = encoder0_last_state
+    } else if (index == 1) {
+        current_state   = encoder1_state
+        last_state      = encoder1_last_state
+    } else if (index == 2) {
+        current_state   = encoder2_state
+        last_state      = encoder2_last_state
+    } else if (index == 3) {
+        current_state   = encoder3_state
+        last_state      = encoder3_last_state
+    }
+
+    if (current_state != last_state) {
+        return true;
+    } else {
+        return false;
+    }
+}
+// here we run through the encoder actioning
+// the function encoder_action takes in the encoder index, the encoder state position, and whether or not we are going clockwise
+// it looks up in the encoder_action_map
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (index == 0) {
+        if (clockwise) {
+            encoder_action(0, encoder0_state, true);
+        } else {
+            encoder_action(0, encoder0_state, false);
+        }
+    }
+    if (index == 1) {
+        if (clockwise) {
+            encoder_action(1, encoder1_state, true);
+        } else {
+            encoder_action(1, encoder1_state, false);
+        }
+    }
+    if (index == 2) {
+        if (clockwise) {
+            encoder_action(2, encoder2_state, true);
+        } else {
+            encoder_action(2, encoder2_state, false);
+        }
+    }
+    if (index == 3) {
+        if (clockwise) {
+            encoder_action(3, encoder3_state, true);
+        } else {
+            encoder_action(3, encoder3_state, false);
+        }
+    }
+    return false;
+}
+
+int get_current_encoder_cycle(int encoder) {
+    if (encoder == 0) {
+        return encoder0_cycle_position;
+    } else if (encoder == 1) {
+        return encoder1_cycle_position;
+    } else if (encoder == 2) {
+        return encoder2_cycle_position;
+    } else if (encoder == 3) {
+        return encoder3_cycle_position;
+    } else {
+        print("You did not call a valid encoder! \n");
+        return 9;
+    }
+}
+// ohhhh i just misinterpreted encoder wheel and encoder buttons... :S
+
+void update_encoder(int encoder, bool clockwise) {
+    // increment cycle value for specified encoder
+    // get encoder's current val, increment
+    int incremented_cycle;
+    if (clockwise) {
+        incremented_cycle = get_current_encoder_cycle(encoder) + 1;
+    } else {
+        incremented_cycle = get_current_encoder_cycle(encoder) - 1;
+    }
+    // roll over after a certain point
+    if (incremented_cycle > encoder_reset_point) {
+        incremented_cycle = 0;
+    }
+    // void set_rgb_range(uint8_t first_led, uint8_t last_led, int hue, int sat, int val) {
+    if (encoder == 0) {
+        encoder0_cycle_position = incremented_cycle;
+        if (incremented_cycle = 0) {
+            set_rgb_range(RGB_FAL1_MIN, RGB_FAL1_MAX, HSV_CYAN);
+        } else if (incremented_cycle = 1) {
+            // this is ugly...need to rethink the logic
+        }
+
+    } else if (encoder == 1) {
+        encoder1_cycle_position = incremented_cycle;
+    } else if (encoder == 2) {
+        encoder2_cycle_position = incremented_cycle;
+    } else if (encoder == 3) {
+        encoder3_cycle_position = incremented_cycle;
+    }
+}
+
+void set_encoder_rgb(int encoder) {
+    // set the rgb according to the encoder's cycle
+    int cycle;
+    cycle = get_encoder_cycle(encoder);
+    if ((get_encoder_cycle(encoder)) == 0) {
+        set_rgb_range(RGB_FAL1_MIN, RGB_FAL1_MAX, FAL1_L0);
+    }
+}

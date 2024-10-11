@@ -1,0 +1,59 @@
+{
+    "manufacturer": "christrotter",
+    "keyboard_name": "handwired/arcboard_mk17_tft",
+    "maintainer": "christrotter",
+    "bootloader": "rp2040",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": true,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "encoder": true
+    },
+    "split": {
+        "bootmagic": {
+            "matrix": [0, 0]
+        },
+        "enabled": true
+    },
+    "matrix_pins": {
+        "cols": ["GP3", "GP20"],
+        "rows": ["GP2", "GP19"]
+    },
+    "rgblight": {
+        "led_count": 14
+    },
+    "rgb_matrix": {
+        "driver": "WS2812",
+        "max_brightness": 50,
+        "split_count": [7,7]
+    },
+    "ws2812": {
+        "pin": "GP4",
+        "driver": "vendor"
+    },
+    "processor": "RP2040",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0, "y": 0},
+                {"matrix": [0, 1], "x": 0, "y": 1},
+                {"matrix": [1, 0], "x": 0, "y": 2},
+                {"matrix": [1, 1], "x": 0, "y": 3},
+                {"matrix": [2, 0], "x": 1, "y": 0},
+                {"matrix": [2, 1], "x": 1, "y": 1},
+                {"matrix": [3, 0], "x": 1, "y": 2},
+                {"matrix": [3, 1], "x": 1, "y": 3}
+            ]
+        }
+    }
+}

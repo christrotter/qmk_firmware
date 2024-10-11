@@ -1,0 +1,130 @@
+{
+    "manufacturer": "christrotter",
+    "keyboard_name": "handwired/arcpedals_mk1",
+    "maintainer": "christrotter",
+    "bootloader": "rp2040",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": true,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "encoder": false,
+        "quantum_painter": false,
+        "rgb_matrix": true
+    },
+    "bootmagic": {
+        "matrix": [0, 0]
+    },
+    "split": {
+        "bootmagic": {
+            "matrix": [3, 0]
+        },
+        "enabled": true,
+        "transport": {
+            "watchdog": true,
+            "watchdog_timeout": 3000,
+            "sync_matrix_state": true,
+            "sync_modifiers": true
+        }
+    },
+    "matrix_pins": {
+        "cols": ["GP16", "GP17" ],
+        "rows": ["GP15", "GP14", "GP13"]
+    },
+    "rgblight": {
+        "led_count": 54
+    },
+    "rgb_matrix": {
+        "driver": "WS2812",
+        "max_brightness": 150,
+        "split_count": [6,48],
+        "layout": [
+            { "flags": 4, "matrix": [0, 0], "x": 0, "y": 0},
+            { "flags": 4, "matrix": [0, 1], "x": 1, "y": 0},
+            { "flags": 4, "matrix": [1, 0], "x": 2, "y": 0},
+            { "flags": 4, "matrix": [1, 1], "x": 3, "y": 0},
+            { "flags": 4, "matrix": [2, 0], "x": 4, "y": 0},
+            { "flags": 4, "matrix": [2, 1], "x": 5, "y": 0},
+            { "flags": 4, "matrix": [3, 0], "x": 0, "y": 6},
+            { "flags": 4, "matrix": [3, 1], "x": 1, "y": 6},
+            { "flags": 4, "matrix": [4, 0], "x": 2, "y": 6},
+            { "flags": 4, "matrix": [4, 1], "x": 3, "y": 6},
+            { "flags": 4, "matrix": [5, 0], "x": 4, "y": 6},
+            { "flags": 4, "matrix": [5, 1], "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6},
+            { "flags": 8, "x": 5, "y": 6}
+        ]
+    },
+    "ws2812": {
+        "pin": "GP20",
+        "driver": "vendor"
+    },
+    "processor": "RP2040",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0, "y": 0},
+                {"matrix": [0, 1], "x": 0, "y": 1},
+                {"matrix": [3, 0], "x": 3, "y": 0},
+                {"matrix": [3, 1], "x": 3, "y": 1},
+                {"matrix": [1, 0], "x": 1, "y": 0},
+                {"matrix": [1, 1], "x": 1, "y": 1},
+                {"matrix": [4, 0], "x": 4, "y": 0},
+                {"matrix": [4, 1], "x": 4, "y": 1},
+                {"matrix": [2, 0], "x": 2, "y": 0},
+                {"matrix": [2, 1], "x": 2, "y": 1},
+                {"matrix": [5, 0], "x": 5, "y": 0},
+                {"matrix": [5, 1], "x": 5, "y": 1}
+            ]
+        }
+    }
+}

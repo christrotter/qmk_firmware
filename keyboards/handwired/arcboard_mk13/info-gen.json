@@ -1,0 +1,157 @@
+{
+    "manufacturer": "Chris Trotter",
+    "keyboard_name": "ArcBoard-mk13",
+    "maintainer": "Chris Trotter",
+    "bootloader": "rp2040",
+    "debounce": 5,
+    "diode_direction": "COL2ROW",
+    "features": {
+        "console": true,
+        "custom_unicode": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "pointing_device": false,
+        "rgb_matrix": true,
+        "tap_dance": true
+    },
+    "keyboard_folder": "handwired/arcboard_mk13",
+    "matrix_pins": {
+        "cols": ["GP16", "GP17", "GP18", "GP19", "GP20", "GP21", "GP22"],
+        "rows": ["GP7", "GP6", "GP5", "GP4", "GP3", "GP2", "GP27"]
+    },
+    "mouse_key": {
+        "enabled": true
+    },
+    "oneshot": {
+        "tap_toggle": 2,
+        "timeout": 2000
+    },
+    "processor": "RP2040",
+    "rgb_matrix": {
+        "driver": "WS2812"
+    },
+    "rgblight": {
+        "led_count": 86,
+        "pin": "GP28"
+    },
+    "split": {
+        "enabled": true,
+        "main": "right",
+        "soft_serial_pin": "GP1",
+        "transport": {
+            "protocol": "serial",
+            "sync_matrix_state": false,
+            "sync_modifiers": false
+        }
+    },
+    "tapping": {
+        "ignore_mod_tap_interrupt": false,
+        "term": 250
+    },
+    "url": "",
+    "usb": {
+        "device_ver": "0x0100",
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "polling_interval": 1,
+        "shared_endpoint": {
+            "mouse": false
+        },
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "c_macro": true,
+            "filename": "keyboards/handwired/arcboard_mk13/arcboard_mk13.h",
+            "layout": [
+                { "label": "LM_11", "matrix": [0, 0], "w": 1, "x": 0, "y": 0 },
+                { "label": "LM_12", "matrix": [0, 1], "w": 1, "x": 1, "y": 0 },
+                { "label": "LM_13", "matrix": [0, 2], "w": 1, "x": 2, "y": 0 },
+                { "label": "LM_14", "matrix": [0, 3], "w": 1, "x": 3, "y": 0 },
+                { "label": "LM_15", "matrix": [0, 4], "w": 1, "x": 4, "y": 0 },
+                { "label": "LM_16", "matrix": [0, 5], "w": 1, "x": 5, "y": 0 },
+                { "label": "LM_17", "matrix": [0, 6], "w": 1, "x": 6, "y": 0 },
+                { "label": "RM_11", "matrix": [7, 0], "w": 1, "x": 7, "y": 0 },
+                { "label": "RM_12", "matrix": [7, 1], "w": 1, "x": 8, "y": 0 },
+                { "label": "RM_13", "matrix": [7, 2], "w": 1, "x": 9, "y": 0 },
+                { "label": "RM_14", "matrix": [7, 3], "w": 1, "x": 10, "y": 0 },
+                { "label": "RM_15", "matrix": [7, 4], "w": 1, "x": 11, "y": 0 },
+                { "label": "RM_16", "matrix": [7, 5], "w": 1, "x": 12, "y": 0 },
+                { "label": "RM_17", "matrix": [7, 6], "w": 1, "x": 13, "y": 0 },
+                { "label": "LM_21", "matrix": [1, 0], "w": 1, "x": 14, "y": 0 },
+                { "label": "LM_22", "matrix": [1, 1], "w": 1, "x": 15, "y": 0 },
+                { "label": "LM_23", "matrix": [1, 2], "w": 1, "x": 16, "y": 0 },
+                { "label": "LM_24", "matrix": [1, 3], "w": 1, "x": 17, "y": 0 },
+                { "label": "LM_25", "matrix": [1, 4], "w": 1, "x": 18, "y": 0 },
+                { "label": "LM_26", "matrix": [1, 5], "w": 1, "x": 19, "y": 0 },
+                { "label": "LM_27", "matrix": [1, 6], "w": 1, "x": 20, "y": 0 },
+                { "label": "RM_21", "matrix": [8, 0], "w": 1, "x": 21, "y": 0 },
+                { "label": "RM_22", "matrix": [8, 1], "w": 1, "x": 22, "y": 0 },
+                { "label": "RM_23", "matrix": [8, 2], "w": 1, "x": 23, "y": 0 },
+                { "label": "RM_24", "matrix": [8, 3], "w": 1, "x": 24, "y": 0 },
+                { "label": "RM_25", "matrix": [8, 4], "w": 1, "x": 25, "y": 0 },
+                { "label": "RM_26", "matrix": [8, 5], "w": 1, "x": 26, "y": 0 },
+                { "label": "RM_27", "matrix": [8, 6], "w": 1, "x": 27, "y": 0 },
+                { "label": "LM_31", "matrix": [2, 0], "w": 1, "x": 28, "y": 0 },
+                { "label": "LM_32", "matrix": [2, 1], "w": 1, "x": 29, "y": 0 },
+                { "label": "LM_33", "matrix": [2, 2], "w": 1, "x": 30, "y": 0 },
+                { "label": "LM_34", "matrix": [2, 3], "w": 1, "x": 31, "y": 0 },
+                { "label": "LM_35", "matrix": [2, 4], "w": 1, "x": 32, "y": 0 },
+                { "label": "LM_36", "matrix": [2, 5], "w": 1, "x": 33, "y": 0 },
+                { "label": "LM_37", "matrix": [2, 6], "w": 1, "x": 34, "y": 0 },
+                { "label": "RM_31", "matrix": [9, 0], "w": 1, "x": 35, "y": 0 },
+                { "label": "RM_32", "matrix": [9, 1], "w": 1, "x": 36, "y": 0 },
+                { "label": "RM_33", "matrix": [9, 2], "w": 1, "x": 37, "y": 0 },
+                { "label": "RM_34", "matrix": [9, 3], "w": 1, "x": 38, "y": 0 },
+                { "label": "RM_35", "matrix": [9, 4], "w": 1, "x": 39, "y": 0 },
+                { "label": "RM_36", "matrix": [9, 5], "w": 1, "x": 40, "y": 0 },
+                { "label": "RM_37", "matrix": [9, 6], "w": 1, "x": 41, "y": 0 },
+                { "label": "LM_41", "matrix": [3, 0], "w": 1, "x": 42, "y": 0 },
+                { "label": "LM_42", "matrix": [3, 1], "w": 1, "x": 43, "y": 0 },
+                { "label": "LM_43", "matrix": [3, 2], "w": 1, "x": 44, "y": 0 },
+                { "label": "LM_44", "matrix": [3, 3], "w": 1, "x": 45, "y": 0 },
+                { "label": "LM_45", "matrix": [3, 4], "w": 1, "x": 46, "y": 0 },
+                { "label": "LM_46", "matrix": [3, 5], "w": 1, "x": 47, "y": 0 },
+                { "label": "LM_47", "matrix": [3, 6], "w": 1, "x": 48, "y": 0 },
+                { "label": "RM_41", "matrix": [10, 0], "w": 1, "x": 49, "y": 0 },
+                { "label": "RM_42", "matrix": [10, 1], "w": 1, "x": 50, "y": 0 },
+                { "label": "RM_43", "matrix": [10, 2], "w": 1, "x": 51, "y": 0 },
+                { "label": "RM_44", "matrix": [10, 3], "w": 1, "x": 52, "y": 0 },
+                { "label": "RM_45", "matrix": [10, 4], "w": 1, "x": 53, "y": 0 },
+                { "label": "RM_46", "matrix": [10, 5], "w": 1, "x": 54, "y": 0 },
+                { "label": "RM_47", "matrix": [10, 6], "w": 1, "x": 55, "y": 0 },
+                { "label": "LM_51", "matrix": [4, 0], "w": 1, "x": 56, "y": 0 },
+                { "label": "LM_52", "matrix": [4, 1], "w": 1, "x": 57, "y": 0 },
+                { "label": "LM_53", "matrix": [4, 2], "w": 1, "x": 58, "y": 0 },
+                { "label": "LM_54", "matrix": [4, 3], "w": 1, "x": 59, "y": 0 },
+                { "label": "LM_55", "matrix": [4, 4], "w": 1, "x": 60, "y": 0 },
+                { "label": "LM_56", "matrix": [4, 5], "w": 1, "x": 61, "y": 0 },
+                { "label": "LM_57", "matrix": [4, 6], "w": 1, "x": 62, "y": 0 },
+                { "label": "RM_51", "matrix": [11, 0], "w": 1, "x": 63, "y": 0 },
+                { "label": "RM_52", "matrix": [11, 1], "w": 1, "x": 64, "y": 0 },
+                { "label": "RM_53", "matrix": [11, 2], "w": 1, "x": 65, "y": 0 },
+                { "label": "RM_54", "matrix": [11, 3], "w": 1, "x": 66, "y": 0 },
+                { "label": "RM_55", "matrix": [11, 4], "w": 1, "x": 67, "y": 0 },
+                { "label": "RM_56", "matrix": [11, 5], "w": 1, "x": 68, "y": 0 },
+                { "label": "RM_57", "matrix": [11, 6], "w": 1, "x": 69, "y": 0 },
+                { "label": "LM_61", "matrix": [5, 2], "w": 1, "x": 70, "y": 0 },
+                { "label": "LM_62", "matrix": [5, 3], "w": 1, "x": 71, "y": 0 },
+                { "label": "RM_61", "matrix": [12, 2], "w": 1, "x": 72, "y": 0 },
+                { "label": "RM_62", "matrix": [12, 3], "w": 1, "x": 73, "y": 0 },
+                { "label": "LT_71", "matrix": [6, 0], "w": 1, "x": 74, "y": 0 },
+                { "label": "LT_72", "matrix": [6, 1], "w": 1, "x": 75, "y": 0 },
+                { "label": "LT_73", "matrix": [6, 2], "w": 1, "x": 76, "y": 0 },
+                { "label": "LT_74", "matrix": [6, 3], "w": 1, "x": 77, "y": 0 },
+                { "label": "LT_75", "matrix": [6, 4], "w": 1, "x": 78, "y": 0 },
+                { "label": "LT_76", "matrix": [6, 5], "w": 1, "x": 79, "y": 0 },
+                { "label": "RT_71", "matrix": [13, 0], "w": 1, "x": 80, "y": 0 },
+                { "label": "RT_72", "matrix": [13, 1], "w": 1, "x": 81, "y": 0 },
+                { "label": "RT_73", "matrix": [13, 2], "w": 1, "x": 82, "y": 0 },
+                { "label": "RT_74", "matrix": [13, 3], "w": 1, "x": 83, "y": 0 },
+                { "label": "RT_75", "matrix": [13, 4], "w": 1, "x": 84, "y": 0 },
+                { "label": "RT_76", "matrix": [13, 5], "w": 1, "x": 85, "y": 0 }
+            ]
+        }
+    }
+}
