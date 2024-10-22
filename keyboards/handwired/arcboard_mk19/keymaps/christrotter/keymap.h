@@ -48,6 +48,21 @@
 #define REC_33_RIGHT        LCTL(LALT(KC_G))
 #define REC_50_RIGHT        LCTL(LALT(KC_RIGHT))
 #define REC_66_RIGHT        LCTL(LALT(KC_T))
+
+// rectangle quadrants
+#define REC_TOP_RIGHT        LCTL(LALT(KC_W))
+#define REC_BOT_RIGHT        LCTL(LALT(KC_W))
+#define REC_TOP_LEFT        LCTL(LALT(KC_W))
+#define REC_BOT_LEFT        LCTL(LALT(KC_W))
+
+// rectangle sixths
+#define REC_6TH_TL        LGUI(LALT(LSFT(KC_1)))
+#define REC_6TH_TM        LGUI(LALT(LSFT(KC_2)))
+#define REC_6TH_TR        LGUI(LALT(LSFT(KC_3)))
+#define REC_6TH_BL        LGUI(LALT(LSFT(KC_4)))
+#define REC_6TH_BM        LGUI(LALT(LSFT(KC_5)))
+#define REC_6TH_BR        LGUI(LALT(LSFT(KC_6)))
+
 // #define REC_LEFT_HALF       LCTL(LALT(KC_LEFT))
 // #define REC_PREV_MONITOR    LCTL(LALT(LGUI(KC_LEFT)))
 // #define REC_NEXT_MONITOR    LCTL(LALT(LGUI(KC_RIGHT)))
