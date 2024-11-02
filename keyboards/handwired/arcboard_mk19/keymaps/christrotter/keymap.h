@@ -81,6 +81,9 @@
 #define ZOOM_IN LGUI(KC_PLUS)
 #define ZOOM_OUT LGUI(KC_MINUS)
 
+#define SHEET_LEFT LALT(KC_UP)
+#define SHEET_RIGHT LALT(KC_DOWN)
+
 #define ZOOM_MUTE   LSFT(LGUI(KC_COMM))
 #define ZOOM_VID    LSFT(LGUI(KC_DOT))
 
@@ -185,8 +188,8 @@ enum custom_keycodes {
     #define FAL4_OUT_L1 HSV_PURPLE
     #define FAL4_IN_L2 HSV_MOONLANDER
     #define FAL4_OUT_L2 HSV_MOONLANDER
-    #define FAL4_IN_L3 HSV_PINK
-    #define FAL4_OUT_L3 HSV_PURPLE
+    #define FAL4_IN_L3 HSV_SPRINGGREEN
+    #define FAL4_OUT_L3 HSV_GREEN
 #endif
 
 // encoder button mapping // uhhh why do we have this again...
