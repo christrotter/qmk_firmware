@@ -52,8 +52,6 @@
 #define WHITE \
     { HSV_MOONLANDER }
 
-#define RED3 { RED, RED, RED }
-
 // indicator colours
 #define INDICATOR_BG \
     HSV_CYAN

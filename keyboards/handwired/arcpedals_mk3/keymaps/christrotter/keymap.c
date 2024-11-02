@@ -8,6 +8,10 @@
 enum keycodes {
   KC_CYCLE_LAYERS = QK_USER,
 };
+// 1st layer on the cycle
+#define LAYER_CYCLE_START 0
+// Last layer on the cycle
+#define LAYER_CYCLE_END   3
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     #include "rgb_ledmaps.h"
@@ -20,13 +24,13 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
 /*
     Physical layout:
                #### LEFT FOOT ####            ###               #### RIGHT FOOT ####
-    topL, topR, botL, botR,         desk1     ###      topL, topR, botL, botR,         desk1
+    botL, botR, topL, topR,         desk1     ###      botL, botR, topL, topR,         desk1
     sideL, sideR, heelL, heelR,     desk2     ###      sideL, sideR, heelL, heelR,     desk2
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SCROLL] = LAYOUT(
-        KC_MS_WH_UP,    KC_MS_WH_DOWN,    KC_MS_BTN1,     KC_MS_WH_LEFT,   KC_E,           MO(1),    KC_Y,    KC_X,     KC_W,   KC_U,
-        KC_MS_BTN3,    KC_CYCLE_LAYERS,    QK_BOOT,     KC_MS_WH_RIGHT,   KC_5,           KC_0,    KC_9,    KC_8,     KC_7,   KC_6
+        KC_MS_BTN3,     KC_MS_WH_LEFT,          KC_MS_WH_UP,    KC_MS_WH_DOWN,  KC_E,           MO(1),    KC_Y,    KC_X,     KC_W,   KC_U,
+        LGUI(KC_MS_BTN3),    KC_CYCLE_LAYERS,    QK_BOOT,     EE_CLR,   KC_5,           KC_0,    KC_9,    KC_8,     KC_7,   KC_6
     ),
     [_MOUSE] = LAYOUT(
         _______,    _______,    _______,     _______,   _______,           _______,    _______,    _______,     _______,   _______,
@@ -93,3 +97,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // eeconfig_init();
     }
 #endif
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!(process_record_keymap(keycode, record)
+        #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
+            && process_record_user_rgb_matrix(keycode, record)
+        #endif
+          && true)) {
+        return false;
+    }
+
+    // now we check for specific keycodes...
+    #if defined(CUSTOM_KEYCODES)
+        switch (keycode) {
+            case KC_CYCLE_LAYERS:
+              // Our logic will happen on presses, nothing is done on releases
+              if (!record->event.pressed) {
+                // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
+                return false;
+              }
+              uint8_t current_layer = get_highest_layer(layer_state);
+              // Check if we are within the range, if not quit
+              if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
+                return false;
+              }
+              uint8_t next_layer = current_layer + 1;
+              if (next_layer > LAYER_CYCLE_END) {
+                  next_layer = LAYER_CYCLE_START;
+              }
+              layer_move(next_layer);
+              return false;
+    }
+    #endif // end CUSTOM_KEYCODES (for troubleshooting)
+    return true;
+}

@@ -6,6 +6,8 @@
 #undef TAPPING_TERM
 #define TAPPING_TERM 225            // time (in ms) for a tap to become a hold
 #define TAP_CHECK TAPPING_TERM
+#define PERMISSIVE_HOLD
+
 #undef TAPPING_TOGGLE
 #define TAPPING_TOGGLE 2
 #define ONESHOT_TAP_TOGGLE 2        /* Tapping this number of times holds the key until tapped once again. */
