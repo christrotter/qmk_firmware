@@ -82,34 +82,30 @@ static uint8_t layerIndicatorLeds[] = {
         121, \
         122, \
         123
-    };
+};
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (is_keyboard_left()) {
         // set LEFT per-key leds by ledmap
         set_rgb_ledmap(0, 23, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
-        set_rgb_array(layerIndicatorLeds, HSV_CYAN);
     } else {
         // set RIGHT per-key leds by ledmap
-        set_rgb_ledmap(64, 87, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
+        set_rgb_ledmap(64, 87, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));  
+    }
 
-        // set trackball module leds to layer colour
-        // switch(get_highest_layer(layer_state|default_layer_state)) {
-        //     case 0:
-        //         set_rgb_array(layerIndicatorLeds, HSV_SPRINGGREEN);
-        //         break;
-        //     case 1:
-        //         set_rgb_array(layerIndicatorLeds, HSV_PINK);
-        //         break;
-        //     case 2:
-        //         set_rgb_array(layerIndicatorLeds, HSV_ORANGE);
-        //         break;
-        //     case 3:
-        //         set_rgb_array(layerIndicatorLeds, HSV_RED);
-        //         break;
-        //     default:
-        //         break;
-        // }
+    // set background colour  
+    switch(get_highest_layer(layer_state|default_layer_state)) {
+        case 0:
+            set_rgb_array(layerIndicatorLeds, HSV_CYAN);
+            break;
+        case 1:
+            set_rgb_array(layerIndicatorLeds, HSV_ORANGE);
+            break;
+        case 2:
+            set_rgb_array(layerIndicatorLeds, HSV_RED);
+            break;
+        default:
+            break;
     }
     return rgb_matrix_indicators_advanced_keymap(led_min, led_max);
 }

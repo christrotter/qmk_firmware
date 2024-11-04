@@ -11,7 +11,7 @@ enum keycodes {
 // 1st layer on the cycle
 #define LAYER_CYCLE_START 0
 // Last layer on the cycle
-#define LAYER_CYCLE_END   3
+#define LAYER_CYCLE_END   2
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     #include "rgb_ledmaps.h"
@@ -26,65 +26,50 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
                #### LEFT FOOT ####            ###               #### RIGHT FOOT ####
     botL, botR, topL, topR,         desk1     ###      botL, botR, topL, topR,         desk1
     sideL, sideR, heelL, heelR,     desk2     ###      sideL, sideR, heelL, heelR,     desk2
+
+    should lay this out nicer...
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SCROLL] = LAYOUT(
-        KC_MS_BTN3,     KC_MS_WH_LEFT,          KC_MS_WH_UP,    KC_MS_WH_DOWN,  KC_E,           MO(1),    KC_Y,    KC_X,     KC_W,   KC_U,
-        LGUI(KC_MS_BTN3),    KC_CYCLE_LAYERS,    QK_BOOT,     EE_CLR,   KC_5,           KC_0,    KC_9,    KC_8,     KC_7,   KC_6
-    ),
-    [_MOUSE] = LAYOUT(
-        _______,    _______,    _______,     _______,   _______,           _______,    _______,    _______,     _______,   _______,
-        _______,    _______,    _______,     _______,   _______,           _______,    _______,    _______,     _______,   _______
+        _______, KC_LGUI, _______, EE_CLR, _______,                                 _______, _______, _______, _______, _______,
+        KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,    KC_MS_WH_UP, KC_MS_WH_RIGHT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______
     ),
     [_FUSION] = LAYOUT(
-        _______,    _______,    _______,     _______,   _______,           _______,    _______,    _______,     _______,   _______,
-        _______,    _______,    _______,     _______,   _______,           _______,    _______,    _______,     _______,   _______
+        _______, _______, _______, _______, _______,                                _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,                                _______, _______, _______, _______, _______
     ),
     [_MGMT] = LAYOUT(
-        _______,    _______,    _______,     _______,   _______,           _______,    _______,    _______,     _______,   _______,
-        _______,    _______,    _______,     _______,   _______,           _______,    _______,    _______,     _______,   _______
+        _______, _______, EE_CLR, QK_BOOT, _______,                                 _______, _______, EE_CLR, QK_BOOT, _______,
+        _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,                _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______
     )
 };
 
-// super important to get the wiring order correct!!!
-
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
 // the indicator LEDs are mapped using the flags and for loop.
+/*
+    Physical layout:
+               #### LEFT FOOT ####            ###               #### RIGHT FOOT ####
+    botL(1), botR(2), topL(3), topR(4),         desk1     ###      botL, botR, topL, topR,         desk1
+    sideL(5), sideR(6), heelL(7), heelR(8),     desk2     ###      sideL, sideR, heelL, heelR,     desk2
+
+    should lay this out nicer...
+*/
+
 const ledmap ledmaps[] = {
     [_SCROLL]   = LEDMAP(
-      RED, RED, RED, GREEN, GREEN, GREEN, BLUE, BLUE, BLUE, ORANGE, ORANGE, ORANGE, YELLOW, YELLOW, YELLOW, CYAN, CYAN, CYAN, CHART, CHART, CHART, PURPLE, PURPLE, PURPLE, PINK, PINK, PINK, RED, RED, RED,         RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED
-   ),
-   [_MOUSE]     = LEDMAP(
-      GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN,         GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN
-   ),
+      L_B1_L0,L_B1_L0,L_B1_L0, L_B2_L0,L_B2_L0,L_B2_L0, L_B3_L0,L_B3_L0,L_B3_L0, L_B4_L0,L_B4_L0,L_B4_L0, L_B5_L0,L_B5_L0,L_B5_L0, L_B6_L0,L_B6_L0,L_B6_L0, L_B7_L0,L_B7_L0,L_B7_L0, L_B8_L0,L_B8_L0,L_B8_L0, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, \
+      R_B1_L0,R_B1_L0,R_B1_L0, R_B2_L0,R_B2_L0,R_B2_L0, R_B3_L0,R_B3_L0,R_B3_L0, R_B4_L0,R_B4_L0,R_B4_L0, R_B5_L0,R_B5_L0,R_B5_L0, R_B6_L0,R_B6_L0,R_B6_L0, R_B7_L0,R_B7_L0,R_B7_L0, R_B8_L0,R_B8_L0,R_B8_L0, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE
+    ),
     [_FUSION]   = LEDMAP(
-      RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED,         RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED
-   ),
-   [_MGMT]     = LEDMAP(
-      RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED,         RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED, RED
-   )
+      L_B1_L1,L_B1_L1,L_B1_L1, L_B2_L1,L_B2_L1,L_B2_L1, L_B3_L1,L_B3_L1,L_B3_L1, L_B4_L1,L_B4_L1,L_B4_L1, L_B5_L1,L_B5_L1,L_B5_L1, L_B6_L1,L_B6_L1,L_B6_L1, L_B7_L1,L_B7_L1,L_B7_L1, L_B8_L1,L_B8_L1,L_B8_L1, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, \
+      R_B1_L1,R_B1_L1,R_B1_L1, R_B2_L1,R_B2_L1,R_B2_L1, R_B3_L1,R_B3_L1,R_B3_L1, R_B4_L1,R_B4_L1,R_B4_L1, R_B5_L1,R_B5_L1,R_B5_L1, R_B6_L1,R_B6_L1,R_B6_L1, R_B7_L1,R_B7_L1,R_B7_L1, R_B8_L1,R_B8_L1,R_B8_L1, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE
+    ),
+    [_MGMT]     = LEDMAP(
+      L_B1_L2,L_B1_L2,L_B1_L2, L_B2_L2,L_B2_L2,L_B2_L2, L_B3_L2,L_B3_L2,L_B3_L2, L_B4_L2,L_B4_L2,L_B4_L2, L_B5_L2,L_B5_L2,L_B5_L2, L_B6_L2,L_B6_L2,L_B6_L2, L_B7_L2,L_B7_L2,L_B7_L2, L_B8_L2,L_B8_L2,L_B8_L2, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, \
+      R_B1_L2,R_B1_L2,R_B1_L2, R_B2_L2,R_B2_L2,R_B2_L2, R_B3_L2,R_B3_L2,R_B3_L2, R_B4_L2,R_B4_L2,R_B4_L2, R_B5_L2,R_B5_L2,R_B5_L2, R_B6_L2,R_B6_L2,R_B6_L2, R_B7_L2,R_B7_L2,R_B7_L2, R_B8_L2,R_B8_L2,R_B8_L2, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE
+    )
 };
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
-
-/*
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[_SCROLL] = LAYOUT(
-    // physical layout is:
-    //      (LEFT)                                                   (RIGHT)
-    // left, toe, ball, right                              -    left, toe, ball, right
-    KC_MS_BTN1, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_MS_WH_RIGHT,      KC_MS_WH_LEFT, KC_MS_WH_UP, KC_CYCLE_LAYERS, KC_MS_BTN3
-),
-[_MOUSE] = LAYOUT(
-    KC_NO, KC_MS_BTN3, KC_CYCLE_LAYERS, KC_MS_BTN1,                            KC_NO, KC_MS_BTN1, KC_CYCLE_LAYERS, KC_MS_BTN2
-),
-[_FUSION] = LAYOUT(
-    KC_NO, KC_LGUI, KC_CYCLE_LAYERS, KC_MS_WH_DOWN,              KC_MS_WH_UP, KC_MS_BTN3, KC_CYCLE_LAYERS, KC_NO
-),
-[_MGMT] = LAYOUT(
-    KC_NO, EE_CLR, KC_CYCLE_LAYERS, KC_NO,                              KC_NO, QK_BOOT, KC_CYCLE_LAYERS, KC_NO
-)
-};
-*/
 
 #if defined(CONSOLE_ENABLE)
     #include "print.h"
