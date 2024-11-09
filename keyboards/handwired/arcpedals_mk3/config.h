@@ -4,3 +4,5 @@
 #pragma once
 
 #define EE_HANDS
+
+#define RGB_TOT_IND_L 64

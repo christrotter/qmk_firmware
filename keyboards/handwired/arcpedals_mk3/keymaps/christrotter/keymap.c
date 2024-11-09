@@ -31,15 +31,15 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SCROLL] = LAYOUT(
-        _______, KC_LGUI, _______, EE_CLR, _______,                                 _______, _______, _______, _______, _______,
-        KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,    KC_MS_WH_UP, KC_MS_WH_RIGHT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______
+        KC_LCTL, KC_LGUI, KC_LSFT, KC_LALT,                             _______,    KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT,                             _______,
+        KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,    KC_MS_WH_UP, KC_MS_WH_RIGHT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,  _______
     ),
     [_FUSION] = LAYOUT(
-        _______, _______, _______, _______, _______,                                _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______,                                _______, _______, _______, _______, _______
+        _______, KC_LGUI, _______, _______, _______,                                 _______, _______, _______, _______, _______,
+        KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,    KC_MS_WH_UP, KC_MS_WH_RIGHT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______
     ),
     [_MGMT] = LAYOUT(
-        _______, _______, EE_CLR, QK_BOOT, _______,                                 _______, _______, EE_CLR, QK_BOOT, _______,
+        _______, _______, QK_BOOT, EE_CLR, _______,                                 _______, _______, EE_CLR, QK_BOOT, _______,
         _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,                _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______
     )
 };
@@ -57,16 +57,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 const ledmap ledmaps[] = {
     [_SCROLL]   = LEDMAP(
-      L_B1_L0,L_B1_L0,L_B1_L0, L_B2_L0,L_B2_L0,L_B2_L0, L_B3_L0,L_B3_L0,L_B3_L0, L_B4_L0,L_B4_L0,L_B4_L0, L_B5_L0,L_B5_L0,L_B5_L0, L_B6_L0,L_B6_L0,L_B6_L0, L_B7_L0,L_B7_L0,L_B7_L0, L_B8_L0,L_B8_L0,L_B8_L0, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, \
-      R_B1_L0,R_B1_L0,R_B1_L0, R_B2_L0,R_B2_L0,R_B2_L0, R_B3_L0,R_B3_L0,R_B3_L0, R_B4_L0,R_B4_L0,R_B4_L0, R_B5_L0,R_B5_L0,R_B5_L0, R_B6_L0,R_B6_L0,R_B6_L0, R_B7_L0,R_B7_L0,R_B7_L0, R_B8_L0,R_B8_L0,R_B8_L0, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE
+      L_B1_L0,L_B1_L0,L_B1_L0,L_B2_L0,L_B2_L0,L_B2_L0,L_B3_L0,L_B3_L0,L_B3_L0,L_B4_L0,L_B4_L0,L_B4_L0,L_B5_L0,L_B5_L0,L_B5_L0,L_B6_L0,L_B6_L0,L_B6_L0,L_B7_L0,L_B7_L0,L_B7_L0,L_B8_L0,L_B8_L0,L_B8_L0, \
+      R_B1_L0,R_B1_L0,R_B1_L0,R_B2_L0,R_B2_L0,R_B2_L0,R_B3_L0,R_B3_L0,R_B3_L0,R_B4_L0,R_B4_L0,R_B4_L0,R_B5_L0,R_B5_L0,R_B5_L0,R_B6_L0,R_B6_L0,R_B6_L0,R_B7_L0,R_B7_L0,R_B7_L0,R_B8_L0,R_B8_L0,R_B8_L0
     ),
     [_FUSION]   = LEDMAP(
-      L_B1_L1,L_B1_L1,L_B1_L1, L_B2_L1,L_B2_L1,L_B2_L1, L_B3_L1,L_B3_L1,L_B3_L1, L_B4_L1,L_B4_L1,L_B4_L1, L_B5_L1,L_B5_L1,L_B5_L1, L_B6_L1,L_B6_L1,L_B6_L1, L_B7_L1,L_B7_L1,L_B7_L1, L_B8_L1,L_B8_L1,L_B8_L1, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, \
-      R_B1_L1,R_B1_L1,R_B1_L1, R_B2_L1,R_B2_L1,R_B2_L1, R_B3_L1,R_B3_L1,R_B3_L1, R_B4_L1,R_B4_L1,R_B4_L1, R_B5_L1,R_B5_L1,R_B5_L1, R_B6_L1,R_B6_L1,R_B6_L1, R_B7_L1,R_B7_L1,R_B7_L1, R_B8_L1,R_B8_L1,R_B8_L1, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE
+      L_B1_L1,L_B1_L1,L_B1_L1,L_B2_L1,L_B2_L1,L_B2_L1,L_B3_L1,L_B3_L1,L_B3_L1,L_B4_L1,L_B4_L1,L_B4_L1,L_B5_L1,L_B5_L1,L_B5_L1,L_B6_L1,L_B6_L1,L_B6_L1,L_B7_L1,L_B7_L1,L_B7_L1,L_B8_L1,L_B8_L1,L_B8_L1, \
+      R_B1_L1,R_B1_L1,R_B1_L1,R_B2_L1,R_B2_L1,R_B2_L1,R_B3_L1,R_B3_L1,R_B3_L1,R_B4_L1,R_B4_L1,R_B4_L1,R_B5_L1,R_B5_L1,R_B5_L1,R_B6_L1,R_B6_L1,R_B6_L1,R_B7_L1,R_B7_L1,R_B7_L1,R_B8_L1,R_B8_L1,R_B8_L1
     ),
     [_MGMT]     = LEDMAP(
-      L_B1_L2,L_B1_L2,L_B1_L2, L_B2_L2,L_B2_L2,L_B2_L2, L_B3_L2,L_B3_L2,L_B3_L2, L_B4_L2,L_B4_L2,L_B4_L2, L_B5_L2,L_B5_L2,L_B5_L2, L_B6_L2,L_B6_L2,L_B6_L2, L_B7_L2,L_B7_L2,L_B7_L2, L_B8_L2,L_B8_L2,L_B8_L2, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, \
-      R_B1_L2,R_B1_L2,R_B1_L2, R_B2_L2,R_B2_L2,R_B2_L2, R_B3_L2,R_B3_L2,R_B3_L2, R_B4_L2,R_B4_L2,R_B4_L2, R_B5_L2,R_B5_L2,R_B5_L2, R_B6_L2,R_B6_L2,R_B6_L2, R_B7_L2,R_B7_L2,R_B7_L2, R_B8_L2,R_B8_L2,R_B8_L2, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE, HSV_WHITE
+      L_B1_L2,L_B1_L2,L_B1_L2,L_B2_L2,L_B2_L2,L_B2_L2,L_B3_L2,L_B3_L2,L_B3_L2,L_B4_L2,L_B4_L2,L_B4_L2,L_B5_L2,L_B5_L2,L_B5_L2,L_B6_L2,L_B6_L2,L_B6_L2,L_B7_L2,L_B7_L2,L_B7_L2,L_B8_L2,L_B8_L2,L_B8_L2, \
+      R_B1_L2,R_B1_L2,R_B1_L2,R_B2_L2,R_B2_L2,R_B2_L2,R_B3_L2,R_B3_L2,R_B3_L2,R_B4_L2,R_B4_L2,R_B4_L2,R_B5_L2,R_B5_L2,R_B5_L2,R_B6_L2,R_B6_L2,R_B6_L2,R_B7_L2,R_B7_L2,R_B7_L2,R_B8_L2,R_B8_L2,R_B8_L2
     )
 };
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
@@ -75,7 +75,7 @@ const ledmap ledmaps[] = {
     #include "print.h"
     void keyboard_post_init_user(void) {
         // Customise these values to desired behaviour
-        debug_enable=true;
+        // debug_enable=true;
         debug_matrix=true;
         // debug_keyboard=true;
         // debug_mouse=true;
