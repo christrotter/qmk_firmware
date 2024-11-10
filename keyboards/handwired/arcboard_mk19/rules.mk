@@ -1,5 +1,4 @@
 # general config
-DEBUG_MATRIX_SCAN_RATE_ENABLE = yes
 SERIAL_DRIVER = vendor
 
 # matrix config
