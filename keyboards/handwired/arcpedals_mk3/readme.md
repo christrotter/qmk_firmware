@@ -73,18 +73,75 @@ Simply put...
 
 # lessons
 Some big ones out of this...
+
+## button design
 - Building large (_wide pressable surface area_) buttons that reliably actuate over sub-mm distances is kinda hard.
 - Pressing down on an angled plane is far more comfortable than trying to swivel your foot horizontally to push something.  I had originally been trying to mimic the 'must be good' MSI Liberator pedal.
+- The feel/tactility of a button is extra important when you cannot see what your feet are doing - it's important to feel like you're doing something.
 - Hinged things require room for the hinged part to swing, dawg.  More effort in Fusion 360 joints would have paid off here.
+- The shorter your switch travel, the finer your tolerances need to be - i.e. add shims to your design for fine-tuning.
+- Super-wide buttons require X and Y stabilizers.
+- Dowel/sleeve configurations require effectively zero runout to work smoothly.
+- Magnets are strong, but feet are stronger.
+- TPU springs, harder than you'd think.
+
+## general design
+- Integrate floor plates into the main frame - it's fiddly trying to make them snap into place otherwise.
+- Cheap stuff, cheap tolerances.
+- In your design of a thing that will be mirrored, `THINGS THAT DO NOT NEED TO BE ASYMMETRICAL SHOULD BE SYMMETRICAL`.  Wasted hours and a lot of filament because parts that truly should have been usable on either side were not.
+- Corollary: `If a part must be asymmetrical, indicate its directionality.`
+- If you think very early on, man, that's silly how the things is not symmetrical - `SEE ABOVE WOW`.
+- Wires/sleeving is very hard to represent in 3D, and therefore your design will inevitably not allow for enough space for them and you will be sad.
+- Hex holes work much better for pressing magnets into.
+- Design through holes to allow you to poke press-fit parts back out if necessary - these can help with support removal.
+
+## workflow
+- If you have a solid vise/workbench, don't insist on sitting at your desk trying to do chisel work.
+- Take the time to make jigs, especially if you need any kind of accuracy in the finished part.
+  - e.g. the diffuser for the heel leds is a flat part, 0.7mm thick, that has curved ends.  If I'd taken the time to make a jig, it would not look terrible.
+  - e.g. the button hinge holes are drilled.  I made a jig that allows the button part to clip in so I get consistent drill holes every time.
+
+## printing
 - To make pedals that weigh in at 3.6kg total requires at least `2x that much filament` in development.
 - FDM 3D printing not capable of 'smooth' surface finishes, and your designs should understand this.  e.g. polished metal surfaces have very low friction/stiction - a printed surface can be very ridged!
-- Splitting complex parts in half, using dowels to locate the parts, and gluing really helps cut down on PETG support surface woes.
-- TPU springs, harder than you'd think.
+- FDM 3D printing can create really accurate models, but not perfect models - 0.05mm runout over 20mm is enough to cause binding in a dowel/sleeve configuration.
 - The speed of the Prusa MK4S really is impressive, halved all printing time compared to the Prusa MK3S.
-- Rendering is able to give you pretty accurate representations of the final product.
+- If your material is too thin, even an M3 screw will crack it.
+- Splitting complex parts in half, using dowels to locate the parts, and gluing really helps cut down on PETG support surface woes.
+- When using dowels, undersize the dowel by 1% so your press-fit does not require hydraulic machinery to fit.
+- Wait for PETG to cool to ~45C - on the textured build plate it just pops itself loose.
+- Clean the textured build plate after every print with 90%+ isopropyl alcohol, I stopped getting layer shifting issues after implementing this.
+- PETG supports come off of non-round holes better than round...
+- A sharp, small, rounded woodworker's gouge works great for cleaning up support material from M3 insert/dowel holes.
+
+## pcb's & electrical
+- Definitely make sure that for newly-designed PCBs you have a PCB test procedure.
+- Have the GND pad always be the square pad; be consistent.
+- If you are sick, and perhaps tired, do not solder or wire - things will be done backwards and you'll end up re-doing it.
+
+## fusion360
+- Rendering is able to give you pretty accurate representations of the final product - duplicate existing materials in Fusion 360 to unlock editing them, custom colours!
+- Ideally leave your appearance overrides off until you get to the last assembly model - you can't override inherited appearance choices.
+- When applying appearances, do so at the component level, not body - very hard to track down otherwise!
+- `USE THE FUSION TIMELINE TO MAKE CHANGES`.  Period.  If you find yourself modifying an object later on instead of going back to edit the original instantiation of it, you will eventually hit an impassable wall of broken design features.
+- Constrain your sketches - just do it.
+- Don't tie your dimensions to projected lines; rather reference the origin.
+- Design for 'melding' your components together; then use joints to hold the parts together.
+- In Fusion 360, don't use form-body's as your profiles, wherever possible - they are not consistent and create grief.
 - Fusion 360 forms work pretty well when you keep one major form body per project file, and import other form projects into it.
   - skeleton/frame project -> heel form body & bits; -> front-end form body & bits ---> both form projects into 'final assembly' project
 - Fusion 360 parameters do not work outside of the origin model - you must upgrade to paid for this functionality.
+- The free version of Fusion 360 allows you to have USD$1000/year income, then you must upgrade to paid.
+
+# materials
+- M3 screws and inserts; mostly 8mm, some 10, some 12
+- JST-XH 2.54mm 6-pin, 4-pin
+- wire sleeve & heatshrink tubing & silicone-sheathed 26-awg hookup wire
+- RGB WS2812 LED strip (cut to fit pieces)
+- PETG filament (black, dark grey, light grey, white), silk PLA silver, 40A TPU
+- 2x RP Pico
+- 2x custom breakout PCB (no factory PCB-Assembly) https://github.com/christrotter/pedal-breakout-pcb
+- 16x custom microswitch PCBs (w. factory PCB-Assembly) https://github.com/christrotter/microswitch-pcb
 
 # highlights in photos
 
@@ -97,3 +154,4 @@ Some big ones out of this...
 <a href="https://i.imgur.com/CsmT0eQ.jpg"><img src="https://i.imgur.com/CsmT0eQ.jpg" width="800"></a>
 
 <a href="https://i.imgur.com/kzg8itY.jpg"><img src="https://i.imgur.com/kzg8itY.jpg" width="800"></a>
+
