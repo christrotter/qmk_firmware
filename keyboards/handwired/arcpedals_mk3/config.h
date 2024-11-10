@@ -5,4 +5,6 @@
 
 #define EE_HANDS
 
-#define RGB_TOT_IND_L 64
+#if defined(SPLIT_KEYBOARD)
+    #define SPLIT_LAYER_STATE_ENABLE            // docs say use this if you are using split and rgb lighting per layer // this added 20 to scanrate???
+#endif

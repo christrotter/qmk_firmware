@@ -16,4 +16,19 @@
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     #define RGB_INDICATOR_BRIGHTNESS 100
+    #define RGB_LEDMAP_BRIGHTNESS 100
+
+    #define RGB_START_LEDMAP_LEFT 0
+    #define RGB_END_LEDMAP_LEFT 23
+    #define RGB_INDICATOR_L_START 24
+    #define RGB_INDICATOR_L_END 63
+    // +6 for the two unwired keys
+    #define RGB_TOT_IND_L 46
+
+    #define RGB_START_LEDMAP_RIGHT 70
+    #define RGB_END_LEDMAP_RIGHT 93
+    #define RGB_INDICATOR_R_START 94
+    #define RGB_INDICATOR_R_END 139
+    // +6 for the two unwired keys
+    
 #endif

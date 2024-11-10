@@ -20,14 +20,14 @@
     #define LAYER_MOUSE PINK
     #define LAYER_FUSION ORANGE
     #define LAYER_MGMT RED
-
     #define BLANK {HSV_WHITE}
 
+    // SCROLL
     #define L_B1_L0 {HSV_BLUE}
     #define L_B2_L0 {HSV_PURPLE}
     #define L_B3_L0 {HSV_GREEN}
     #define L_B4_L0 {HSV_YELLOW}
-    #define L_B5_L0 {HSV_PINK}
+    #define L_B5_L0 {HSV_PURPLE}
     #define L_B6_L0 {HSV_RED}
     #define L_B7_L0 {HSV_SPRINGGREEN}
     #define L_B8_L0 {HSV_SPRINGGREEN}
@@ -40,42 +40,63 @@
     #define R_B6_L0 {HSV_PINK}
     #define R_B7_L0 {HSV_SPRINGGREEN}
     #define R_B8_L0 {HSV_SPRINGGREEN}
-    
-    #define L_B1_L1 {HSV_WHITE}
-    #define L_B2_L1 {HSV_WHITE}
-    #define L_B3_L1 {HSV_WHITE}
-    #define L_B4_L1 {HSV_WHITE}
-    #define L_B5_L1 {HSV_WHITE}
-    #define L_B6_L1 {HSV_WHITE}
+
+    // ARROWS
+    #define L_B1_L1 {HSV_GREEN}
+    #define L_B2_L1 {HSV_GREEN}
+    #define L_B3_L1 {HSV_GREEN}
+    #define L_B4_L1 {HSV_YELLOW}
+    #define L_B5_L1 {HSV_PURPLE}
+    #define L_B6_L1 {HSV_RED}
     #define L_B7_L1 {HSV_SPRINGGREEN}
     #define L_B8_L1 {HSV_SPRINGGREEN}
     
-    #define R_B1_L1 {HSV_WHITE}
-    #define R_B2_L1 {HSV_WHITE}
-    #define R_B3_L1 {HSV_WHITE}
-    #define R_B4_L1 {HSV_WHITE}
-    #define R_B5_L1 {HSV_WHITE}
-    #define R_B6_L1 {HSV_WHITE}
+    #define R_B1_L1 {HSV_GREEN}
+    #define R_B2_L1 {HSV_GREEN}
+    #define R_B3_L1 {HSV_YELLOW}
+    #define R_B4_L1 {HSV_GREEN}
+    #define R_B5_L1 {HSV_GREEN}
+    #define R_B6_L1 {HSV_PINK}
     #define R_B7_L1 {HSV_SPRINGGREEN}
     #define R_B8_L1 {HSV_SPRINGGREEN}
-    
+
+    // FUSION
     #define L_B1_L2 {HSV_WHITE}
-    #define L_B2_L2 {HSV_WHITE}
-    #define L_B3_L2 {HSV_ORANGE}
-    #define L_B4_L2 {HSV_RED}
-    #define L_B5_L2 {HSV_WHITE}
-    #define L_B6_L2 {HSV_WHITE}
+    #define L_B2_L2 {HSV_PURPLE}
+    #define L_B3_L2 {HSV_WHITE}
+    #define L_B4_L2 {HSV_WHITE}
+    #define L_B5_L2 {HSV_PURPLE}
+    #define L_B6_L2 {HSV_RED}
     #define L_B7_L2 {HSV_SPRINGGREEN}
     #define L_B8_L2 {HSV_SPRINGGREEN}
     
-    #define R_B1_L2 {HSV_WHITE}
+    #define R_B1_L2 {HSV_PINK}
     #define R_B2_L2 {HSV_WHITE}
-    #define R_B3_L2 {HSV_RED}
-    #define R_B4_L2 {HSV_RED}
-    #define R_B5_L2 {HSV_WHITE}
-    #define R_B6_L2 {HSV_WHITE}
+    #define R_B3_L2 {HSV_WHITE}
+    #define R_B4_L2 {HSV_WHITE}
+    #define R_B5_L2 {HSV_GREEN}
+    #define R_B6_L2 {HSV_PINK}
     #define R_B7_L2 {HSV_SPRINGGREEN}
     #define R_B8_L2 {HSV_SPRINGGREEN}
+
+    // MGMT
+    #define L_B1_L3 {HSV_WHITE}
+    #define L_B2_L3 {HSV_WHITE}
+    #define L_B3_L3 {HSV_ORANGE}
+    #define L_B4_L3 {HSV_RED}
+    #define L_B5_L3 {HSV_WHITE}
+    #define L_B6_L3 {HSV_WHITE}
+    #define L_B7_L3 {HSV_SPRINGGREEN}
+    #define L_B8_L3 {HSV_SPRINGGREEN}
+    
+    #define R_B1_L3 {HSV_WHITE}
+    #define R_B2_L3 {HSV_WHITE}
+    #define R_B3_L3 {HSV_RED}
+    #define R_B4_L3 {HSV_ORANGE}
+    #define R_B5_L3 {HSV_WHITE}
+    #define R_B6_L3 {HSV_WHITE}
+    #define R_B7_L3 {HSV_SPRINGGREEN}
+    #define R_B8_L3 {HSV_SPRINGGREEN}
 #endif
 
 

@@ -47,7 +47,7 @@ elif [ "$1" == "right" ];then
     if [ "$RP2040_CHECK" == "RP2" ];then
         echo "Found an RP2 device in boot state..."
         echo "Copying the UF2 file onto the rpi boot volume..."
-        qmk flash -kb $KEYBOARD -km $KEYMAP -j $BUILD_CORES
+        qmk flash -bl uf2-split-right -kb $KEYBOARD -km $KEYMAP -j $BUILD_CORES
         echo "Now do an eeprom reset...unplug USB, hold down the far right key (e.g. F12)...and plug in USB."
     else
         echo "ERROR: Did not find an RP2 device in boot state!"

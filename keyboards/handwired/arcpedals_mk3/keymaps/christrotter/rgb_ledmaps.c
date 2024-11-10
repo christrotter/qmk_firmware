@@ -52,12 +52,17 @@ void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer) {
     }
 }
 
-void set_rgb_range(uint8_t first_led, uint8_t last_led, int hue, int sat, int val) {
+void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int val, int val_override) {
+    if (val_override) {
+        val = val_override;
+    } else {
+        val = 75;
+    }
     for (int i = first_led; i <= last_led; i++) {
         HSV hsv = {
             .h = hue,
             .s = sat,
-            .v = RGB_INDICATOR_BRIGHTNESS,
+            .v = val, // 120 is ok for outer uf, but inner needs brighter, and the led strip at 120 is wayyyy too bright
         };
         if (hsv.h || hsv.s) {
             RGB rgb = hsv_to_rgb(hsv);
@@ -66,85 +71,47 @@ void set_rgb_range(uint8_t first_led, uint8_t last_led, int hue, int sat, int va
     }
 }
 
-// HONEST TO GOODNESS don't forget the max i value here
-void set_rgb_array(uint8_t ledArray[], int hue, int sat, int val) {
-    for (int i = 0; i <= 32; i++) {
-        HSV hsv = {
-            .h = hue,
-            .s = sat,
-            .v = RGB_INDICATOR_BRIGHTNESS,
-        };
-        if (hsv.h || hsv.s) {
-            RGB rgb = hsv_to_rgb(hsv);
-            rgb_matrix_set_color(ledArray[i], rgb.r, rgb.g, rgb.b);
-        }
-    }
-}
-
-// this is not great, but then I'm not great with C
-// 12 for middle heel which is first in line
-// 8 for left and right heel which are next in line
-// 4 for left and right nacelle which are next in line
-// 1 each for feet and then nosecone
-static uint8_t layerIndicatorLedsLeft[] = {
-        24,25,26,27,28,29,30,31,32,33,34,35, \
-        36,37,38,39,40,41,42,43, \
-        44,45,46,47,48,49,50,51, \
-        52,53,54,55, \
-        56,57,58,59, \
-        60, \
-        61, \
-        62, \
-        63
-};
-
-static uint8_t layerIndicatorLedsRight[] = {
-        88,89,90,91,92,93,94,95,96,97,98,99, \
-        100,101,102,103,104,105,106,107, \
-        108,109,110,111,112,113,114,115, \
-        116,117,118,119, \
-        120,121,122,123, \
-        124, \
-        125, \
-        126, \
-        127
-};
-
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (is_keyboard_left()) {
         // set LEFT per-key leds by ledmap
-        set_rgb_ledmap(0, 23, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
+        set_rgb_ledmap(RGB_START_LEDMAP_LEFT, RGB_END_LEDMAP_LEFT, RGB_LEDMAP_BRIGHTNESS, get_highest_layer(layer_state | default_layer_state));
         // set background colour  
         switch(get_highest_layer(layer_state|default_layer_state)) {
             case 0:
-                set_rgb_array(layerIndicatorLedsLeft, HSV_CYAN);
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_CYAN, RGB_INDICATOR_BRIGHTNESS);
                 break;
             case 1:
-                set_rgb_array(layerIndicatorLedsLeft, HSV_ORANGE);
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_GREEN, RGB_INDICATOR_BRIGHTNESS);
                 break;
             case 2:
-                set_rgb_array(layerIndicatorLedsLeft, HSV_RED);
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_ORANGE, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 3:
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_RED, RGB_INDICATOR_BRIGHTNESS);
                 break;
             default:
                 break;
         }
     } else {
         // set RIGHT per-key leds by ledmap
-        set_rgb_ledmap(64, 87, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));  
-        // set background colour  
+        set_rgb_ledmap(RGB_START_LEDMAP_RIGHT, RGB_END_LEDMAP_RIGHT, RGB_LEDMAP_BRIGHTNESS, get_highest_layer(layer_state | default_layer_state)); 
         switch(get_highest_layer(layer_state|default_layer_state)) {
             case 0:
-                set_rgb_array(layerIndicatorLedsRight, HSV_CYAN);
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_CYAN, RGB_INDICATOR_BRIGHTNESS);
                 break;
             case 1:
-                set_rgb_array(layerIndicatorLedsRight, HSV_ORANGE);
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_GREEN, RGB_INDICATOR_BRIGHTNESS);
                 break;
             case 2:
-                set_rgb_array(layerIndicatorLedsRight, HSV_RED);
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_ORANGE, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 3:
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_RED, RGB_INDICATOR_BRIGHTNESS);
                 break;
             default:
                 break;
-        }
+        } 
     }
+
     return rgb_matrix_indicators_advanced_keymap(led_min, led_max);
 }

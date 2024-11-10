@@ -11,7 +11,7 @@ enum keycodes {
 // 1st layer on the cycle
 #define LAYER_CYCLE_START 0
 // Last layer on the cycle
-#define LAYER_CYCLE_END   2
+#define LAYER_CYCLE_END   3
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     #include "rgb_ledmaps.h"
@@ -29,18 +29,25 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
 
     should lay this out nicer...
 */
+
+// MS_WH_ things are inverted for reasons i did not dig into
+// top toe are in order on both sides for reasons i did not dig into
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SCROLL] = LAYOUT(
-        KC_LCTL, KC_LGUI, KC_LSFT, KC_LALT,                             _______,    KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT,                             _______,
-        KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,    KC_MS_WH_UP, KC_MS_WH_RIGHT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,  _______
+        KC_LCTL, KC_LGUI, KC_LSFT, KC_LALT,                                 _______,    KC_LGUI, KC_LCTL, KC_LSFT, KC_LALT,                                 _______,
+        KC_MS_WH_RIGHT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_UP, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
+    ),
+    [_ARROWS] = LAYOUT(
+        KC_LEFT, KC_UP, KC_LSFT, KC_LALT,                                   _______,        KC_DOWN, KC_RIGHT, KC_LSFT, KC_LALT,                            _______,
+        KC_MS_WH_RIGHT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_UP, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
     ),
     [_FUSION] = LAYOUT(
-        _______, KC_LGUI, _______, _______, _______,                                 _______, _______, _______, _______, _______,
-        KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,    KC_MS_WH_UP, KC_MS_WH_RIGHT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______
+        _______, KC_LGUI, _______, _______,                                 _______,    KC_MS_BTN3, _______, _______, _______,                              _______,
+        KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,     _______,    KC_MS_WH_UP, KC_MS_WH_RIGHT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,      _______
     ),
     [_MGMT] = LAYOUT(
-        _______, _______, QK_BOOT, EE_CLR, _______,                                 _______, _______, EE_CLR, QK_BOOT, _______,
-        _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,                _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______
+        _______, _______, QK_BOOT, EE_CLR,                                  _______,    _______, _______, EE_CLR, QK_BOOT,                                  _______,
+        _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,                 _______,    _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,                 _______
     )
 };
 
@@ -55,18 +62,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     should lay this out nicer...
 */
 
+// these need to match the wiring flippage;
 const ledmap ledmaps[] = {
     [_SCROLL]   = LEDMAP(
       L_B1_L0,L_B1_L0,L_B1_L0,L_B2_L0,L_B2_L0,L_B2_L0,L_B3_L0,L_B3_L0,L_B3_L0,L_B4_L0,L_B4_L0,L_B4_L0,L_B5_L0,L_B5_L0,L_B5_L0,L_B6_L0,L_B6_L0,L_B6_L0,L_B7_L0,L_B7_L0,L_B7_L0,L_B8_L0,L_B8_L0,L_B8_L0, \
       R_B1_L0,R_B1_L0,R_B1_L0,R_B2_L0,R_B2_L0,R_B2_L0,R_B3_L0,R_B3_L0,R_B3_L0,R_B4_L0,R_B4_L0,R_B4_L0,R_B5_L0,R_B5_L0,R_B5_L0,R_B6_L0,R_B6_L0,R_B6_L0,R_B7_L0,R_B7_L0,R_B7_L0,R_B8_L0,R_B8_L0,R_B8_L0
     ),
-    [_FUSION]   = LEDMAP(
+    [_ARROWS]   = LEDMAP(
       L_B1_L1,L_B1_L1,L_B1_L1,L_B2_L1,L_B2_L1,L_B2_L1,L_B3_L1,L_B3_L1,L_B3_L1,L_B4_L1,L_B4_L1,L_B4_L1,L_B5_L1,L_B5_L1,L_B5_L1,L_B6_L1,L_B6_L1,L_B6_L1,L_B7_L1,L_B7_L1,L_B7_L1,L_B8_L1,L_B8_L1,L_B8_L1, \
       R_B1_L1,R_B1_L1,R_B1_L1,R_B2_L1,R_B2_L1,R_B2_L1,R_B3_L1,R_B3_L1,R_B3_L1,R_B4_L1,R_B4_L1,R_B4_L1,R_B5_L1,R_B5_L1,R_B5_L1,R_B6_L1,R_B6_L1,R_B6_L1,R_B7_L1,R_B7_L1,R_B7_L1,R_B8_L1,R_B8_L1,R_B8_L1
     ),
-    [_MGMT]     = LEDMAP(
+    [_FUSION]   = LEDMAP(
       L_B1_L2,L_B1_L2,L_B1_L2,L_B2_L2,L_B2_L2,L_B2_L2,L_B3_L2,L_B3_L2,L_B3_L2,L_B4_L2,L_B4_L2,L_B4_L2,L_B5_L2,L_B5_L2,L_B5_L2,L_B6_L2,L_B6_L2,L_B6_L2,L_B7_L2,L_B7_L2,L_B7_L2,L_B8_L2,L_B8_L2,L_B8_L2, \
       R_B1_L2,R_B1_L2,R_B1_L2,R_B2_L2,R_B2_L2,R_B2_L2,R_B3_L2,R_B3_L2,R_B3_L2,R_B4_L2,R_B4_L2,R_B4_L2,R_B5_L2,R_B5_L2,R_B5_L2,R_B6_L2,R_B6_L2,R_B6_L2,R_B7_L2,R_B7_L2,R_B7_L2,R_B8_L2,R_B8_L2,R_B8_L2
+    ),
+    [_MGMT]     = LEDMAP(
+      L_B1_L3,L_B1_L3,L_B1_L3,L_B2_L3,L_B2_L3,L_B2_L3,L_B3_L3,L_B3_L3,L_B3_L3,L_B4_L3,L_B4_L3,L_B4_L3,L_B5_L3,L_B5_L3,L_B5_L3,L_B6_L3,L_B6_L3,L_B6_L3,L_B7_L3,L_B7_L3,L_B7_L3,L_B8_L3,L_B8_L3,L_B8_L3, \
+      R_B1_L3,R_B1_L3,R_B1_L3,R_B2_L3,R_B2_L3,R_B2_L3,R_B3_L3,R_B3_L3,R_B3_L3,R_B4_L3,R_B4_L3,R_B4_L3,R_B5_L3,R_B5_L3,R_B5_L3,R_B6_L3,R_B6_L3,R_B6_L3,R_B7_L3,R_B7_L3,R_B7_L3,R_B8_L3,R_B8_L3,R_B8_L3
     )
 };
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
@@ -74,6 +86,11 @@ const ledmap ledmaps[] = {
 #if defined(CONSOLE_ENABLE)
     #include "print.h"
     void keyboard_post_init_user(void) {
+        // if (is_keyboard_left()) {
+        //     print("I AM THE LEFT SIDE.");
+        // } else {
+        //     print("I AM THE RIGHT SIDE.");
+        // }
         // Customise these values to desired behaviour
         // debug_enable=true;
         debug_matrix=true;
