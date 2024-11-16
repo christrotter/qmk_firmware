@@ -35,15 +35,15 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SCROLL] = LAYOUT(
         KC_LCTL, KC_MS_WH_DOWN, KC_LSFT, KC_LGUI,                                 _______,    KC_MS_WH_UP, KC_LCTL, KC_LSFT, KC_LGUI,                                 _______,
-        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_DOWN, KC_MS_WH_UP, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
+        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_UP, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
     ),
     [_ARROWS] = LAYOUT(
         KC_LEFT, KC_UP, KC_LSFT, KC_LGUI,                                   _______,        KC_DOWN, KC_RIGHT, KC_LSFT, KC_LGUI,                            _______,
-        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_DOWN, KC_MS_WH_UP, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
+        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_UP, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
     ),
     [_FUSION] = LAYOUT(
         _______, KC_LGUI, _______, _______,                                 _______,    KC_MS_BTN3, _______, _______, _______,                              _______,
-        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_DOWN, KC_MS_WH_UP, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
+        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_UP, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
     ),
     [_MGMT] = LAYOUT(
         _______, _______, QK_BOOT, EE_CLR,                                  _______,    _______, _______, EE_CLR, QK_BOOT,                                  _______,
