@@ -101,10 +101,11 @@ So we need the pcb to output dpad on row5, macropad on row2&3.
 // KC_LEFT, KC_DOWN, KC_RIGHT, KC_UP,_______,
 // KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
 // KC_LEFT, _______, KC_DOWN, KC_UP, KC_RIGHT,
+// monitor input source change: ctrl alt shift v
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        KC_ESC, _______, _______, _______, _______, KC_F5,                  KC_MULTILNE, KC_ESC, OSM(MOD_LSFT), OSM(MOD_LSFT), OSM(MOD_LSFT),      KC_MACSHOT,MAGIPLAY,_______,REC_MAXIMIZE, _______, KC_F12,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
+        KC_ESC, _______, _______, _______, _______, INPUT_CHG,                  KC_MULTILNE, KC_ESC, OSM(MOD_LSFT), OSM(MOD_LSFT), OSM(MOD_LSFT),      KC_MACSHOT,MAGIPLAY,_______,REC_MAXIMIZE, _______, KC_F12,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
         KC_TILD,LT(0,KC_1),LT(0,KC_2),LT(0,KC_3),LT(0,KC_4),LT(0,KC_5),     KC_NO, KC_PGUP, SUP_ALT_TAB,                                      LT(0,KC_6),LT(0,KC_7),LT(0,KC_8),LT(0,KC_9), KC_0, KC_EQUAL,     KC_NO, LGUI(KC_TILD), KC_PGDN,
         KC_TAB, KC_Q, LT(0,KC_W),HOME_E, LT(0,KC_R),LT(0,KC_T),             MEET_HAND, REC_6TH_BL, REC_6TH_BM, REC_6TH_BR,                           KC_Y, KC_U, LT(0,KC_I),KC_O, KC_P, KC_MINUS,                     REC_MINIMIZE, REC_66_RIGHT, REC_50_RIGHT, REC_33_RIGHT,
         KC_LSFT, LT(0,KC_A), HOME_S,  HOME_D,  HOME_F, KC_G,                _______, REC_6TH_TL, REC_6TH_TM, REC_6TH_TR,                             KC_H, HOME_J, HOME_K, HOME_L, KC_QUOT, KC_SCLN,                        REC_MAXIMIZE, REC_33_LEFT, REC_50_LEFT, REC_66_LEFT,

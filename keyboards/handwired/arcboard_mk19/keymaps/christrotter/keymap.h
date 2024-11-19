@@ -37,6 +37,8 @@
 #define KC_CHRMBACK LGUI(KC_LBRC)
 #define KC_CHRMFWD  LGUI(KC_RBRC)
 
+#define INPUT_CHG LCTL(LALT(LSFT(KC_V)))
+
 // rectangle macros; for moving things around on the monitors
 // #define REC_LEFT_HALF       LCTL(LALT(KC_LEFT))
 // #define REC_RIGHT_HALF      LCTL(LALT(KC_RIGHT))
