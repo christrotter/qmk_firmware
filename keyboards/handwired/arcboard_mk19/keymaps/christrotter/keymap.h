@@ -47,6 +47,7 @@
 #define REC_33_LEFT         LCTL(LALT(KC_D))
 #define REC_50_LEFT         LCTL(LALT(KC_LEFT))
 #define REC_66_LEFT         LCTL(LALT(KC_E))
+#define REC_33_MID          LCTL(LALT(KC_F))
 #define REC_33_RIGHT        LCTL(LALT(KC_G))
 #define REC_50_RIGHT        LCTL(LALT(KC_RIGHT))
 #define REC_66_RIGHT        LCTL(LALT(KC_T))
@@ -215,3 +216,15 @@ enum custom_keycodes {
     #define FAL4_L1_BT KC_MUTE
     #define FAL4_L2_BT KC_NO
     #define FAL4_L3_BT MAGIPLY
+
+// usb-hid config
+typedef enum {
+    _TIME = 0xAA, // random value that does not conflict with VIA, must match companion app
+    _VOLUME,
+    _LAYOUT,
+    _MEDIA_ARTIST,
+    _MEDIA_TITLE,
+
+    _RELAY_FROM_DEVICE = 0xCC,
+    _RELAY_TO_DEVICE,
+} hid_data_type;

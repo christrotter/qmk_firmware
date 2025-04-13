@@ -4,12 +4,13 @@
 #include QMK_KEYBOARD_H
 #include "arcboard_mk19.h"
 #include "keymap.h"
+#include "raw_hid.h"
 
 #if defined(CONSOLE_ENABLE)
     #include "print.h"
     void keyboard_post_init_user(void) {
         // Customise these values to desired behaviour
-        // debug_enable=true;
+        debug_enable=true;
         // debug_matrix=true;
         // debug_keyboard=true;
         // debug_mouse=true;
@@ -116,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______,           _______,_______,_______,_______,_______,                    _______, _______, _______, _______, _______, _______,                       _______,_______,_______,_______,_______,
         _______, _______, _______, _______, _______, _______,           _______,_______,_______,                                    _______, _______, _______, _______, _______, _______,                       _______,_______,_______,
         _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______,                         KC_CHRMBACK, KC_CHRMFWD, _______, _______, _______, _______,                _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______,                         _______, KC_MS_BTN1, KC_MS_BTN3, KC_MS_BTN2, _______, _______,              _______, _______, _______, _______,
+        _______, _______, KC_MS_BTN2, KC_MS_BTN3, KC_MS_BTN1, _______,  _______, _______, _______, _______,                         _______, KC_MS_BTN1, KC_MS_BTN3, KC_MS_BTN2, _______, _______,              _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______
     ),
@@ -161,7 +162,7 @@ const ledmap ledmaps[] = {
     RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, BLUE, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
     CYAN, ___n___, ___n___, ___n___, ___n___, ___n___,                                      ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN,
     GOLD, ___n___, ___n___, ___n___, ___n___, ___n___,                                       RED, GREEN, ___n___, ___n___, ___n___,    CYAN, 
-    GREEN, ___n___, ___n___, ___n___, ___n___, ___n___,                                     ___n___, PINK, PURPLE, BLUE, ___n___, ___n___, 
+    GREEN, ___n___, BLUE, PURPLE, PINK, ___n___,                                            ___n___, PINK, PURPLE, BLUE, ___n___, ___n___, 
     ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                    ___n___, ___n___, ___n___, ___n___, ___n___,     RED,
     GREEN, GREEN, ESC, DEL, TOG_NAV, RED,                                                   GREEN, GREEN, TOG_NAV, TOG_SYM, ENTER, SPACE,
     ___n___, GREEN, ORANGE, RED, ___n___, GREEN, ORANGE, RED,                                BLUE, YELLOW, ORANGE, GREEN, RED, PURPLE, PINK, CYAN
@@ -402,4 +403,32 @@ void matrix_scan_user(void) {
       is_sup_alt_tab_active = false;
     }
   }
+}
+
+typedef enum {
+    _LAYER = 0,
+} relay_data_type;
+
+void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
+    memset(data, 0, 32);
+    printf("Receive data: %u %u %u \n", data[0], data[1], data[2]);
+    // if (data[0] == _RELAY_TO_DEVICE) {
+    //     switch (data[1]) {
+    //         case _LAYER:
+    //             layer_move(data[2]);
+    //             break;
+    //     }
+    // }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    uint8_t data[32];
+    memset(data, 0, 32);
+    data[0] = _RELAY_FROM_DEVICE;
+    data[1] = _LAYER;
+    data[2] = get_highest_layer(state);
+    printf("Send data: %u %u %u \n", data[0], data[1], data[2]);
+    raw_hid_send(data, 32);
+
+    return state;
 }

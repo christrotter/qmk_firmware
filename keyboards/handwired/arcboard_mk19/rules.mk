@@ -18,3 +18,5 @@ DRAGSCROLL_ENABLE = yes
 
 # audio
 AUDIO_DRIVER = pwm_hardware
+
+RAW_ENABLE = yes
