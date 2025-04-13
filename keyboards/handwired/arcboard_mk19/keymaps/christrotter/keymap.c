@@ -38,6 +38,15 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *
 __attribute__((weak)) void post_process_record_keymap(uint16_t keycode, keyrecord_t *record) {}
 void                       post_process_record_user(uint16_t keycode, keyrecord_t *record) { post_process_record_keymap(keycode, record); }
 
+void change_pedal_layer(void) {
+    uint8_t data[32];
+    memset(data, 0, 32);
+    data[0] = _RELAY_FROM_DEVICE;
+    data[1] = _PEDAL_CYCLE_LAYERS;
+    // printf("Send data: %u %u \n", data[0], data[1]);
+    raw_hid_send(data, 32);
+}
+
 /*
 row0 = 8 keys in thumb row, but two are disconnected/useless, just leds in chain
 row1 = fkeys 0-5, dpad 6-10 (4 arrows, 1 center push)
@@ -108,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         KC_ESC, _______, _______, _______, _______, INPUT_CHG,                  KC_MULTILNE, KC_ESC, OSM(MOD_LSFT), OSM(MOD_LSFT), OSM(MOD_LSFT),      KC_MACSHOT,MAGIPLAY,_______,REC_MAXIMIZE, _______, KC_F12,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
         KC_TILD,LT(0,KC_1),LT(0,KC_2),LT(0,KC_3),LT(0,KC_4),LT(0,KC_5),     KC_NO, KC_PGUP, SUP_ALT_TAB,                                      LT(0,KC_6),LT(0,KC_7),LT(0,KC_8),LT(0,KC_9), KC_0, KC_EQUAL,     KC_NO, LGUI(KC_TILD), KC_PGDN,
-        KC_TAB, KC_Q, LT(0,KC_W),HOME_E, LT(0,KC_R),LT(0,KC_T),             MEET_HAND, REC_6TH_BL, REC_6TH_BM, REC_6TH_BR,                           KC_Y, KC_U, LT(0,KC_I),KC_O, KC_P, KC_MINUS,                     REC_MINIMIZE, REC_66_RIGHT, REC_50_RIGHT, REC_33_RIGHT,
+        KC_TAB, KC_Q, LT(0,KC_W),HOME_E, LT(0,KC_R),LT(0,KC_T),             KC_PD_LAYER, REC_6TH_BL, REC_6TH_BM, REC_6TH_BR,                           KC_Y, KC_U, LT(0,KC_I),KC_O, KC_P, KC_MINUS,                     REC_MINIMIZE, REC_66_RIGHT, REC_50_RIGHT, REC_33_RIGHT,
         KC_LSFT, LT(0,KC_A), HOME_S,  HOME_D,  HOME_F, KC_G,                _______, REC_6TH_TL, REC_6TH_TM, REC_6TH_TR,                             KC_H, HOME_J, HOME_K, HOME_L, KC_QUOT, KC_SCLN,                        REC_MAXIMIZE, REC_33_LEFT, REC_50_LEFT, REC_66_LEFT,
         DRAG_SCROLL,LT(0,KC_Z),LT(0,KC_X),LT(0,KC_C),LT(0,KC_V),LT(0,KC_B),                                                         LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,KC_ESC,
         KC_BSPC, MO(_NAV), KC_DEL, KC_ESC, KC_LSFT, OSM(MOD_LSFT),                                                                  KC_SPACE,  KC_ENTER,   MO(_SYMBOLS), MO(_NAV), KC_LSFT, KC_MULTILNE
@@ -150,7 +159,7 @@ const ledmap ledmaps[] = {
 //     [_QWERTY]   = LEDMAP(
 
    [_QWERTY]   = LEDMAP(
-    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, BLUE, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
+    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    BLUE, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, BLUE, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
     CYAN, ___n___, ___n___, ___n___, ___n___, ___n___,                                      ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN,
     GOLD, ___n___, ___n___, HRM_CTL, ___n___, ___n___,                                      ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN, 
     GREEN, ___n___, HRM_ALT, HRM_GUI, HRM_SFT, ___n___,                                     ___n___, HRM_SFT, HRM_GUI, HRM_ALT, ___n___, ___n___, 
@@ -377,6 +386,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
+            case KC_PD_LAYER:
+            if (record->event.pressed) {
+                // print("KC_PD_LAYER pressed\n");
+                change_pedal_layer();
+                return false;
+            }
+            return true;
     }
     #endif // end CUSTOM_KEYCODES (for troubleshooting)
     return true;
@@ -421,14 +437,14 @@ void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
     // }
 }
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    uint8_t data[32];
-    memset(data, 0, 32);
-    data[0] = _RELAY_FROM_DEVICE;
-    data[1] = _LAYER;
-    data[2] = get_highest_layer(state);
-    printf("Send data: %u %u %u \n", data[0], data[1], data[2]);
-    raw_hid_send(data, 32);
-
-    return state;
-}
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//     uint8_t data[32];
+//     memset(data, 0, 32);
+//     data[0] = _RELAY_FROM_DEVICE;
+//     data[1] = _LAYER;
+//     data[2] = get_highest_layer(state);
+//     printf("Send data: %u %u %u \n", data[0], data[1], data[2]);
+//     raw_hid_send(data, 32);
+// 
+//     return state;
+// }

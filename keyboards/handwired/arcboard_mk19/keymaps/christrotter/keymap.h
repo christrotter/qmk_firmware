@@ -103,6 +103,7 @@ enum custom_keycodes {
     ALT_TAB,
     SFT_ALT_TAB,
     SUP_ALT_TAB,
+    KC_PD_LAYER,
 };
 
 // Left-hand home row mods
@@ -224,6 +225,7 @@ typedef enum {
     _LAYOUT,
     _MEDIA_ARTIST,
     _MEDIA_TITLE,
+    _PEDAL_CYCLE_LAYERS = 0xBA,
 
     _RELAY_FROM_DEVICE = 0xCC,
     _RELAY_TO_DEVICE,
