@@ -1,6 +1,6 @@
 #!/bin/bash
 KB_PATH=handwired/arcpedals_mk2
-HOME_DIR=/Users/christrotter/git/qmk/qmk_firmware
+HOME_DIR=/Users/christrotter/git/qmk_firmware
 KB_DIR=$HOME_DIR/keyboards/$KB_PATH
 USER_DIR=$HOME_DIR/users/christrotter
 

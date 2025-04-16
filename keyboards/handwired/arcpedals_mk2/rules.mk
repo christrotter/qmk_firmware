@@ -12,3 +12,5 @@ PICO_INTRINSICS_ENABLED = no # ATM Unsupported by ChibiOS.
 SERIAL_DRIVER = vendor
 
 POINTING_DEVICE_ENABLE = yes
+
+RAW_ENABLE = yes

@@ -12,10 +12,6 @@
 #define ONESHOT_TIMEOUT 2000        /* Time (in ms) before the one shot key is released */
 #define CUSTOM_KEYCODES
 
-#if defined(CONSOLE_ENABLE)
-    #define DEBUG_MATRIX_SCAN_RATE // we call it on the TFTs
-#endif
-
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     #define RGB_INDICATOR_BRIGHTNESS 100
 #endif

@@ -39,7 +39,7 @@
 
 // WS2812 RGB LED strip input and number of LEDs
 #if defined(RGB_MATRIX_ENABLE) || defined(RGB_MATRIX_LEDMAPS_ENABLED)
-    #define RGB_MATRIX_LED_COUNT RGBLED_NUM
+    // #define RGB_MATRIX_LED_COUNT RGBLED_NUM
     // I got better scan rate performance by avoiding led_min/led_max and flags.
     #define RGB_MATRIX_DEFAULT_HUE 5
     #define RGB_MATRIX_DEFAULT_SAT 5

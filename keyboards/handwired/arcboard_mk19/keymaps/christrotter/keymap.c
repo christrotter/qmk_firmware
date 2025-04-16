@@ -425,8 +425,10 @@ typedef enum {
     _LAYER = 0,
 } relay_data_type;
 
-void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
-    memset(data, 0, 32);
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+    // memset(response, 0, 32);
+    printf("received");
+    printf("Received %u bytes \n", length);
     printf("Receive data: %u %u %u \n", data[0], data[1], data[2]);
     // if (data[0] == _RELAY_TO_DEVICE) {
     //     switch (data[1]) {
