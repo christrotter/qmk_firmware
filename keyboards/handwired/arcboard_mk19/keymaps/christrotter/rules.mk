@@ -11,3 +11,6 @@ ifeq ($(strip $(QUANTUM_PAINTER_ENABLE)), yes)
 	SRC += keymaps/christrotter/graphics/roger.qgf.c
 	SRC += keymaps/christrotter/graphics/qmk-logo.qgf.c
 endif
+
+# Encoder
+ENCODER_MAP_ENABLE = yes
