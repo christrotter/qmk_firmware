@@ -3,13 +3,10 @@
     "processor": "RP2040",
     "bootloader": "rp2040",
     "matrix_pins": {
-        "cols": ["GP4"],
-        "rows": ["GP5"]
-    },
-    "backlight": {
-        "pin": "GP25"
+        "cols": ["GP3"],
+        "rows": ["GP4"]
     },
     "ws2812": {
-        "pin": "GP25"
+        "pin": "GP22"
     }
 }
