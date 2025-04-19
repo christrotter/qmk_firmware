@@ -1,8 +1,5 @@
 # This file intentionally left blank
 
-# Functionality options
-TAP_DANCE_ENABLE        = yes
-
 # LED settings
 RGB_MATRIX_LEDMAPS_ENABLED = yes 	# turn on per-key colours
 

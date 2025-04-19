@@ -228,5 +228,5 @@ typedef enum {
     _PEDAL_CYCLE_LAYERS = 0xBA,
 
     _RELAY_FROM_DEVICE = 0xCC,
-    _RELAY_TO_DEVICE,
+    _RELAY_TO_DEVICE = 0xCD,
 } hid_data_type;

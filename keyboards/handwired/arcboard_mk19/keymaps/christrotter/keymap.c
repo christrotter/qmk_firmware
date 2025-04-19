@@ -43,7 +43,7 @@ void change_pedal_layer(void) {
     memset(data, 0, 32);
     data[0] = _RELAY_FROM_DEVICE;
     data[1] = _PEDAL_CYCLE_LAYERS;
-    // printf("Send data: %u %u \n", data[0], data[1]);
+    printf("Send data: %u %u \n", data[0], data[1]);
     raw_hid_send(data, 32);
 }
 
@@ -425,28 +425,27 @@ typedef enum {
     _LAYER = 0,
 } relay_data_type;
 
-void raw_hid_receive(uint8_t *data, uint8_t length) {
-    // memset(response, 0, 32);
-    printf("received");
-    printf("Received %u bytes \n", length);
-    printf("Receive data: %u %u %u \n", data[0], data[1], data[2]);
-    // if (data[0] == _RELAY_TO_DEVICE) {
-    //     switch (data[1]) {
-    //         case _LAYER:
-    //             layer_move(data[2]);
-    //             break;
-    //     }
-    // }
+layer_state_t layer_state_set_user(layer_state_t state) {
+    uint8_t data[32];
+    memset(data, 0, 32);
+    data[0] = _RELAY_FROM_DEVICE;
+    data[1] = _LAYER;
+    data[2] = get_highest_layer(state);
+    raw_hid_send(data, 32);
+
+    return state;
 }
 
-// layer_state_t layer_state_set_user(layer_state_t state) {
-//     uint8_t data[32];
-//     memset(data, 0, 32);
-//     data[0] = _RELAY_FROM_DEVICE;
-//     data[1] = _LAYER;
-//     data[2] = get_highest_layer(state);
-//     printf("Send data: %u %u %u \n", data[0], data[1], data[2]);
-//     raw_hid_send(data, 32);
-// 
-//     return state;
-// }
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+    dprintf("Raw-hid: received %u bytes \n", length);
+    // memset(response, 0, 32);
+    
+    if (data[0] == _RELAY_TO_DEVICE) {
+        dprintf("Raw-hid: data: %u %u %u \n", data[0], data[1], data[2]);
+        // switch (data[1]) {
+        //     case _LAYER:
+        //         layer_move(data[2]);
+        //         break;
+        // }
+    }
+}

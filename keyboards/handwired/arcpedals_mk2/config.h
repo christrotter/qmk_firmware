@@ -43,6 +43,6 @@
     // I got better scan rate performance by avoiding led_min/led_max and flags.
     #define RGB_MATRIX_DEFAULT_HUE 5
     #define RGB_MATRIX_DEFAULT_SAT 5
-    #define RGB_MATRIX_DEFAULT_VAL RGB_MATRIX_MAXIMUM_BRIGHTNESS
+    #define RGB_MATRIX_DEFAULT_VAL 150
     #define NOP_FUDGE 0.4 // won't compile without this set
 #endif

@@ -25,16 +25,6 @@
     }
 #endif
 
-void change_pedal_layer(void) {
-    uint8_t data[32];
-    memset(data, 0, 32);
-    data[0] = _RELAY_FROM_DEVICE;
-    data[1] = _PEDAL_CYCLE_LAYERS;
-    // printf("Send data: %u %u \n", data[0], data[1]);
-    raw_hid_send(data, 32);
-}
-
-
 #if defined(TAP_DANCE_ENABLE)
 // Tap Dance definitions
 enum {
@@ -50,6 +40,7 @@ tap_dance_action_t tap_dance_actions[] = {
 enum keycodes {
   KC_CYCLE_LAYERS = QK_USER,
   KC_PD_LAYER,
+  KC_TEST,
 };
 // 1st layer on the cycle
 #define LAYER_CYCLE_START 0
@@ -68,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_MS_BTN1, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_MS_WH_RIGHT,      KC_MS_WH_LEFT, KC_MS_WH_UP, KC_CYCLE_LAYERS, KC_MS_BTN3
 ),
 [_MOUSE] = LAYOUT(
-    KC_NO, KC_MS_BTN3, KC_CYCLE_LAYERS, KC_MS_BTN1,                            KC_NO, KC_PD_LAYER, KC_CYCLE_LAYERS, KC_MS_BTN2
+    KC_NO, KC_MS_BTN3, KC_CYCLE_LAYERS, KC_MS_BTN1,                            KC_NO, KC_MS_BTN1, KC_CYCLE_LAYERS, KC_MS_BTN2
 ),
 [_FUSION] = LAYOUT(
     KC_NO, KC_LGUI, KC_CYCLE_LAYERS, KC_MS_WH_DOWN,              KC_MS_WH_UP, KC_MS_BTN3, KC_CYCLE_LAYERS, KC_NO
@@ -116,6 +107,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               // Our logic will happen on presses, nothing is done on releases
               if (!record->event.pressed) {
                 // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
+                dprintf("KC_CYCLE_LAYERS released\n");
                 return false;
               }
               uint8_t current_layer = get_highest_layer(layer_state);
@@ -129,13 +121,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               }
               layer_move(next_layer);
               return false;
-              case KC_PD_LAYER:
+            case KC_PD_LAYER:
               if (record->event.pressed) {
                   // print("KC_PD_LAYER pressed\n");
-                  change_pedal_layer();
+                  // change_pedal_layer();
                   return false;
               }
               return true;
+            case KC_TEST:
+                if (record->event.pressed) {
+                    layer_move(0);
+                    return false;
+                }
+            return true;
     }
     #endif // end CUSTOM_KEYCODES (for troubleshooting)
     return true;
@@ -146,14 +144,13 @@ typedef enum {
 } relay_data_type;
 
 void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
-    memset(data, 0, 32);
     print("usb-hid data incoming...");
-    printf("Receive data: %u %u %u \n", data[0], data[1], data[2]);
-    // if (data[0] == _RELAY_TO_DEVICE) {
-    //     switch (data[1]) {
-    //         case _LAYER:
-    //             layer_move(data[2]);
-    //             break;
-    //     }
-    // }
+    dprintf("Receive data: %u %u %u \n", data[0], data[1], data[2]);
+    if (data[0] == _RELAY_TO_DEVICE) {
+        switch (data[1]) {
+            case _LAYER:
+                layer_move(data[2]);
+                break;
+        }
+    }
 }

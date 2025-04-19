@@ -49,7 +49,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         switch (keycode) {
             case KC_TEST:
                 if (record->event.pressed) {
-                    dprintf("KC_TEST pressed\n");
+                    xprintf("KC_TEST pressed\n");
                     uint8_t data[32];
                     memset(data, 0, 32);
                     data[0] = _RELAY_FROM_DEVICE;
@@ -67,6 +67,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
-    printf("usb-hid data incoming...\n");
+    xprintf("usb-hid data incoming...\n");
     dprintf("Receive data: %u %u %u \n", data[0], data[1], data[2]);
 }
