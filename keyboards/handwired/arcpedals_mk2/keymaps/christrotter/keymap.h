@@ -33,8 +33,10 @@ typedef enum {
     _LAYOUT,
     _MEDIA_ARTIST,
     _MEDIA_TITLE,
-    _PEDAL_CYCLE_LAYERS = 0xBA,
+    _CYCLE_PEDAL_LAYERS = 0xBA,
+    _LAYER_COLOUR,
 
     _RELAY_FROM_DEVICE = 0xCC,
     _RELAY_TO_DEVICE = 0xCD,
+    _DIRECT_TO_HOST = 0xCE,
 } hid_data_type;

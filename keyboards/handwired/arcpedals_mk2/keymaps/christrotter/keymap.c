@@ -88,6 +88,21 @@ const ledmap ledmaps[] = {
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
 
 
+uint8_t cycle_pedal_layer(void) {
+    uint8_t current_layer = get_highest_layer(layer_state);
+    // Check if we are within the range, if not quit
+    if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
+      return false;
+    }
+    uint8_t next_layer = current_layer + 1;
+    if (next_layer > LAYER_CYCLE_END) {
+        next_layer = LAYER_CYCLE_START;
+    }
+    layer_move(next_layer);
+    return next_layer;
+}
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!(process_record_keymap(keycode, record)
         #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
@@ -107,7 +122,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               // Our logic will happen on presses, nothing is done on releases
               if (!record->event.pressed) {
                 // We've already handled the keycode (doing nothing), let QMK know so no further code is run unnecessarily
-                dprintf("KC_CYCLE_LAYERS released\n");
+                // dprintf("KC_CYCLE_LAYERS released\n");
                 return false;
               }
               uint8_t current_layer = get_highest_layer(layer_state);
@@ -139,18 +154,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+void send_layer_colour(uint8_t layer_colour) {
+    uint8_t data[32];
+    memset(data, 0, 32);
+    // data[0] = _DIRECT_TO_HOST;
+    data[0] = _RELAY_FROM_DEVICE;
+    data[1] = _DIRECT_TO_HOST;
+    data[2] = layer_colour;
+    xprintf("Raw-hid: Send layer colour: %u %u %u\n", data[0], data[1], data[2]);
+    raw_hid_send(data, 32);
+}
+
+// now, on layer change, we want to emit the layer number to the app, as a guarantee that the led colour will be correct.
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+    case _SCROLL:
+        send_layer_colour(1);
+        break;
+    case _MOUSE:
+        send_layer_colour(2);
+        break;
+    case _FUSION:
+        send_layer_colour(3);
+        break;
+    case _MGMT:
+        send_layer_colour(4);
+        break;
+    }
+  return state;
+}
+
 typedef enum {
     _LAYER = 0,
 } relay_data_type;
 
-void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
-    print("usb-hid data incoming...");
-    dprintf("Receive data: %u %u %u \n", data[0], data[1], data[2]);
-    if (data[0] == _RELAY_TO_DEVICE) {
-        switch (data[1]) {
-            case _LAYER:
-                layer_move(data[2]);
-                break;
-        }
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+    xprintf("Raw-hid: Receive %u bytes data: %u %u %u \n", length, data[0], data[1], data[2]);
+    if (data[1] == _CYCLE_PEDAL_LAYERS) {
+        // xprintf("Raw-hid: flag successful \n");
+        cycle_pedal_layer();
     }
 }
