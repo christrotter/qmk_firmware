@@ -104,6 +104,7 @@ enum custom_keycodes {
     SFT_ALT_TAB,
     SUP_ALT_TAB,
     KC_PD_LAYER,
+    AM_Toggle,
 };
 
 // Left-hand home row mods
@@ -130,6 +131,7 @@ enum custom_keycodes {
     #define ___n___ {0, 0, 0}
     #define TOG_MSE BLUE
     #define TOG_NAV CHART
+    #define TOG_RECT PURPLE
     #define TOG_SYM PINK
     #define DRAG ORANGE
     #define MAGIPLY PINK

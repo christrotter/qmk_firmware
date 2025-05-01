@@ -31,5 +31,11 @@
             ENCODER_CCW_CW(KC_VOLD, KC_VOLU),           // Right, angled
             ENCODER_CCW_CW(SHEET_LEFT, SHEET_RIGHT)           // Right, flat
         },
+        [_RECT]      =  {
+            ENCODER_CCW_CW(KC_NO, KC_NO),               // Left,  flat
+            ENCODER_CCW_CW(KC_NO, KC_NO),               // Left,  angled
+            ENCODER_CCW_CW(KC_NO, KC_NO),           // Right, angled
+            ENCODER_CCW_CW(KC_NO, KC_NO)           // Right, flat
+        },
     };
 #endif

@@ -115,12 +115,12 @@ So we need the pcb to output dpad on row5, macropad on row2&3.
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        KC_ESC, _______, _______, _______, _______, INPUT_CHG,                  KC_MULTILNE, KC_ESC, OSM(MOD_LSFT), OSM(MOD_LSFT), OSM(MOD_LSFT),      KC_MACSHOT,MAGIPLAY,_______,REC_MAXIMIZE, _______, KC_F12,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
-        KC_TILD,LT(0,KC_1),LT(0,KC_2),LT(0,KC_3),LT(0,KC_4),LT(0,KC_5),     KC_NO, KC_PGUP, SUP_ALT_TAB,                                      LT(0,KC_6),LT(0,KC_7),LT(0,KC_8),LT(0,KC_9), KC_0, KC_EQUAL,     KC_NO, LGUI(KC_TILD), KC_PGDN,
-        KC_TAB, KC_Q, LT(0,KC_W),HOME_E, LT(0,KC_R),LT(0,KC_T),             KC_PD_LAYER, REC_6TH_BL, REC_6TH_BM, REC_6TH_BR,                           KC_Y, KC_U, LT(0,KC_I),KC_O, KC_P, KC_MINUS,                     REC_MINIMIZE, REC_66_RIGHT, REC_50_RIGHT, REC_33_RIGHT,
-        KC_LSFT, LT(0,KC_A), HOME_S,  HOME_D,  HOME_F, KC_G,                _______, REC_6TH_TL, REC_6TH_TM, REC_6TH_TR,                             KC_H, HOME_J, HOME_K, HOME_L, KC_QUOT, KC_SCLN,                        REC_MAXIMIZE, REC_33_LEFT, REC_50_LEFT, REC_66_LEFT,
-        DRAG_SCROLL,LT(0,KC_Z),LT(0,KC_X),LT(0,KC_C),LT(0,KC_V),LT(0,KC_B),                                                         LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,KC_ESC,
-        KC_BSPC, MO(_NAV), KC_DEL, KC_ESC, KC_LSFT, OSM(MOD_LSFT),                                                                  KC_SPACE,  KC_ENTER,   MO(_SYMBOLS), MO(_NAV), KC_LSFT, KC_MULTILNE
+        KC_ESC, _______, _______, _______, _______, INPUT_CHG,                  KC_MULTILNE, KC_ESC, OSM(MOD_LSFT), OSM(MOD_LGUI), OSM(MOD_LSFT),      KC_MACSHOT,MAGIPLAY,_______,OSM(MOD_LGUI), _______, KC_F12,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
+        KC_TILD,LGUI(KC_1),LGUI(KC_2),LGUI(KC_3),LGUI(KC_4),LGUI(KC_5),     KC_NO, OSL(_RECT), SUP_ALT_TAB,                                      LGUI(KC_6),LGUI(KC_7),LGUI(KC_8),LGUI(KC_9), KC_0, KC_EQUAL,     KC_NO, LGUI(KC_TILD), OSL(_RECT),
+        KC_TAB, KC_Q, LT(0,KC_W),HOME_E, LT(0,KC_R),LT(0,KC_T),             KC_PD_LAYER, _______, _______, _______,                           KC_Y, KC_U, LT(0,KC_I),KC_O, KC_P, KC_MINUS,                     _______, _______, _______, _______,
+        KC_LSFT, LT(0,KC_A), HOME_S,  HOME_D,  HOME_F, KC_G,                _______, _______, _______, _______,                             KC_H, HOME_J, HOME_K, HOME_L, KC_QUOT, KC_SCLN,                        _______, _______, _______, _______,
+        DRAG_SCROLL,LT(0,KC_Z),LT(0,KC_X),LT(0,KC_C),LT(0,KC_V),LT(0,KC_B),                                                         LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,OSM(MOD_LGUI),
+        KC_BSPC, MO(_NAV), KC_DEL, KC_ESC, KC_LSFT, OSM(MOD_LSFT),                                                                  KC_SPACE,  KC_ENTER,   MO(_SYMBOLS), MO(_NAV), OSL(_RECT), QK_LAYER_LOCK
     ),
     [_MOUSE] = LAYOUT(
         _______, _______, _______, _______, _______, _______,           _______,_______,_______,_______,_______,                    _______, _______, _______, _______, _______, _______,                       _______,_______,_______,_______,_______,
@@ -128,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______,                         KC_CHRMBACK, KC_CHRMFWD, _______, _______, _______, _______,                _______, _______, _______, _______,
         _______, _______, KC_MS_BTN2, KC_MS_BTN3, KC_MS_BTN1, _______,  _______, _______, _______, _______,                         _______, KC_MS_BTN1, KC_MS_BTN3, KC_MS_BTN2, _______, _______,              _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______
+        _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, AM_Toggle
     ),
     [_SYMBOLS] = LAYOUT(
         _______,  _______, _______, _______, _______, _______,          _______,_______,_______,_______,_______,                    _______, _______, _______, _______, _______, _______,                       _______,_______,_______,_______,_______,
@@ -146,6 +146,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______,                                                                       KC_SFTGUIARROW_L, KC_SFTALTARROW_L, KC_SFTARROW_D, KC_SFTALTARROW_R, KC_SFTGUIARROW_R, _______,
         _______, _______, _______, _______, KC_MACLOCK, _______,                                                                    _______, _______, _______, _______, _______, _______
     ),
+    [_RECT] = LAYOUT(
+        _______,  _______, _______, _______, _______, _______,           _______,_______,_______,_______,_______,                   REC_MAXIMIZE, REC_MINIMIZE, _______, _______, _______, _______,                       _______,_______,_______,_______,_______,
+        _______, _______, _______, _______, _______, _______,           _______,_______,_______,                                    REC_6TH_TL, REC_6TH_TM, REC_6TH_TR, _______, _______, _______,                 _______,_______,_______,
+        _______, _______, _______, _______, _______, _______,_______, _______, _______, _______,                                    REC_6TH_BL, REC_6TH_BM, REC_6TH_TR, _______, _______, _______,              _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,_______,        _______, _______, _______, _______,                             REC_33_LEFT, REC_66_LEFT, REC_33_MID, REC_66_RIGHT, REC_33_RIGHT, _______,         _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                                                       REC_50_LEFT, REC_50_RIGHT, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______
+    ),
 };
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
@@ -159,31 +167,31 @@ const ledmap ledmaps[] = {
 //     [_QWERTY]   = LEDMAP(
 
    [_QWERTY]   = LEDMAP(
-    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    BLUE, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, BLUE, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
+    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    HRM_GUI, SPRING, GREEN, RED,           ORANGE, PINK, ___n___, HRM_GUI, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
     CYAN, ___n___, ___n___, ___n___, ___n___, ___n___,                                      ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN,
     GOLD, ___n___, ___n___, HRM_CTL, ___n___, ___n___,                                      ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN, 
     GREEN, ___n___, HRM_ALT, HRM_GUI, HRM_SFT, ___n___,                                     ___n___, HRM_SFT, HRM_GUI, HRM_ALT, ___n___, ___n___, 
-    ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                    ___n___, HRM_CTL, ___n___, ___n___, ___n___,     RED,
-    GREEN, GREEN, ESC, DEL, TOG_NAV, RED,                                                   GREEN, GREEN, TOG_NAV, TOG_SYM, ENTER, SPACE,
-    ___n___, GREEN, ORANGE, RED, ___n___, GREEN, ORANGE, RED,                                BLUE, YELLOW, ORANGE, GREEN, RED, PURPLE, PINK, CYAN
+    ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                    ___n___, HRM_CTL, ___n___, ___n___, ___n___,     HRM_GUI,
+    GREEN, GREEN, ESC, DEL, TOG_NAV, RED,                                                   CYAN, TOG_RECT, TOG_NAV, TOG_SYM, ENTER, SPACE,
+    ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,                                ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___
     ),
    [_MOUSE]   = LEDMAP(
-    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, BLUE, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
+    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, HRM_GUI, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
     CYAN, ___n___, ___n___, ___n___, ___n___, ___n___,                                      ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN,
     GOLD, ___n___, ___n___, ___n___, ___n___, ___n___,                                       RED, GREEN, ___n___, ___n___, ___n___,    CYAN, 
     GREEN, ___n___, BLUE, PURPLE, PINK, ___n___,                                            ___n___, PINK, PURPLE, BLUE, ___n___, ___n___, 
-    ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                    ___n___, ___n___, ___n___, ___n___, ___n___,     RED,
-    GREEN, GREEN, ESC, DEL, TOG_NAV, RED,                                                   GREEN, GREEN, TOG_NAV, TOG_SYM, ENTER, SPACE,
-    ___n___, GREEN, ORANGE, RED, ___n___, GREEN, ORANGE, RED,                                BLUE, YELLOW, ORANGE, GREEN, RED, PURPLE, PINK, CYAN
+    ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                    ___n___, ___n___, ___n___, ___n___, ___n___,     ___n___,
+    GREEN, GREEN, ESC, DEL, TOG_NAV, RED,                                                   CYAN, TOG_RECT, TOG_NAV, TOG_SYM, ENTER, SPACE,
+    ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,                                ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___
     ),
    [_SYMBOLS]   = LEDMAP(
-    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, BLUE, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
+    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, HRM_GUI, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
     CYAN, ___n___, ___n___, ___n___, ___n___, ___n___,                                      ORANGE, MAGIPLY, ___n___, ___n___, ___n___, ___n___,
     GOLD, GOLD, GREEN, PURPLE, PURPLE, GREEN,                                               GREEN, CYAN, CYAN, CYAN, ___n___,    ___n___, 
     GREEN, CYAN, YELLOW, MAGENT, MAGENT, BLUE,                                              GREEN, CYAN, CYAN, CYAN, CYAN, ___n___, 
     ORANGE, GOLD, GREEN, PINK, PINK, CYAN,                                                  RED, CYAN, CYAN, CYAN, GOLD, ___n___,
-    GREEN, GREEN, ESC, DEL, TOG_NAV, RED,                                                   GREEN, GREEN, TOG_NAV, TOG_SYM, ENTER, SPACE,
-    ___n___, GREEN, ORANGE, RED, ___n___, GREEN, ORANGE, RED,                                BLUE, YELLOW, ORANGE, GREEN, RED, PURPLE, PINK, CYAN
+    GREEN, GREEN, ESC, DEL, TOG_NAV, RED,                                                   CYAN, TOG_RECT, TOG_NAV, TOG_SYM, ENTER, SPACE,
+    ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,                                ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___
     ),
    [_NAV]   = LEDMAP(
     RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        RED, ORANGE, ___n___, ___n___, ___n___, ___n___,        GREEN, GREEN, GREEN, GREEN,
@@ -191,8 +199,17 @@ const ledmap ledmaps[] = {
     GOLD, ___n___, ___n___, CYAN, ___n___, PURPLE,                                          GREEN,    CYAN,   GREEN,    CYAN,     RED,    ___n___, 
     GREEN, BLUE,  SPRING,    PINK,    CYAN, ___n___,                                        YELLOW,   GREEN,   GREEN,   GREEN,  YELLOW, ___n___, 
     ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                    PURPLE,  ORANGE,  ORANGE,  ORANGE,  PURPLE, ___n___,
-    GREEN, YELLOW, ESC, DEL, TOG_NAV, RED,                                                  GREEN, GREEN, TOG_NAV, TOG_SYM, ENTER, SPACE,
-    ___n___, GREEN, ORANGE, RED, ___n___, GREEN, ORANGE, RED,                                BLUE, YELLOW, ORANGE, GREEN, RED, PURPLE, PINK, CYAN
+    GREEN, YELLOW, ESC, DEL, TOG_NAV, RED,                                                  CYAN, TOG_RECT, TOG_NAV, TOG_SYM, ENTER, SPACE,
+    ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,                                ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___
+    ),
+    [_RECT]   = LEDMAP(
+    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        BLUE, RED, ___n___, ___n___, ___n___, ___n___,        GREEN, GREEN, GREEN, GREEN,
+    CYAN, ___n___, ___n___, ___n___, ___n___, ___n___,                                      GREEN, ORANGE, RED, ___n___, ___n___,    ___n___,
+    GOLD, ___n___, ___n___, CYAN, ___n___, PURPLE,                                          GREEN, ORANGE, RED, ___n___, ___n___,    ___n___, 
+    GREEN, BLUE,  SPRING,    PINK,    CYAN, ___n___,                                        RED, YELLOW, GREEN, YELLOW, RED, ___n___, 
+    ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                    CYAN, PINK, ___n___, ___n___, ___n___, ___n___,
+    GREEN, YELLOW, ESC, DEL, TOG_NAV, RED,                                                  CYAN, TOG_RECT, TOG_NAV, TOG_SYM, ENTER, SPACE,
+    ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,                                ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___
     ),
 };
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
@@ -393,6 +410,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
+            case AM_Toggle:
+                if(record->event.pressed) { // key down
+                    auto_mouse_toggle();
+                } // do nothing on key up
+                return false; // prevent further processing of keycode
     }
     #endif // end CUSTOM_KEYCODES (for troubleshooting)
     return true;

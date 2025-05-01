@@ -56,18 +56,21 @@ void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int 
 
 bool rgb_matrix_indicators_user() {
     bool is_shifted = (get_mods() | get_weak_mods()) & MOD_MASK_SHIFT;
-    bool is_oneshot = (get_oneshot_mods() | get_mods()) & MOD_MASK_SHIFT;
+    bool is_oneshot_shift = (get_oneshot_mods() | get_mods()) & MOD_MASK_SHIFT;
+
+    bool is_lguied = (get_mods() | get_weak_mods()) & MOD_MASK_GUI;
+    bool is_oneshot_gui = (get_oneshot_mods() | get_mods()) & MOD_MASK_GUI;
 
     if (is_keyboard_left()) {
         // set LEFT per-key leds by ledmap
         set_rgb_ledmap(RGB_KEYS_L_START, RGB_KEYS_L_END, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
 
-        if (is_shifted) {
-            set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
-        } else if (is_oneshot) {
+        if (is_shifted || is_oneshot_shift) {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
         } else if (set_scrolling) {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
+        } else if (is_lguied || is_oneshot_gui) {
+            set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
         } else {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_MOONLANDER, INDICATOR_IDLE_BRIGHTNESS);
         }
@@ -97,6 +100,12 @@ bool rgb_matrix_indicators_user() {
                 set_rgb_range(RGB_UF2_INNER_L_START, RGB_UF2_INNER_L_END, FAL2_IN_L3, UF_INNER_BRIGHTNESS);
                 set_rgb_range(RGB_UF2_OUTER_L_START, RGB_UF2_OUTER_L_END, FAL2_OUT_L3, UF_OUTER_BRIGHTNESS);
                 break;
+            case 4:
+                set_rgb_range(RGB_UF1_INNER_R_START, RGB_UF1_INNER_R_END, FAL3_IN_L3, UF_INNER_BRIGHTNESS);
+                set_rgb_range(RGB_UF1_OUTER_R_START, RGB_UF1_OUTER_R_END, FAL3_OUT_L3, UF_OUTER_BRIGHTNESS);
+                set_rgb_range(RGB_UF2_INNER_R_START, RGB_UF2_INNER_R_END, FAL4_IN_L3, UF_INNER_BRIGHTNESS);
+                set_rgb_range(RGB_UF2_OUTER_R_START, RGB_UF2_OUTER_R_END, FAL4_OUT_L3, UF_OUTER_BRIGHTNESS);
+                break;
             default:
                 break;
         }   
@@ -104,12 +113,12 @@ bool rgb_matrix_indicators_user() {
         // set RIGHT per-key leds by ledmap
         set_rgb_ledmap(RGB_KEYS_R_START, RGB_KEYS_R_END, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
 
-        if (is_shifted) {
-            set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
-        } else if (is_oneshot) {
+        if (is_shifted || is_oneshot_shift) {
             set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
         } else if (set_scrolling) {
             set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
+        } else if (is_lguied || is_oneshot_gui) {
+            set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
         } else {
             set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_MOONLANDER, INDICATOR_IDLE_BRIGHTNESS);
         }
@@ -134,6 +143,12 @@ bool rgb_matrix_indicators_user() {
                 set_rgb_range(RGB_UF2_OUTER_R_START, RGB_UF2_OUTER_R_END, FAL4_OUT_L2, UF_OUTER_BRIGHTNESS);
                 break;
             case 3:
+                set_rgb_range(RGB_UF1_INNER_R_START, RGB_UF1_INNER_R_END, FAL3_IN_L3, UF_INNER_BRIGHTNESS);
+                set_rgb_range(RGB_UF1_OUTER_R_START, RGB_UF1_OUTER_R_END, FAL3_OUT_L3, UF_OUTER_BRIGHTNESS);
+                set_rgb_range(RGB_UF2_INNER_R_START, RGB_UF2_INNER_R_END, FAL4_IN_L3, UF_INNER_BRIGHTNESS);
+                set_rgb_range(RGB_UF2_OUTER_R_START, RGB_UF2_OUTER_R_END, FAL4_OUT_L3, UF_OUTER_BRIGHTNESS);
+                break;
+            case 4:
                 set_rgb_range(RGB_UF1_INNER_R_START, RGB_UF1_INNER_R_END, FAL3_IN_L3, UF_INNER_BRIGHTNESS);
                 set_rgb_range(RGB_UF1_OUTER_R_START, RGB_UF1_OUTER_R_END, FAL3_OUT_L3, UF_OUTER_BRIGHTNESS);
                 set_rgb_range(RGB_UF2_INNER_R_START, RGB_UF2_INNER_R_END, FAL4_IN_L3, UF_INNER_BRIGHTNESS);
