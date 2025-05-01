@@ -65,12 +65,15 @@ bool rgb_matrix_indicators_user() {
         // set LEFT per-key leds by ledmap
         set_rgb_ledmap(RGB_KEYS_L_START, RGB_KEYS_L_END, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
 
-        if (is_shifted || is_oneshot_shift) {
+        if (is_shifted || (is_oneshot_shift && !is_oneshot_gui)) {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
         } else if (set_scrolling) {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
-        } else if (is_lguied || is_oneshot_gui) {
+        } else if (is_lguied || (is_oneshot_gui && !is_oneshot_shift)) {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
+        } else if (is_oneshot_gui && is_oneshot_shift) {
+            set_rgb_range(RGB_INDICATOR_L1_START, RGB_INDICATOR_L1_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
+            set_rgb_range(RGB_INDICATOR_L2_START, RGB_INDICATOR_L2_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
         } else {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_MOONLANDER, INDICATOR_IDLE_BRIGHTNESS);
         }
@@ -113,12 +116,15 @@ bool rgb_matrix_indicators_user() {
         // set RIGHT per-key leds by ledmap
         set_rgb_ledmap(RGB_KEYS_R_START, RGB_KEYS_R_END, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
 
-        if (is_shifted || is_oneshot_shift) {
+        if (is_shifted || (is_oneshot_shift && !is_oneshot_gui)) {
             set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
         } else if (set_scrolling) {
             set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
-        } else if (is_lguied || is_oneshot_gui) {
+        } else if (is_lguied || (is_oneshot_gui && !is_oneshot_shift)) {
             set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
+        } else if (is_oneshot_gui && is_oneshot_shift) {
+            set_rgb_range(RGB_INDICATOR_R1_START, RGB_INDICATOR_R1_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
+            set_rgb_range(RGB_INDICATOR_R2_START, RGB_INDICATOR_R2_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
         } else {
             set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_MOONLANDER, INDICATOR_IDLE_BRIGHTNESS);
         }
