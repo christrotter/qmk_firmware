@@ -266,150 +266,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 break;
             case LT(0,KC_YAY):
-            if (record->event.pressed) {
-                SEND_STRING("\\o/");
-                return false;
-            }
-            return true;
-            case LT(0,KC_TILD):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_TILD)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_1):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_1)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_2):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_2)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_3):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_3)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_4):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_4)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_5):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_5)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_6):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_6)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_7):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_7)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_8):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_8)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_9):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_9)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_Z):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_Z)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_X):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_X)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_C):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_C)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_V):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_V)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_B):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_B)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_A):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_A)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_R):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_R)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_W):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_W)); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_T):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_T)); // hold for command+letter
-                return false;
-            }
-            return true;
+                if (record->event.pressed) {
+                    SEND_STRING("\\o/");
+                    return false;
+                }
+                return true;
             case LT(0,KC_N):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(LSFT(KC_N))); // hold for command+letter
-                return false;
-            }
-            return true;
-            case LT(0,KC_I):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(LCMD(KC_I)); // hold for command+letter
-                return false;
-            }
-            return true;
+                if (!record->tap.count && record->event.pressed) {
+                    tap_code16(LCMD(LSFT(KC_N))); // hold for command+letter
+                    return false;
+                }
+                return true;
             case LT(0,KC_MPLY):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(KC_MNXT); // hold for command+letter
-                return false;
-            }
-            return true;
+                if (!record->tap.count && record->event.pressed) {
+                    tap_code16(KC_MNXT); // hold for command+letter
+                    return false;
+                }
+                return true;
             case KC_PD_LAYER:
-            if (record->event.pressed) {
-                // xprintf("KC_PD_LAYER pressed\n");
-                cycle_pedal_layer();
-                return false;
-            }
-            return true;
+                if (record->event.pressed) {
+                    // xprintf("KC_PD_LAYER pressed\n");
+                    cycle_pedal_layer();
+                    return false;
+                }
+                return true;
             case AM_Toggle:
                 if(record->event.pressed) { // key down
                     auto_mouse_toggle();
@@ -431,7 +311,6 @@ void matrix_scan_user(void) {
   if (is_alt_tab_active) {
     if (timer_elapsed(alt_tab_timer) > 1000) {
       unregister_code(KC_LGUI);
-      // unregister_code(KC_LSFT);
       is_alt_tab_active = false;
     }
   }
