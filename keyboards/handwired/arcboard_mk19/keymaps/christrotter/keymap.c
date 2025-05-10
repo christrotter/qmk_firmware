@@ -34,6 +34,27 @@ uint16_t alt_tab_timer = 0;
 bool is_sup_alt_tab_active = false;
 uint16_t sup_alt_tab_timer = 0;
 
+// bool set_oneshot_gui = false;
+
+void oneshot_mods_changed_user(uint8_t mods) {
+    if (mods & MOD_MASK_SHIFT) {
+      xprintf("Oneshot mods SHIFT\n");
+    }
+    if (mods & MOD_MASK_CTRL) {
+      xprintf("Oneshot mods CTRL\n");
+    }
+    if (mods & MOD_MASK_ALT) {
+      xprintf("Oneshot mods ALT\n");
+    }
+    if (mods & MOD_MASK_GUI) {
+      xprintf("Oneshot mods GUI\n");
+    }
+    if (!mods) {
+      xprintf("Oneshot mods off\n");
+      // set_oneshot_gui = false;
+    }
+  }
+
 __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
 __attribute__((weak)) void post_process_record_keymap(uint16_t keycode, keyrecord_t *record) {}
 void                       post_process_record_user(uint16_t keycode, keyrecord_t *record) { post_process_record_keymap(keycode, record); }
@@ -126,7 +147,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______,           _______,_______,_______,_______,_______,                    _______, _______, _______, _______, _______, _______,                       _______,_______,_______,_______,_______,
         _______, _______, _______, _______, _______, _______,           _______,_______,_______,                                    _______, _______, _______, _______, _______, _______,                       _______,_______,_______,
         _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______,                         KC_CHRMBACK, KC_CHRMFWD, _______, _______, _______, _______,                _______, _______, _______, _______,
-        _______, _______, KC_MS_BTN2, KC_MS_BTN3, KC_MS_BTN1, _______,  _______, _______, _______, _______,                         _______, KC_MS_BTN1, KC_MS_BTN3, KC_MS_BTN2, _______, _______,              _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______,                         _______, KC_MS_BTN1, KC_MS_BTN3, KC_MS_BTN2, _______, _______,              _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, AM_Toggle
     ),
@@ -141,8 +162,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NAV] = LAYOUT(
         EE_CLR,  QK_BOOT, _______, _______, _______, _______,           _______,_______,_______,_______,_______,                    EE_CLR,  QK_BOOT, _______, _______, _______, _______,                       _______,_______,_______,_______,_______,
         _______, _______, _______, _______, _______, _______,           _______,_______,_______,                                    _______, _______, KC_SFTARROW_U, _______, _______, _______,                 _______,_______,_______,
-        _______, _______, _______, _______, _______, LT(0,KC_YAY),_______, _______, _______, _______,                         KC_HOME, KC_ITRMSPCE_L, KC_UP, KC_ITRMSPCE_R, KC_END, _______,              _______, _______, _______, _______,
-        _______, _______, _______, _______, _______,_______,        _______, _______, _______, _______,                         KC_ALTARROW_L, KC_LEFT, KC_DOWN, KC_RIGHT, KC_ALTARROW_R,  _______,         _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, LT(0,KC_YAY),      _______, _______, _______, _______,                         KC_HOME, KC_ITRMSPCE_L, KC_UP, KC_ITRMSPCE_R, KC_END, _______,              _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,_______,            _______, _______, _______, _______,                         KC_ALTARROW_L, KC_LEFT, KC_DOWN, KC_RIGHT, KC_ALTARROW_R,  _______,         _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,                                                                       KC_SFTGUIARROW_L, KC_SFTALTARROW_L, KC_SFTARROW_D, KC_SFTALTARROW_R, KC_SFTGUIARROW_R, _______,
         _______, _______, _______, _______, KC_MACLOCK, _______,                                                                    _______, _______, _______, _______, _______, _______
     ),
@@ -178,8 +199,8 @@ const ledmap ledmaps[] = {
    [_MOUSE]   = LEDMAP(
     RED, ___n___, ___n___, ___n___, ___n___, SPRING,    ___n___, SPRING, GREEN, RED,        ORANGE, PINK, ___n___, HRM_GUI, ___n___, SPRING,           GREEN, GREEN, GREEN, GREEN,
     CYAN, ___n___, ___n___, ___n___, ___n___, ___n___,                                      ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN,
-    GOLD, ___n___, ___n___, ___n___, ___n___, ___n___,                                       RED, GREEN, ___n___, ___n___, ___n___,    CYAN, 
-    GREEN, ___n___, BLUE, PURPLE, PINK, ___n___,                                            ___n___, PINK, PURPLE, BLUE, ___n___, ___n___, 
+    GOLD, ___n___, ___n___, ___n___, ___n___, ___n___,                                      RED, GREEN, ___n___, ___n___, ___n___,    CYAN, 
+    GREEN, ___n___, ___n___, ___n___, ___n___, ___n___,                                     ___n___, PINK, PURPLE, BLUE, ___n___, ___n___, 
     ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                    ___n___, ___n___, ___n___, ___n___, ___n___,     ___n___,
     GREEN, GREEN, ESC, DEL, TOG_NAV, RED,                                                   CYAN, TOG_RECT, TOG_NAV, TOG_SYM, ENTER, SPACE,
     ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,                 ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___, ___n___
@@ -224,6 +245,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
     #endif
+    // if (set_oneshot_gui) {
+    //     xprintf("Raw-hid: toggled oneshot gui \n");
+    //     set_oneshot_mods(MOD_LGUI);
+    //     return false;
+    // }
     // now we check for specific keycodes...
     #if defined(CUSTOM_KEYCODES)
         switch (keycode) {
@@ -338,5 +364,20 @@ typedef enum {
 // }
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
-    xprintf("Raw-hid: bytes: %u data: %u %u %u \n", length, data[0], data[1], data[2]);
+    // xprintf("Raw-hid: bytes: %u data: %u %u %u \n", length, data[0], data[1], data[2]);
+    if (data[1] == _TOGGLE_DRAGSCROLL) {
+        set_scrolling = !set_scrolling;
+        xprintf("Raw-hid: toggled dragscroll \n");
+    }
+    else if (data[1] == _TOGGLE_ONESHOT_GUI) {
+        // set_oneshot_gui = !set_oneshot_gui;
+        set_oneshot_mods(MOD_LGUI);
+        xprintf("Raw-hid: toggled oneshot gui \n");
+    }
+    else if (data[1] == _TOGGLE_KB_RECT) {
+        // set_oneshot_gui = !set_oneshot_gui;
+        set_oneshot_layer(4, ONESHOT_START);
+        clear_oneshot_layer_state(ONESHOT_PRESSED);
+        xprintf("Raw-hid: toggled oneshot gui \n");
+    }
 }

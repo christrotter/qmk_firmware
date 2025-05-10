@@ -68,7 +68,7 @@ bool rgb_matrix_indicators_user() {
         if (is_shifted || (is_oneshot_shift && !is_oneshot_gui)) {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
         } else if (set_scrolling) {
-            // this never runs...
+            // this never runs...the set_scrolling bool is never sync'd to the slave
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
         } else if (is_lguied || (is_oneshot_gui && !is_oneshot_shift)) {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
