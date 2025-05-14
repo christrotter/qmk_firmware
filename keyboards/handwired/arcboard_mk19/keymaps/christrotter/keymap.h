@@ -231,6 +231,7 @@ typedef enum {
 
     _RELAY_FROM_DEVICE = 0xCC,
     _RELAY_TO_DEVICE = 0xCD,
+    _RELAY_FROM_APP = 0xCF,
     _TOGGLE_DRAGSCROLL = 0xDD,
     _TOGGLE_ONESHOT_GUI = 0xDE,
     _TOGGLE_KB_RECT = 0xDF,

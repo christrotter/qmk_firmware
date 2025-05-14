@@ -34,8 +34,6 @@ uint16_t alt_tab_timer = 0;
 bool is_sup_alt_tab_active = false;
 uint16_t sup_alt_tab_timer = 0;
 
-// bool set_oneshot_gui = false;
-
 void oneshot_mods_changed_user(uint8_t mods) {
     if (mods & MOD_MASK_SHIFT) {
       xprintf("Oneshot mods SHIFT\n");
@@ -51,7 +49,6 @@ void oneshot_mods_changed_user(uint8_t mods) {
     }
     if (!mods) {
       xprintf("Oneshot mods off\n");
-      // set_oneshot_gui = false;
     }
   }
 
@@ -364,7 +361,6 @@ typedef enum {
 // }
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
-    // xprintf("Raw-hid: bytes: %u data: %u %u %u \n", length, data[0], data[1], data[2]);
     if (data[1] == _TOGGLE_DRAGSCROLL) {
         set_scrolling = !set_scrolling;
         xprintf("Raw-hid: toggled dragscroll \n");
@@ -379,5 +375,14 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         set_oneshot_layer(4, ONESHOT_START);
         clear_oneshot_layer_state(ONESHOT_PRESSED);
         xprintf("Raw-hid: toggled oneshot gui \n");
+    }
+    else if (data[0] == _RELAY_FROM_APP) {
+        xprintf("Raw-hid: relay from app: %u %u %u \n", data[0], data[1], data[2]);
+        if (data[1] == _APP_VSCODE) {
+            // here we want to set a bool so we can toggle keys on
+        }
+    }
+    else {
+        xprintf("Raw-hid: unknown data: %u %u %u \n", data[0], data[1], data[2]);
     }
 }
