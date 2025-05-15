@@ -104,6 +104,7 @@ enum custom_keycodes {
     SFT_ALT_TAB,
     SUP_ALT_TAB,
     KC_PD_LAYER,
+    KC_FINDER,
     AM_Toggle,
 };
 
@@ -236,5 +237,6 @@ typedef enum {
     _TOGGLE_ONESHOT_GUI = 0xDE,
     _TOGGLE_KB_RECT = 0xDF,
 
-    _APP_VSCODE = 0xE0,
+    _APP_OTHER = 0x00,
+    _APP_VSCODE = 0x01,
 } hid_data_type;

@@ -133,7 +133,7 @@ So we need the pcb to output dpad on row5, macropad on row2&3.
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        KC_ESC, _______, _______, _______, _______, INPUT_CHG,                  KC_MULTILNE, KC_ESC, OSM(MOD_LSFT), OSM(MOD_LGUI), OSM(MOD_LSFT),      KC_MACSHOT,MAGIPLAY,_______,OSM(MOD_LGUI), _______, KC_F12,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
+        KC_ESC, _______, _______, _______, _______, INPUT_CHG,                  KC_FINDER, KC_ESC, OSM(MOD_LSFT), OSM(MOD_LGUI), OSM(MOD_LSFT),      KC_MACSHOT,MAGIPLAY,_______,OSM(MOD_LGUI), _______, KC_F12,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
         KC_TILD,LGUI(KC_1),LGUI(KC_2),LGUI(KC_3),LGUI(KC_4),LGUI(KC_5),     KC_NO, OSL(_RECT), SUP_ALT_TAB,                                      LGUI(KC_6),LGUI(KC_7),LGUI(KC_8),LGUI(KC_9), KC_0, KC_EQUAL,     KC_NO, LGUI(KC_TILD), OSL(_RECT),
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T,             KC_PD_LAYER, _______, _______, _______,                           KC_Y, KC_U, LT(0,KC_I),KC_O, KC_P, KC_MINUS,                     _______, _______, _______, _______,
         KC_LSFT, KC_A, KC_S,  KC_D,  KC_F, KC_G,                _______, _______, _______, _______,                             KC_H, HOME_J, KC_K, HOME_L, KC_QUOT, KC_SCLN,                        _______, _______, _______, _______,
@@ -172,6 +172,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______,                                                                       REC_50_LEFT, REC_50_RIGHT, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______
     ),
+    [_VSCODE] = LAYOUT(
+        _______, _______, _______, _______, _______, _______,            KC_MULTILNE, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,            _______, _______, _______,                                 _______, _______, _______, _______, _______, _______,       _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,            _______, _______, _______, _______,                        _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,            _______, _______, _______, _______,                        _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                                                       _______, _______, _______, _______, _______, _______
+    ),
 };
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
@@ -185,7 +193,7 @@ const ledmap ledmaps[] = {
 //     [_QWERTY]   = LEDMAP(
 
    [_QWERTY]   = LEDMAP(
-    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    HRM_GUI, SPRING, GREEN, RED,            ORANGE, PINK, ___n___, HRM_GUI, ___n___, SPRING,        GREEN, GREEN, GREEN, GREEN,
+    RED, ___n___, ___n___, ___n___, ___n___, SPRING,    HRM_GUI, BLUE, GREEN, RED,            ORANGE, PINK, ___n___, HRM_GUI, ___n___, SPRING,        GREEN, GREEN, GREEN, GREEN,
     CYAN, ___n___, ___n___, ___n___, ___n___, ___n___,                                          ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN,
     GOLD, ___n___, ___n___, ___n___, ___n___, ___n___,                                          ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN, 
     GREEN, ___n___, ___n___, ___n___, ___n___, ___n___,                                         ___n___, HRM_SFT, ___n___, HRM_ALT, ___n___, ___n___, 
@@ -229,6 +237,15 @@ const ledmap ledmaps[] = {
     ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,                                       ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
     ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,                     ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___
     ),
+    [_VSCODE]   = LEDMAP(
+        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, SPRING, ___t___, ___t___,    ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
+        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,                                       ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
+        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,                                       ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, 
+        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,                                       ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, 
+        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,                                       ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
+        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,                                       ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
+        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,                     ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___, ___t___
+        ),
 };
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
 
@@ -313,6 +330,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
                 return true;
+            case KC_FINDER:
+                if (record->event.pressed) {
+                    tap_code16(LCMD(KC_SPACE));
+                    return false;
+                }
+                return true;
             case AM_Toggle:
                 if(record->event.pressed) { // key down
                     auto_mouse_toggle();
@@ -345,20 +368,10 @@ void matrix_scan_user(void) {
   }
 }
 
+// uh is this used?
 typedef enum {
     _LAYER = 0,
 } relay_data_type;
-
-// layer_state_t layer_state_set_user(layer_state_t state) {
-//     uint8_t data[32];
-//     memset(data, 0, 32);
-//     data[0] = _RELAY_FROM_DEVICE;
-//     data[1] = _LAYER;
-//     data[2] = get_highest_layer(state);
-//     raw_hid_send(data, 32);
-// 
-//     return state;
-// }
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
     if (data[1] == _TOGGLE_DRAGSCROLL) {
@@ -379,7 +392,15 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
     else if (data[0] == _RELAY_FROM_APP) {
         xprintf("Raw-hid: relay from app: %u %u %u \n", data[0], data[1], data[2]);
         if (data[1] == _APP_VSCODE) {
-            // here we want to set a bool so we can toggle keys on
+            layer_on(_VSCODE);
+            xprintf("Raw-hid: VSCODE layer on \n");
+        }
+        else if (data[1] == _APP_OTHER) {
+            // check if vscode layer is on
+            if (layer_state_is(_VSCODE)) {
+                layer_off(_VSCODE);
+            }
+            xprintf("Raw-hid: VSCODE layer off \n");
         }
     }
     else {

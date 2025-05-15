@@ -63,7 +63,8 @@ enum userspace_layers {
     _MOUSE,
     _SYMBOLS,
     _NAV,
-    _RECT
+    _RECT,
+    _VSCODE
 };
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
