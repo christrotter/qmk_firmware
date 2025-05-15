@@ -52,6 +52,8 @@
     R_56, R_57, R_58, R_59 \
 }
 
+#define ___t___ {255, 255} // Transparent color that inherits from lower layers
+
 typedef uint8_t ledmap[RGB_MATRIX_LED_COUNT][3];
 extern const ledmap ledmaps[];
 

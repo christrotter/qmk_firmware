@@ -235,4 +235,6 @@ typedef enum {
     _TOGGLE_DRAGSCROLL = 0xDD,
     _TOGGLE_ONESHOT_GUI = 0xDE,
     _TOGGLE_KB_RECT = 0xDF,
+
+    _APP_VSCODE = 0xE0,
 } hid_data_type;

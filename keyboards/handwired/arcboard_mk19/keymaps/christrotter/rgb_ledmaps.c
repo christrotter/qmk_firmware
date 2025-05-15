@@ -11,25 +11,70 @@
 
 bool process_record_user_rgb_matrix(uint16_t keycode, keyrecord_t *record) { return true; }
 
-void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer) {
-    const ledmap *l = &(ledmaps[layer]);
-    for (int i = first_led; i <= last_led; i++) {
-        // RGB_TOT_IND_L is 'how many right indicator leds between left and right key ranges, in the context of the led-flag section of g_led_config'
-        // cuz, ledmaps doesn't think there are any indicator leds, it believes you only have l.key-range + r.key-range = total addressable leds
+bool is_transparent_color(uint8_t h, uint8_t s) {
+    return h == 255 && s == 255; // Our transparent values
+}
+
+// Function to get color from layer stack
+HSV get_color_from_layers(int led_index, int current_layer) {
+    for (int layer = current_layer; layer >= 0; layer--) {
+        const ledmap *l = &(ledmaps[layer]);
+        
+        int adjusted_index = led_index;
         if (!(is_keyboard_left())) {
-            i = i - RGB_TOT_IND_L;
+            adjusted_index = led_index - RGB_TOT_IND_L;
         }
-        HSV hsv = {
-            .h = (*l)[i][0],
-            .s = (*l)[i][1],
-            .v = val,
-        };
+        
+        uint8_t h = (*l)[adjusted_index][0];
+        uint8_t s = (*l)[adjusted_index][1];
+        
+        if (!is_transparent_color(h, s)) {
+            return (HSV){h, s, 0}; // v will be set later
+        }
+    }
+    
+    // Default if all layers are transparent
+    return (HSV){0, 0, 0};
+}
+
+// void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer) {
+//     const ledmap *l = &(ledmaps[layer]);
+//     for (int i = first_led; i <= last_led; i++) {
+//         // RGB_TOT_IND_L is 'how many right indicator leds between left and right key ranges, in the context of the led-flag section of g_led_config'
+//         // cuz, ledmaps doesn't think there are any indicator leds, it believes you only have l.key-range + r.key-range = total addressable leds
+//         if (!(is_keyboard_left())) {
+//             i = i - RGB_TOT_IND_L;
+//         }
+//         HSV hsv = {
+//             .h = (*l)[i][0],
+//             .s = (*l)[i][1],
+//             .v = val,
+//         };
+//         // e.g. test for transparency here
+//         if (!(is_keyboard_left())) {
+//             i = i + RGB_TOT_IND_L;
+//         } // revert i to fit the 'in reality' led sequence
+//         if (hsv.h || hsv.s) {
+//             RGB rgb = hsv_to_rgb(hsv);
+//             rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+//         }
+//     }
+// }
+
+void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer) {
+    for (int i = first_led; i <= last_led; i++) {
+        HSV hsv = get_color_from_layers(i, layer);
+        hsv.v = val; // Use the provided brightness value
+        
+        // Adjust the index back for split keyboard if needed
+        int display_index = i;
         if (!(is_keyboard_left())) {
-            i = i + RGB_TOT_IND_L;
-        } // revert i to fit the 'in reality' led sequence
-        if (hsv.h || hsv.s) {
+            display_index = i; // Index already adjusted in get_color_from_layers
+        }
+        
+        if (hsv.h || hsv.s) { // If the color isn't black/off
             RGB rgb = hsv_to_rgb(hsv);
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+            rgb_matrix_set_color(display_index, rgb.r, rgb.g, rgb.b);
         }
     }
 }
