@@ -139,6 +139,12 @@ bool rgb_matrix_indicators_user() {
                 set_rgb_range(RGB_UF2_INNER_R_START, RGB_UF2_INNER_R_END, FAL4_IN_L3, UF_INNER_BRIGHTNESS);
                 set_rgb_range(RGB_UF2_OUTER_R_START, RGB_UF2_OUTER_R_END, FAL4_OUT_L3, UF_OUTER_BRIGHTNESS);
                 break;
+            case 5:
+                set_rgb_range(RGB_UF1_INNER_L_START, RGB_UF1_INNER_L_END, FAL1_IN_L0, UF_INNER_BRIGHTNESS);
+                set_rgb_range(RGB_UF1_OUTER_L_START, RGB_UF1_OUTER_L_END, FAL1_OUT_L0, UF_OUTER_BRIGHTNESS);
+                set_rgb_range(RGB_UF2_INNER_L_START, RGB_UF2_INNER_L_END, FAL2_IN_L0, UF_INNER_BRIGHTNESS);
+                set_rgb_range(RGB_UF2_OUTER_L_START, RGB_UF2_OUTER_L_END, FAL2_OUT_L0, UF_OUTER_BRIGHTNESS);
+                break;
             default:
                 break;
         }   
@@ -189,6 +195,12 @@ bool rgb_matrix_indicators_user() {
                 set_rgb_range(RGB_UF1_OUTER_R_START, RGB_UF1_OUTER_R_END, FAL3_OUT_L3, UF_OUTER_BRIGHTNESS);
                 set_rgb_range(RGB_UF2_INNER_R_START, RGB_UF2_INNER_R_END, FAL4_IN_L3, UF_INNER_BRIGHTNESS);
                 set_rgb_range(RGB_UF2_OUTER_R_START, RGB_UF2_OUTER_R_END, FAL4_OUT_L3, UF_OUTER_BRIGHTNESS);
+                break;
+            case 5:
+            set_rgb_range(RGB_UF1_INNER_R_START, RGB_UF1_INNER_R_END, FAL3_IN_L0, UF_INNER_BRIGHTNESS);
+            set_rgb_range(RGB_UF1_OUTER_R_START, RGB_UF1_OUTER_R_END, FAL3_OUT_L0, UF_OUTER_BRIGHTNESS);
+            set_rgb_range(RGB_UF2_INNER_R_START, RGB_UF2_INNER_R_END, FAL4_IN_L0, UF_INNER_BRIGHTNESS);
+            set_rgb_range(RGB_UF2_OUTER_R_START, RGB_UF2_OUTER_R_END, FAL4_OUT_L0, UF_OUTER_BRIGHTNESS);
                 break;
             default:
                 break;

@@ -38,10 +38,10 @@
             ENCODER_CCW_CW(KC_NO, KC_NO)           // Right, flat
         },
         [_VSCODE]      =  {
-            ENCODER_CCW_CW(KC_NO, KC_NO),               // Left,  flat
-            ENCODER_CCW_CW(KC_NO, KC_NO),               // Left,  angled
-            ENCODER_CCW_CW(KC_NO, KC_NO),           // Right, angled
-            ENCODER_CCW_CW(KC_NO, KC_NO)           // Right, flat
+            ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP), // Left,  flat
+            ENCODER_CCW_CW(SFT_ALT_TAB, ALT_TAB),       // Left,  angled
+            ENCODER_CCW_CW(KC_TAB_L, KC_TAB_R),         // Right, angled
+            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  // Right, flat
         },
     };
 #endif
