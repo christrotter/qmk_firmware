@@ -15,3 +15,4 @@ endif
 # Encoder
 ENCODER_MAP_ENABLE = yes
 LAYER_LOCK_ENABLE = yes
+LVGL_ENABLE_LARGE_FONTS = yes

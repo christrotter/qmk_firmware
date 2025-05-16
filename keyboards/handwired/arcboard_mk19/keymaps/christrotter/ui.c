@@ -31,6 +31,10 @@ const char *current_layer_name(void) {
             return "symbols";
         case _MOUSE:
             return "mouse";
+        case _RECT:
+            return "rect";
+        case _VSCODE:
+            return "vscode";
     }
     return "unknown";
 }
@@ -152,13 +156,12 @@ void create_ring_widget(void) {
 
     // Create a label for the layer name
     layer_label = lv_label_create(lv_scr_act());
-    // lv_label_set_text(layer_label, current_layer_name());
-    lv_label_set_text(layer_label, "TEST LABEL");
+    lv_label_set_text(layer_label, current_layer_name());
     lv_obj_center(layer_label);
     
     // Style the label to be white and larger
     lv_obj_set_style_text_color(layer_label, lv_color_white(), 0);
-    lv_obj_set_style_text_font(layer_label, NULL, 0); // Use a larger font
+    lv_obj_set_style_text_font(layer_label, &lv_font_montserrat_48, 0); 
 }
 
 void update_layer_display(void) {
