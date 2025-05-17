@@ -143,8 +143,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         )) {
         return false;
     }
-    
-    if (!record->event.pressed) {return true;}
 
     // now we check for specific keycodes...
     #if defined(CUSTOM_KEYCODES)
