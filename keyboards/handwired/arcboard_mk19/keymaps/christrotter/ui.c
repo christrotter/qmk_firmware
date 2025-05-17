@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qp.h>
-#include "arcboard_mk19.c"
+#include "arcboard_mk19.h"
 #include "graphics/futura40.qff.c"
 #include "graphics/awesome.qgf.h"
 #include "graphics/disappointed_guy.qgf.h"
