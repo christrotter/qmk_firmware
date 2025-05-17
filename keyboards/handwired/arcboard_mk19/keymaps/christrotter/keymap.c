@@ -250,7 +250,7 @@ const ledmap ledmaps[] = {
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!(process_record_keymap(keycode, record) && true)) {
+    if (!(process_record_keymap(keycode, record))) {
         return false;
     }
     #if defined(DRAGSCROLL_ENABLE)
