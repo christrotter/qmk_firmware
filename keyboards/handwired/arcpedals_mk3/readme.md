@@ -1,10 +1,10 @@
 # handwired/arcpedals_mk3
 *You should not build this.  Probably mk4 will be much better.*
 
-<a href="https://i.imgur.com/7tJTCDT.jpg"><img src="https://i.imgur.com/7tJTCDT.jpg" width="800"></a>
+<a href="https://i.imgur.com/EoFzvrt.jpg"><img src="https://i.imgur.com/EoFzvrt.jpg" width="800"></a>
 
-<a href="https://i.imgur.com/XXe5Rpa.jpg"><img src="https://i.imgur.com/XXe5Rpa.jpg" width="400"></a>
-<a href="https://i.imgur.com/kXsa6WP.jpg"><img src="https://i.imgur.com/kXsa6WP.jpg" width="400"></a>
+<a href="https://i.imgur.com/HPiQ4V7.jpg"><img src="https://i.imgur.com/HPiQ4V7.jpg" width="400"></a>
+<a href="https://i.imgur.com/GoYIRF3.jpg"><img src="https://i.imgur.com/GoYIRF3.jpg" width="400"></a>
 
 After eight interrupted-but-busy months, here we are, with functional mk3 pedals.  Why do this to myself?
 - Holding down keys makes my fingers go numb and catch on fire - what other choice do I have?
@@ -144,14 +144,13 @@ Some big ones out of this...
 - 16x custom microswitch PCBs (w. factory PCB-Assembly) https://github.com/christrotter/microswitch-pcb
 
 # highlights in photos
+<a href="https://i.imgur.com/GDCuT6W.png"><img src="https://i.imgur.com/GDCuT6W.png" width="800"></a>
 
-<a href="https://i.imgur.com/HWcTwsK.png"><img src="https://i.imgur.com/HWcTwsK.png" width="800"></a>
+<a href="https://i.imgur.com/m9gCeOg.jpg"><img src="https://i.imgur.com/m9gCeOg.jpg" width="800"></a>
 
-<a href="https://i.imgur.com/3J8CH2m.jpg"><img src="https://i.imgur.com/3J8CH2m.jpg" width="800"></a>
+<a href="https://i.imgur.com/l7qlBcE.jpg"><img src="https://i.imgur.com/l7qlBcE.jpg" width="800"></a>
 
-<a href="https://i.imgur.com/4nSBUME.jpg"><img src="https://i.imgur.com/4nSBUME.jpg" width="800"></a>
+<a href="https://i.imgur.com/0jCbSu1.jpg"><img src="https://i.imgur.com/0jCbSu1.jpg" width="800"></a>
 
-<a href="https://i.imgur.com/CsmT0eQ.jpg"><img src="https://i.imgur.com/CsmT0eQ.jpg" width="800"></a>
-
-<a href="https://i.imgur.com/kzg8itY.jpg"><img src="https://i.imgur.com/kzg8itY.jpg" width="800"></a>
+<a href="https://i.imgur.com/ASGThwz.jpg"><img src="https://i.imgur.com/ASGThwz.jpg" width="800"></a>
 
