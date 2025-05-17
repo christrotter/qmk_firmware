@@ -375,79 +375,47 @@ typedef enum {
 } relay_data_type;
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
-    // switch (data[1]) {
-    //     case _TOGGLE_DRAGSCROLL:
-    //         set_scrolling = !set_scrolling;
-    //         xprintf("Raw-hid: toggled dragscroll \n");
-    //         break;
-    //     
-    //     case _TOGGLE_ONESHOT_GUI:
-    //         set_oneshot_mods(MOD_LGUI);
-    //         xprintf("Raw-hid: toggled oneshot gui \n");
-    //         break;
-    //     
-    //     case _TOGGLE_KB_RECT:
-    //         set_oneshot_layer(4, ONESHOT_START);
-    //         clear_oneshot_layer_state(ONESHOT_PRESSED);
-    //         xprintf("Raw-hid: toggled oneshot gui \n");
-    //         break;
-    //     
-    //     default:
-    //         if (data[0] == _RELAY_FROM_APP) {
-    //             xprintf("Raw-hid: relay from app: %u %u %u \n", data[0], data[1], data[2]);
-    //             
-    //             switch (data[1]) {
-    //                 case _APP_VSCODE:
-    //                     layer_on(_VSCODE);
-    //                     xprintf("Raw-hid: VSCODE layer on \n");
-    //                     break;
-    //                 
-    //                 case _APP_OTHER:
-    //                     if (layer_state_is(_VSCODE)) {
-    //                         layer_off(_VSCODE);
-    //                     }
-    //                     xprintf("Raw-hid: VSCODE layer off \n");
-    //                     break;
-    //                 
-    //                 default:
-    //                     xprintf("Raw-hid: unknown app command: %u \n", data[1]);
-    //                     break;
-    //             }
-    //         } else {
-    //             xprintf("Raw-hid: unknown data: %u %u %u \n", data[0], data[1], data[2]);
-    //         }
-    //         break;
-    // }
-    if (data[1] == _TOGGLE_DRAGSCROLL) {
-        set_scrolling = !set_scrolling;
-        xprintf("Raw-hid: toggled dragscroll \n");
-    }
-    else if (data[1] == _TOGGLE_ONESHOT_GUI) {
-        // set_oneshot_gui = !set_oneshot_gui;
-        set_oneshot_mods(MOD_LGUI);
-        xprintf("Raw-hid: toggled oneshot gui \n");
-    }
-    else if (data[1] == _TOGGLE_KB_RECT) {
-        // set_oneshot_gui = !set_oneshot_gui;
-        set_oneshot_layer(4, ONESHOT_START);
-        clear_oneshot_layer_state(ONESHOT_PRESSED);
-        xprintf("Raw-hid: toggled oneshot gui \n");
-    }
-    else if (data[0] == _RELAY_FROM_APP) {
-        xprintf("Raw-hid: relay from app: %u %u %u \n", data[0], data[1], data[2]);
-        if (data[1] == _APP_VSCODE) {
-            layer_on(_VSCODE);
-            xprintf("Raw-hid: VSCODE layer on \n");
-        }
-        else if (data[1] == _APP_OTHER) {
-            // check if vscode layer is on
-            if (layer_state_is(_VSCODE)) {
-                layer_off(_VSCODE);
+    switch (data[1]) {
+        case _TOGGLE_DRAGSCROLL:
+            set_scrolling = !set_scrolling;
+            xprintf("Raw-hid: toggled dragscroll \n");
+            break;
+        
+        case _TOGGLE_ONESHOT_GUI:
+            set_oneshot_mods(MOD_LGUI);
+            xprintf("Raw-hid: toggled oneshot gui \n");
+            break;
+        
+        case _TOGGLE_KB_RECT:
+            set_oneshot_layer(4, ONESHOT_START);
+            clear_oneshot_layer_state(ONESHOT_PRESSED);
+            xprintf("Raw-hid: toggled oneshot gui \n");
+            break;
+        
+        default:
+            if (data[0] == _RELAY_FROM_APP) {
+                xprintf("Raw-hid: relay from app: %u %u %u \n", data[0], data[1], data[2]);
+                
+                switch (data[1]) {
+                    case _APP_VSCODE:
+                        layer_on(_VSCODE);
+                        xprintf("Raw-hid: VSCODE layer on \n");
+                        break;
+                    
+                    case _APP_OTHER:
+                        if (layer_state_is(_VSCODE)) {
+                            layer_off(_VSCODE);
+                        }
+                        xprintf("Raw-hid: VSCODE layer off \n");
+                        break;
+                    
+                    default:
+                        xprintf("Raw-hid: unknown app command: %u \n", data[1]);
+                        break;
+                }
+            } else {
+                xprintf("Raw-hid: unknown data: %u %u %u \n", data[0], data[1], data[2]);
             }
-            xprintf("Raw-hid: VSCODE layer off \n");
-        }
-    }
-    else {
-        xprintf("Raw-hid: unknown data: %u %u %u \n", data[0], data[1], data[2]);
+            break;
     }
 }
