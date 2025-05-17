@@ -53,7 +53,7 @@ HSV get_color_from_layer_stack(uint16_t led_index) {
 void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer) {
     for (int i = first_led; i <= last_led; i++) {
         // Get the color from the layer stack
-        HSV hsv = get_color_from_layer_stack(i);
+        hsv_t hsv = get_color_from_layer_stack(i);
         hsv.v = val; // Set brightness
         
         if (hsv.h || hsv.s) { // Only set if the color isn't black/off
@@ -71,7 +71,7 @@ void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int 
         val = 75;
     }
     for (int i = first_led; i <= last_led; i++) {
-        HSV hsv = {
+        hsv_t hsv = {
             .h = hue,
             .s = sat,
             .v = val, // 120 is ok for outer uf, but inner needs brighter, and the led strip at 120 is wayyyy too bright

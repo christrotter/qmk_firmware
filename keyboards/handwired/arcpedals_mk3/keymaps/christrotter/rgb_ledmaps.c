@@ -37,7 +37,7 @@ void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer) {
         if (!(is_keyboard_left())) {
             i = i - RGB_TOT_IND_L;
         }
-        HSV hsv = {
+        hsv_t hsv = {
             .h = (*l)[i][0],
             .s = (*l)[i][1],
             .v = val,
@@ -59,7 +59,7 @@ void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int 
         val = 75;
     }
     for (int i = first_led; i <= last_led; i++) {
-        HSV hsv = {
+        hsv_t hsv = {
             .h = hue,
             .s = sat,
             .v = val, // 120 is ok for outer uf, but inner needs brighter, and the led strip at 120 is wayyyy too bright
