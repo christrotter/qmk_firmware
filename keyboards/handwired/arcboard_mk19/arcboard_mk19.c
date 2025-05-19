@@ -51,29 +51,11 @@ static void debug_kb_config_to_console(kb_config_t* config) {
 
 
 static void pointing_device_task_arcboard(report_mouse_t* mouse_report) {
-    static int16_t scroll_buffer_x = 0;
-    static int16_t scroll_buffer_y = 0;
     if (kb_config.is_dragscroll_enabled) {
-#    ifdef CHARYBDIS_DRAGSCROLL_REVERSE_X
-        scroll_buffer_x -= mouse_report->x;
-#    else
-        scroll_buffer_x += mouse_report->x;
-#    endif // CHARYBDIS_DRAGSCROLL_REVERSE_X
-#    ifdef CHARYBDIS_DRAGSCROLL_REVERSE_Y
-        scroll_buffer_y -= mouse_report->y;
-#    else
-        scroll_buffer_y += mouse_report->y;
-#    endif // CHARYBDIS_DRAGSCROLL_REVERSE_Y
+        mouse_report->h -= mouse_report->x; // -= to invert x-axis
+        mouse_report->v =  mouse_report->y;
         mouse_report->x = 0;
         mouse_report->y = 0;
-        if (abs(scroll_buffer_x) > CHARYBDIS_DRAGSCROLL_BUFFER_SIZE) {
-            mouse_report->h = scroll_buffer_x > 0 ? 1 : -1;
-            scroll_buffer_x = 0;
-        }
-        if (abs(scroll_buffer_y) > CHARYBDIS_DRAGSCROLL_BUFFER_SIZE) {
-            mouse_report->v = scroll_buffer_y > 0 ? 1 : -1;
-            scroll_buffer_y = 0;
-        }
     }
 }
 
