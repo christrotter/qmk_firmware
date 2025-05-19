@@ -137,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TILD,LGUI(KC_1),LGUI(KC_2),LGUI(KC_3),LGUI(KC_4),LGUI(KC_5),     KC_NO, OSL(_RECT), SUP_ALT_TAB,                                      LGUI(KC_6),LGUI(KC_7),LGUI(KC_8),LGUI(KC_9), KC_0, KC_EQUAL,     KC_NO, LGUI(KC_TILD), OSL(_RECT),
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T,             KC_PD_LAYER, _______, _______, _______,                           KC_Y, KC_U, LT(0,KC_I),KC_O, KC_P, KC_MINUS,                     _______, _______, _______, _______,
         KC_LSFT, KC_A, KC_S,  KC_D,  KC_F, KC_G,                _______, _______, _______, _______,                             KC_H, HOME_J, KC_K, HOME_L, KC_QUOT, KC_SCLN,                        _______, _______, _______, _______,
-        DRAG_SCROLL, KC_Z, KC_X, KC_C, KC_V, KC_B,                                                         LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,OSM(MOD_LGUI),
+        DRAGSCROLL_MODE_TOGGLE, KC_Z, KC_X, KC_C, KC_V, KC_B,                                                         LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,OSM(MOD_LGUI),
         KC_BSPC, MO(_NAV), KC_DEL, KC_ESC, KC_LSFT, OSM(MOD_LSFT),                                                                  KC_SPACE,  KC_ENTER,   MO(_SYMBOLS), MO(_NAV), OSL(_RECT), QK_LAYER_LOCK
     ),
     [_MOUSE] = LAYOUT(
@@ -266,84 +266,82 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // }
 
     // now we check for specific keycodes...
-    #if defined(CUSTOM_KEYCODES)
-        switch (keycode) {
-            case ALT_TAB:
-                if (record->event.pressed) {
-                  if (!is_alt_tab_active) {
-                    is_alt_tab_active = true;
-                    register_code(KC_LGUI);
-                  }
-                  alt_tab_timer = timer_read();
-                  register_code(KC_TAB);
-                } else {
-                  unregister_code(KC_TAB);
-                }
-                break;
-            case SFT_ALT_TAB:
-                if (record->event.pressed) {
-                  if (!is_alt_tab_active) {
-                    is_alt_tab_active = true;
-                    register_code(KC_LGUI);
-                  }
-                  alt_tab_timer = timer_read();
-                  register_code(KC_LSFT);
-                  register_code(KC_TAB);
-                } else {
-                  unregister_code(KC_TAB);
-                  unregister_code(KC_LSFT);
-                }
-                break;
-            case SUP_ALT_TAB:
-                if (record->event.pressed) {
-                  if (!is_sup_alt_tab_active) {
-                    is_sup_alt_tab_active = true;
-                    register_code(KC_LGUI);
-                  }
-                  sup_alt_tab_timer = timer_read();
-                  register_code(KC_TAB);
-                } else {
-                  unregister_code(KC_TAB);
-                }
-                break;
-            case LT(0,KC_YAY):
-                if (record->event.pressed) {
-                    SEND_STRING("\\o/");
-                    return false;
-                }
-                return true;
-            case LT(0,KC_N):
-                if (!record->tap.count && record->event.pressed) {
-                    tap_code16(LCMD(LSFT(KC_N))); // hold for command+letter
-                    return false;
-                }
-                return true;
-            case LT(0,KC_MPLY):
-                if (!record->tap.count && record->event.pressed) {
-                    tap_code16(KC_MNXT); // hold for command+letter
-                    return false;
-                }
-                return true;
-            case KC_PD_LAYER:
-                if (record->event.pressed) {
-                    // xprintf("KC_PD_LAYER pressed\n");
-                    cycle_pedal_layer();
-                    return false;
-                }
-                return true;
-            case KC_FINDER:
-                if (record->event.pressed) {
-                    tap_code16(LCMD(KC_SPACE));
-                    return false;
-                }
-                return true;
-            case AM_Toggle:
-                if(record->event.pressed) { // key down
-                    auto_mouse_toggle();
-                } // do nothing on key up
-                return false; // prevent further processing of keycode
+    switch (keycode) {
+        case ALT_TAB:
+            if (record->event.pressed) {
+              if (!is_alt_tab_active) {
+                is_alt_tab_active = true;
+                register_code(KC_LGUI);
+              }
+              alt_tab_timer = timer_read();
+              register_code(KC_TAB);
+            } else {
+              unregister_code(KC_TAB);
+            }
+            break;
+        case SFT_ALT_TAB:
+            if (record->event.pressed) {
+              if (!is_alt_tab_active) {
+                is_alt_tab_active = true;
+                register_code(KC_LGUI);
+              }
+              alt_tab_timer = timer_read();
+              register_code(KC_LSFT);
+              register_code(KC_TAB);
+            } else {
+              unregister_code(KC_TAB);
+              unregister_code(KC_LSFT);
+            }
+            break;
+        case SUP_ALT_TAB:
+            if (record->event.pressed) {
+              if (!is_sup_alt_tab_active) {
+                is_sup_alt_tab_active = true;
+                register_code(KC_LGUI);
+              }
+              sup_alt_tab_timer = timer_read();
+              register_code(KC_TAB);
+            } else {
+              unregister_code(KC_TAB);
+            }
+            break;
+        case LT(0,KC_YAY):
+            if (record->event.pressed) {
+                SEND_STRING("\\o/");
+                return false;
+            }
+            return true;
+        case LT(0,KC_N):
+            if (!record->tap.count && record->event.pressed) {
+                tap_code16(LCMD(LSFT(KC_N))); // hold for command+letter
+                return false;
+            }
+            return true;
+        case LT(0,KC_MPLY):
+            if (!record->tap.count && record->event.pressed) {
+                tap_code16(KC_MNXT); // hold for command+letter
+                return false;
+            }
+            return true;
+        case KC_PD_LAYER:
+            if (record->event.pressed) {
+                // xprintf("KC_PD_LAYER pressed\n");
+                cycle_pedal_layer();
+                return false;
+            }
+            return true;
+        case KC_FINDER:
+            if (record->event.pressed) {
+                tap_code16(LCMD(KC_SPACE));
+                return false;
+            }
+            return true;
+        case AM_Toggle:
+            if(record->event.pressed) { // key down
+                auto_mouse_toggle();
+            } // do nothing on key up
+            return false; // prevent further processing of keycode
     }
-    #endif // end CUSTOM_KEYCODES (for troubleshooting)
     return true;
 }
 
@@ -377,7 +375,7 @@ typedef enum {
 void raw_hid_receive(uint8_t *data, uint8_t length) {
     switch (data[1]) {
         case _TOGGLE_DRAGSCROLL:
-            set_scrolling = !set_scrolling;
+        kb_set_pointer_dragscroll_enabled(!kb_get_pointer_dragscroll_enabled());
             xprintf("Raw-hid: toggled dragscroll \n");
             break;
         

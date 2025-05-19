@@ -83,11 +83,20 @@
     #define SPLIT_LAYER_STATE_ENABLE            // docs say use this if you are using split and rgb lighting per layer // this added 20 to scanrate???
 #endif
 
+// config sync settings
+#define SPLIT_TRANSACTION_IDS_KB RPC_ID_KB_CONFIG_SYNC
+
 #if defined(POINTING_DEVICE_ENABLE)
     #define POINTING_DEVICE_TASK_THROTTLE_MS 10 // this ensures that the trackball sensor polling happens only every 10ms
     #define MOUSE_EXTENDED_REPORT
     #define SPLIT_POINTING_ENABLE               // required for telling the master side about slave trackball state, i.e. if usb left, and tb right
     #define POINTING_DEVICE_RIGHT
+    #define POINTING_DEVICE_INVERT_Y
+    // #define POINTING_DEVICE_INVERT_X
+    #define ROTATIONAL_TRANSFORM_ANGLE 90
+    #define DRAGSCROLL_BUFFER_SIZE 0
+    #define PMW33XX_CPI 700       // your mouse cpi (DPI) setting (how fast the ball tracks); note when usb main is on the left half this config needs to be 900
+    #define DRAGSCROLL_CPI 100    // dragscroll cpi - interestingly, can't be set below 100?
 #endif
 
 // encoder direction change fix

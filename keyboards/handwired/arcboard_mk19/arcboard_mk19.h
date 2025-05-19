@@ -6,6 +6,9 @@
 #include "quantum.h"
 #include "color.h"
 #include QMK_KEYBOARD_H
+#if defined(RGB_MATRIX_LEDMAPS_ENABLED)
+    #include "rgb_ledmaps.h"
+#endif
 
 #define _MACROS _MOUSE
 
@@ -67,14 +70,17 @@ enum userspace_layers {
     _VSCODE
 };
 
-#if defined(RGB_MATRIX_LEDMAPS_ENABLED)
-    #include "rgb_ledmaps.h"
-#endif
-
 #if defined(POINTING_DEVICE_ENABLE)
     enum board_keycodes {
         BOARD_SAFE_RANGE,
+        DRAGSCROLL_MODE,
+        DRAGSCROLL_MODE_TOGGLE,
     };
+    #define DRGSCRL DRAGSCROLL_MODE
+    #define DRG_TOG DRAGSCROLL_MODE_TOGGLE
+
+    bool kb_get_pointer_dragscroll_enabled(void);
+    void kb_set_pointer_dragscroll_enabled(bool enable);
 #endif // POINTING_DEVICE_ENABLE
 
 void keyboard_post_init_transport_sync(void);

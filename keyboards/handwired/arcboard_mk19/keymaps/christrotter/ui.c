@@ -3,11 +3,13 @@
 
 #include <qp.h>
 #include "arcboard_mk19.h"
+
 #include "graphics/futura40.qff.c"
 #include "graphics/awesome.qgf.h"
 #include "graphics/disappointed_guy.qgf.h"
 #include "graphics/roger.qgf.h"
 #include "graphics/qmk-logo.qgf.h"
+#include "graphics/vscode.h"
 
 bool lcd_power;
 
@@ -47,6 +49,11 @@ void init_ui(void) {
     qmk_logo = qp_load_image_mem(gfx_qmk_logo);
 
     display1 = qp_gc9a01_make_spi_device(240, 240, DISPLAY2_CS_PIN, DISPLAY_DC_PIN, DISPLAY_RST_PIN, DISPLAY_SPI_DIVISOR, DISPLAY_SPI_MODE);
+    if (is_keyboard_left()) {
+        qp_init(display1, QP_ROTATION_90); // this is not working
+    } else {
+        qp_init(display1, QP_ROTATION_0);
+    }
     qp_init(display1, QP_ROTATION_0);
     // when you init display1, b/c they share rst pin, you do something to reset; running it again when init-ing display2 un-does all your init?
     display2 = qp_gc9a01_make_spi_device(240, 240, DISPLAY1_CS_PIN, DISPLAY_DC_PIN, NO_PIN, DISPLAY_SPI_DIVISOR, DISPLAY_SPI_MODE);
@@ -123,46 +130,53 @@ void draw_ui_user(void) {
     // }
 }
 
-void create_ring_widget(void) {
-    // Create a full black background
-    lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), 0);
-    
-    // Create the arc widget (ring)
-    lv_obj_t* ring = lv_arc_create(lv_scr_act());
-    
-    // Configure the arc to be a complete circle
-    lv_arc_set_bg_angles(ring, 0, 360);
-    lv_arc_set_angles(ring, 0, 360);
-    
-    // Remove the knob that would appear on the arc
-    lv_obj_remove_style(ring, NULL, LV_PART_KNOB);
-    
-    // Make it non-interactive
-    lv_obj_clear_flag(ring, LV_OBJ_FLAG_CLICKABLE);
-    
-    // Center the ring in the display
-    lv_obj_center(ring);
-    
-    // Set size to create a ring around the edge (adjust as needed)
-    lv_obj_set_size(ring, 220, 220);
-    
-    // Style the arc to be white
-    lv_obj_set_style_arc_color(ring, lv_color_white(), LV_PART_INDICATOR);
-    lv_obj_set_style_arc_width(ring, 10, LV_PART_INDICATOR); // Adjust width as needed
-    
-    // Background of the arc should be transparent
-    lv_obj_set_style_arc_color(ring, lv_color_black(), LV_PART_MAIN);
-    lv_obj_set_style_arc_width(ring, 10, LV_PART_MAIN);
-
-    // Create a label for the layer name
-    layer_label = lv_label_create(lv_scr_act());
-    lv_label_set_text(layer_label, current_layer_name());
-    lv_obj_center(layer_label);
-    
-    // Style the label to be white and larger
-    lv_obj_set_style_text_color(layer_label, lv_color_white(), 0);
-    lv_obj_set_style_text_font(layer_label, &lv_font_montserrat_48, 0); 
-}
+// void add_lvgl_image(void) {
+//     LV_IMG_DECLARE(vscode);
+//     lv_obj_t * vscode_icon = lv_image_create(lv_screen_active());
+//     lv_image_set_src(img1, &vscode);
+//     lv_obj_align(vscode_icon, LV_ALIGN_CENTER, 0, 0);
+// }
+// 
+// void create_ring_widget(void) {
+//     // Create a full black background
+//     lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), 0);
+//     
+//     // Create the arc widget (ring)
+//     lv_obj_t* ring = lv_arc_create(lv_scr_act());
+//     
+//     // Configure the arc to be a complete circle
+//     lv_arc_set_bg_angles(ring, 0, 360);
+//     lv_arc_set_angles(ring, 0, 360);
+//     
+//     // Remove the knob that would appear on the arc
+//     lv_obj_remove_style(ring, NULL, LV_PART_KNOB);
+//     
+//     // Make it non-interactive
+//     lv_obj_clear_flag(ring, LV_OBJ_FLAG_CLICKABLE);
+//     
+//     // Center the ring in the display
+//     lv_obj_center(ring);
+//     
+//     // Set size to create a ring around the edge (adjust as needed)
+//     lv_obj_set_size(ring, 220, 220);
+//     
+//     // Style the arc to be white
+//     lv_obj_set_style_arc_color(ring, lv_color_white(), LV_PART_INDICATOR);
+//     lv_obj_set_style_arc_width(ring, 10, LV_PART_INDICATOR); // Adjust width as needed
+//     
+//     // Background of the arc should be transparent
+//     lv_obj_set_style_arc_color(ring, lv_color_black(), LV_PART_MAIN);
+//     lv_obj_set_style_arc_width(ring, 10, LV_PART_MAIN);
+// 
+//     // Create a label for the layer name
+//     layer_label = lv_label_create(lv_scr_act());
+//     lv_label_set_text(layer_label, current_layer_name());
+//     lv_obj_center(layer_label);
+//     
+//     // Style the label to be white and larger
+//     lv_obj_set_style_text_color(layer_label, lv_color_white(), 0);
+//     lv_obj_set_style_text_font(layer_label, &lv_font_montserrat_48, 0); 
+// }
 
 void update_layer_display(void) {
     static uint32_t last_layer_state = 0;
@@ -204,24 +218,7 @@ void keyboard_post_init_kb(void) {
     init_ui();   // Initialise the display
     keyboard_post_init_user();
     if (qp_lvgl_attach(display1)) {     // Attach LVGL to the display
-        create_ring_widget();
+        // create_ring_widget();
+        // add_lvgl_image();
     }
-}
-
-void housekeeping_task_user(void) {
-    static uint32_t last_draw = 0;
-    lcd_power = (last_input_activity_elapsed() < SCREEN_TIMEOUT) ? 1 : 0;
-
-    setPinOutput(DISPLAY_LED_PIN);
-    if (lcd_power) {
-        writePinHigh(DISPLAY_LED_PIN);
-        if (timer_elapsed32(last_draw) > 33) { // Throttle to 30fps
-            last_draw = timer_read32();
-            update_layer_display();
-            draw_ui_user();
-        }
-    } else {
-        writePinLow(DISPLAY_LED_PIN);
-    }
-
 }
