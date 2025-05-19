@@ -2,23 +2,17 @@
 #include "transactions.h"
 #include <string.h>
 
+// todo: revisit 'enabled' vs 'active' and consider 'state'
 typedef union {
     uint8_t raw;
     struct {
         bool    is_dragscroll_enabled : 1;
+        bool    is_super_alt_tab_active : 1;
+        bool    is_alt_tab_active     : 1;
     } __attribute__((packed));
 } kb_config_t;
 
 static kb_config_t kb_config = {0};
-
-#    ifndef CHARYBDIS_DRAGSCROLL_BUFFER_SIZE
-#        define CHARYBDIS_DRAGSCROLL_BUFFER_SIZE 6
-#    endif // !CHARYBDIS_DRAGSCROLL_BUFFER_SIZE
-#define CHARYBDIS_DRAGSCROLL_REVERSE_X
-
-bool kb_get_pointer_dragscroll_enabled(void) {
-    return kb_config.is_dragscroll_enabled;
-}
 
 static void maybe_update_pointing_device_cpi(kb_config_t* config) {
     if (config->is_dragscroll_enabled) {
@@ -27,14 +21,38 @@ static void maybe_update_pointing_device_cpi(kb_config_t* config) {
         pointing_device_set_cpi(PMW33XX_CPI);
     }
 }
+void pointing_device_init_kb(void) {
+    pointing_device_init_user(); // set auto mouse layer
+}
 
+bool kb_get_pointer_dragscroll_enabled(void) {
+    return kb_config.is_dragscroll_enabled;
+}
 void kb_set_pointer_dragscroll_enabled(bool enable) {
     kb_config.is_dragscroll_enabled = enable;
     maybe_update_pointing_device_cpi(&kb_config);
 }
 
-void pointing_device_init_kb(void) {
-    pointing_device_init_user(); // set auto mouse layer
+// super-alt-tab functionality
+bool kb_get_super_alt_tab_state(void) {
+    return kb_config.is_super_alt_tab_active;
+}
+void kb_set_super_alt_tab_active(void) {
+    kb_config.is_super_alt_tab_active = true;
+}
+void kb_set_super_alt_tab_off(void) {
+    kb_config.is_super_alt_tab_active = false;
+}
+
+// alt-tab functionality
+bool kb_get_alt_tab_state(void) {
+    return kb_config.is_alt_tab_active;
+}
+void kb_set_alt_tab_active(void) {
+    kb_config.is_alt_tab_active = true;
+}
+void kb_set_alt_tab_off(void) {
+    kb_config.is_alt_tab_active = false;
 }
 
 static void debug_kb_config_to_console(kb_config_t* config) {
@@ -43,9 +61,11 @@ static void debug_kb_config_to_console(kb_config_t* config) {
                 "\traw = 0x%X,\n"
                 "\t{\n"
                 "\t\tis_dragscroll_enabled=%u\n"
+                "\t\tis_super_alt_tab_active=%u\n"
+                "\t\tis_alt_tab_active=%u\n"
                 "\t}\n"
                 "}\n",
-                config->raw, config->is_dragscroll_enabled);
+                config->raw, config->is_dragscroll_enabled, config->is_super_alt_tab_active, config->is_alt_tab_active);
     #    endif // CONSOLE_ENABLE
 }
 
@@ -83,7 +103,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
             break;
     }
 #endif  // POINTING_DEVICE_ENABLE
-    return true;
+    return process_record_user(keycode, record);
 }
 
 void kb_config_sync_handler(uint8_t initiator2target_buffer_size, const void* initiator2target_buffer, uint8_t target2initiator_buffer_size, void* target2initiator_buffer) {
@@ -98,8 +118,6 @@ void keyboard_post_init_kb(void) {
     keyboard_post_init_user();
 }
 
-// this needs to move to the kb.c file
-// yanked from Charybdis
 void housekeeping_task_kb(void) {
     if (is_keyboard_master()) {
         // Keep track of the last state, so that we can tell if we need to propagate to slave.
@@ -117,7 +135,6 @@ void housekeeping_task_kb(void) {
             needs_sync = true;
         }
 
-        // Perform the sync if requested.
         if (needs_sync) {
             // this is one of those one-way data transfers mentioned in the docs; does not need SPLIT_TRANSPORT=custom
             if (transaction_rpc_send(RPC_ID_KB_CONFIG_SYNC, sizeof(kb_config), &kb_config)) {
@@ -125,6 +142,4 @@ void housekeeping_task_kb(void) {
             }
         }
     }
-    // No need to invoke the user-specific callback, as it's been called
-    // already.
 }

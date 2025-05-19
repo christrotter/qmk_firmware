@@ -1,7 +1,7 @@
 // Copyright 2023 Chris Trotter (@christrotter)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include <qp.h>
+#include QMK_KEYBOARD_H
 #include "arcboard_mk19.h"
 
 #include "graphics/futura40.qff.c"
@@ -41,6 +41,62 @@ const char *current_layer_name(void) {
     return "unknown";
 }
 
+/*
+    LVGL setup - create your widgets and whatnot here
+*/
+
+void create_ring_widget(void) {
+    // Create a full black background
+    lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), 0);
+    
+    // Create the arc widget (ring)
+    lv_obj_t* ring = lv_arc_create(lv_scr_act());
+    
+    // Configure the arc to be a complete circle
+    lv_arc_set_bg_angles(ring, 0, 360);
+    lv_arc_set_angles(ring, 0, 360);
+    
+    // Remove the knob that would appear on the arc
+    lv_obj_remove_style(ring, NULL, LV_PART_KNOB);
+    
+    // Make it non-interactive
+    lv_obj_clear_flag(ring, LV_OBJ_FLAG_CLICKABLE);
+    
+    // Center the ring in the display
+    lv_obj_center(ring);
+    
+    // Set size to create a ring around the edge (adjust as needed)
+    lv_obj_set_size(ring, 220, 220);
+    
+    // Style the arc to be white
+    lv_obj_set_style_arc_color(ring, lv_color_white(), LV_PART_INDICATOR);
+    lv_obj_set_style_arc_width(ring, 10, LV_PART_INDICATOR); // Adjust width as needed
+    
+    // Background of the arc should be transparent
+    lv_obj_set_style_arc_color(ring, lv_color_black(), LV_PART_MAIN);
+    lv_obj_set_style_arc_width(ring, 10, LV_PART_MAIN);
+
+    // Create a label for the layer name
+    layer_label = lv_label_create(lv_scr_act());
+    lv_label_set_text(layer_label, current_layer_name());
+    lv_obj_center(layer_label);
+    
+    // Style the label to be white and larger
+    lv_obj_set_style_text_color(layer_label, lv_color_white(), 0);
+    lv_obj_set_style_text_font(layer_label, &lv_font_montserrat_48, 0); 
+}
+
+// void add_lvgl_image(void) {
+//     LV_IMG_DECLARE(vscode);
+//     lv_obj_t * vscode_icon = lv_image_create(lv_screen_active());
+//     lv_image_set_src(img1, &vscode);
+//     lv_obj_align(vscode_icon, LV_ALIGN_CENTER, 0, 0);
+// }
+
+/* 
+    Everything below here is now runtime/dynamic
+*/
+
 void init_ui(void) {
     font = qp_load_font_mem(font_futura40);
     awesome = qp_load_image_mem(gfx_awesome);
@@ -62,121 +118,16 @@ void init_ui(void) {
     setPinOutput(DISPLAY_LED_PIN);
     writePinHigh(DISPLAY_LED_PIN);
 
-    // qp_rect(display1, 0, 0, 240, 240, HSV_CYAN, true);
-    // qp_rect(display2, 0, 0, 240, 240, HSV_CYAN, true);
-
     qp_drawimage(display1, 0, 0, qmk_logo);
     qp_drawimage(display2, 0, 0, qmk_logo);
 
     qp_flush(display2);
     qp_flush(display1);
+    if (qp_lvgl_attach(display1)) {     // Attach LVGL to the display
+        create_ring_widget();
+    }
     
 }
-
-void draw_ui_user(void) {
-    // if (qp_lvgl_attach(display1)) {     // Attach LVGL to the display
-    //     // ...Your code to draw           // Run LVGL specific code to draw
-    // }
-    // then detach lvgl!!!
-    // if (!(is_keyboard_left())) {
-       // uint16_t width;
-       // uint16_t height;
-       // qp_get_geometry(display1, &width, &height, NULL, NULL, NULL);
-       // #if defined(CONSOLE_ENABLE)
-       //     char buf[32] = {0};
-       // #endif
-       // bool layer_state_redraw = false;
-       // static uint32_t last_layer_state   = 0;
-       // if (last_layer_state  != layer_state) {
-       //     last_layer_state   = layer_state;
-       //     layer_state_redraw = true;
-       // }
-       // if (layer_state_redraw) {
-       //     extern const char *current_layer_name(void);
-       //     const char        *layer_name = current_layer_name();
-       //     const char        *mouse = "mouse";
-       //     const char        *qwerty = "qwerty";
-       //     const char        *nav = "nav";
-       //     const char        *symbols = "symbols";
-       //     int ypos = 150;
-       //     #if defined(CONSOLE_ENABLE)
-       //         snprintf(buf, sizeof(buf), "%s", layer_name);
-       //     #endif
-       //     int mouse_layer = strcmp(layer_name, mouse);
-       //     int qwerty_layer = strcmp(layer_name, qwerty);
-       //     int nav_layer = strcmp(layer_name, nav);
-       //     int symbols_layer = strcmp(layer_name, symbols);
-       //     qp_rect(display1, 0, 0, 240, 240, HSV_BLUE, true);
-       //     qp_rect(display2, 0, 0, 240, 240, HSV_BLUE, true);
-       //     if (qwerty_layer==0) {
-       //         qp_drawtext_recolor(display1, 35, ypos, font, "QWERTY1 ", HSV_WHITE, HSV_BLACK);
-       //         qp_drawtext_recolor(display2, 35, ypos, font, "QWERTY2 ", HSV_WHITE, HSV_BLACK);
-       //     }
-       //     if (mouse_layer==0) {
-       //         qp_drawtext_recolor(display1, 45, ypos, font, "MOUSE1  ", HSV_WHITE, HSV_BLACK);
-       //         qp_drawtext_recolor(display2, 45, ypos, font, "MOUSE2  ", HSV_WHITE, HSV_BLACK);
-       //     }
-       //     if (nav_layer==0) {
-       //         qp_drawtext_recolor(display1, 75, ypos, font, "NAV1    ", HSV_WHITE, HSV_BLACK);
-       //         qp_drawtext_recolor(display2, 75, ypos, font, "NAV2    ", HSV_WHITE, HSV_BLACK);
-       //     }
-       //     if (symbols_layer==0) {
-       //         qp_drawtext_recolor(display1, 25, ypos, font, "SYMBOLS1 ", HSV_WHITE, HSV_BLACK);
-       //         qp_drawtext_recolor(display2, 25, ypos, font, "SYMBOLS2 ", HSV_WHITE, HSV_BLACK);
-       //     }
-       // }
-       // qp_flush(display1);
-       // qp_flush(display2);
-    // }
-}
-
-// void add_lvgl_image(void) {
-//     LV_IMG_DECLARE(vscode);
-//     lv_obj_t * vscode_icon = lv_image_create(lv_screen_active());
-//     lv_image_set_src(img1, &vscode);
-//     lv_obj_align(vscode_icon, LV_ALIGN_CENTER, 0, 0);
-// }
-// 
-// void create_ring_widget(void) {
-//     // Create a full black background
-//     lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), 0);
-//     
-//     // Create the arc widget (ring)
-//     lv_obj_t* ring = lv_arc_create(lv_scr_act());
-//     
-//     // Configure the arc to be a complete circle
-//     lv_arc_set_bg_angles(ring, 0, 360);
-//     lv_arc_set_angles(ring, 0, 360);
-//     
-//     // Remove the knob that would appear on the arc
-//     lv_obj_remove_style(ring, NULL, LV_PART_KNOB);
-//     
-//     // Make it non-interactive
-//     lv_obj_clear_flag(ring, LV_OBJ_FLAG_CLICKABLE);
-//     
-//     // Center the ring in the display
-//     lv_obj_center(ring);
-//     
-//     // Set size to create a ring around the edge (adjust as needed)
-//     lv_obj_set_size(ring, 220, 220);
-//     
-//     // Style the arc to be white
-//     lv_obj_set_style_arc_color(ring, lv_color_white(), LV_PART_INDICATOR);
-//     lv_obj_set_style_arc_width(ring, 10, LV_PART_INDICATOR); // Adjust width as needed
-//     
-//     // Background of the arc should be transparent
-//     lv_obj_set_style_arc_color(ring, lv_color_black(), LV_PART_MAIN);
-//     lv_obj_set_style_arc_width(ring, 10, LV_PART_MAIN);
-// 
-//     // Create a label for the layer name
-//     layer_label = lv_label_create(lv_scr_act());
-//     lv_label_set_text(layer_label, current_layer_name());
-//     lv_obj_center(layer_label);
-//     
-//     // Style the label to be white and larger
-//     lv_obj_set_style_text_color(layer_label, lv_color_white(), 0);
-//     lv_obj_set_style_text_font(layer_label, &lv_font_montserrat_48, 0); 
-// }
 
 void update_layer_display(void) {
     static uint32_t last_layer_state = 0;
@@ -214,11 +165,19 @@ void update_layer_display(void) {
     }
 }
 
-void keyboard_post_init_kb(void) {
-    init_ui();   // Initialise the display
-    keyboard_post_init_user();
-    if (qp_lvgl_attach(display1)) {     // Attach LVGL to the display
-        // create_ring_widget();
-        // add_lvgl_image();
+void housekeeping_task_user(void) {
+    static uint32_t last_draw = 0;
+    lcd_power = (last_input_activity_elapsed() < SCREEN_TIMEOUT) ? 1 : 0;
+
+    setPinOutput(DISPLAY_LED_PIN);
+    if (lcd_power) {
+        writePinHigh(DISPLAY_LED_PIN);
+        if (timer_elapsed32(last_draw) > 33) { // Throttle to 30fps
+            last_draw = timer_read32();
+            // add functions to update lvgl data here
+            update_layer_display();
+        }
+    } else {
+        writePinLow(DISPLAY_LED_PIN);
     }
 }

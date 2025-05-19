@@ -13,7 +13,7 @@
         "encoder": true,
         "nkro": true,
         "rgb_matrix": true,
-        "quantum_painter": false,
+        "quantum_painter": true,
         "audio": true
     },
     "split": {

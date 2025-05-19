@@ -3,17 +3,7 @@
 
 #pragma once
 
-#include "quantum.h"
-
-#if defined(POINTING_DEVICE_ENABLE) && defined(DRAGSCROLL_ENABLE)
-    bool set_scrolling;
-#else
-    #define DRAG_SCROLL KC_NO
-#endif
-
-#if defined(QUANTUM_PAINTER_ENABLE)
-    // #include "lvgl.h"
-#endif
+#include QMK_KEYBOARD_H
 
 #define XXX KC_NO
 #define __LED__ KC_NO

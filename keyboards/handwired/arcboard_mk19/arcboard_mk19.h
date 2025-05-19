@@ -60,6 +60,7 @@
 #define INDICATOR_SHIFT \
     HSV_GREEN
 
+// really want to have these in the keymap....
 enum userspace_layers {
     _QWERTY             = 0,
     FIRST_DEFAULT_LAYER = 0,
@@ -72,7 +73,6 @@ enum userspace_layers {
 
 #if defined(POINTING_DEVICE_ENABLE)
     enum board_keycodes {
-        BOARD_SAFE_RANGE,
         DRAGSCROLL_MODE,
         DRAGSCROLL_MODE_TOGGLE,
     };
@@ -82,6 +82,14 @@ enum userspace_layers {
     bool kb_get_pointer_dragscroll_enabled(void);
     void kb_set_pointer_dragscroll_enabled(bool enable);
 #endif // POINTING_DEVICE_ENABLE
+
+bool kb_get_super_alt_tab_state(void);
+void kb_set_super_alt_tab_active(void);
+void kb_set_super_alt_tab_off(void);
+
+bool kb_get_alt_tab_state(void);
+void kb_set_alt_tab_active(void);
+void kb_set_alt_tab_off(void);
 
 void keyboard_post_init_transport_sync(void);
 void housekeeping_task_transport_sync(void);

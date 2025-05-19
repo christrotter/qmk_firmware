@@ -6,10 +6,6 @@ CUSTOM_MATRIX = lite
 QUANTUM_LIB_SRC += spi_master.c     # do we still need this?
 SRC += matrix.c
 
-# transport stuff
-# SRC += housekeeping.c
-# SPLIT_TRANSPORT = custom
-
 # LED settings
 RGB_MATRIX_LEDMAPS_ENABLED = yes 	# turn on per-key colours
 

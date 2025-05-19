@@ -8,13 +8,10 @@
 
 #if defined(CONSOLE_ENABLE)
     #include "print.h"
-    void keyboard_post_init_user(void) {
-        // Customise these values to desired behaviour
-        debug_enable=true;
-        // debug_matrix=true;
-        // debug_keyboard=true;
-        // debug_mouse=true;
-    }
+#endif
+
+#if defined(QUANTUM_PAINTER_ENABLE)
+    #include "ui.h"
 #endif
 
 #if defined(ENCODER_MAP_ENABLE)
@@ -29,10 +26,17 @@
     #include "rgb_ledmaps.h"
 #endif
 
-bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
-bool is_sup_alt_tab_active = false;
 uint16_t sup_alt_tab_timer = 0;
+
+void keyboard_post_init_user(void) {
+    // Customise these values to desired behaviour
+    debug_enable=true;
+    // debug_matrix=true;
+    // debug_keyboard=true;
+    // debug_mouse=true;
+    init_ui();   // Initialise the display
+}
 
 void oneshot_mods_changed_user(uint8_t mods) {
     if (mods & MOD_MASK_SHIFT) {
@@ -126,9 +130,6 @@ So we need the pcb to output dpad on row5, macropad on row2&3.
         thumb-keys row,                                                             thumb-keys row
     ),
 */
-// KC_LEFT, KC_DOWN, KC_RIGHT, KC_UP,_______,
-// KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
-// KC_LEFT, _______, KC_DOWN, KC_UP, KC_RIGHT,
 // monitor input source change: ctrl alt shift v
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -250,27 +251,11 @@ const ledmap ledmaps[] = {
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!(process_record_keymap(keycode, record))) {
-        return false;
-    }
-    #if defined(DRAGSCROLL_ENABLE)
-        if (keycode == DRAG_SCROLL && record->event.pressed) {
-            set_scrolling = !set_scrolling;
-            return false;
-        }
-    #endif
-    // if (set_oneshot_gui) {
-    //     xprintf("Raw-hid: toggled oneshot gui \n");
-    //     set_oneshot_mods(MOD_LGUI);
-    //     return false;
-    // }
-
-    // now we check for specific keycodes...
     switch (keycode) {
         case ALT_TAB:
             if (record->event.pressed) {
-              if (!is_alt_tab_active) {
-                is_alt_tab_active = true;
+              if (!kb_get_alt_tab_state()) {
+                kb_set_alt_tab_active();
                 register_code(KC_LGUI);
               }
               alt_tab_timer = timer_read();
@@ -281,8 +266,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case SFT_ALT_TAB:
             if (record->event.pressed) {
-              if (!is_alt_tab_active) {
-                is_alt_tab_active = true;
+              if (!kb_get_alt_tab_state()) {
+                kb_set_alt_tab_active();
                 register_code(KC_LGUI);
               }
               alt_tab_timer = timer_read();
@@ -295,8 +280,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case SUP_ALT_TAB:
             if (record->event.pressed) {
-              if (!is_sup_alt_tab_active) {
-                is_sup_alt_tab_active = true;
+              if (!kb_get_super_alt_tab_state()) {
+                kb_set_super_alt_tab_active();
                 register_code(KC_LGUI);
               }
               sup_alt_tab_timer = timer_read();
@@ -345,32 +330,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-/*
-"emoji-coder"
-- map of images to text strings e.g. :emoji-name:
-- button activates function that sends text string
-- function that changes image displayed depending on encoder rotation
-*/
-
 void matrix_scan_user(void) {
-  if (is_alt_tab_active) {
+  if (kb_get_alt_tab_state()) {
     if (timer_elapsed(alt_tab_timer) > 1000) {
+      kb_set_alt_tab_off();
       unregister_code(KC_LGUI);
-      is_alt_tab_active = false;
     }
   }
-  if (is_sup_alt_tab_active) {
+  if (kb_get_super_alt_tab_state()) {
     if (timer_elapsed(sup_alt_tab_timer) > 50) {
+      kb_set_super_alt_tab_off();
       unregister_code(KC_LGUI);
-      is_sup_alt_tab_active = false;
     }
   }
 }
-
-// uh is this used?
-typedef enum {
-    _LAYER = 0,
-} relay_data_type;
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
     switch (data[1]) {

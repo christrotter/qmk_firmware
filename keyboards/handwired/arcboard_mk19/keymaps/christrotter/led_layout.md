@@ -68,6 +68,7 @@ bool rgb_matrix_indicators_user() {
 ```
 
 This is that function.  Important here is that we are passing in the layer ledmap index.
+**NOTE THIS HAS BEEN REWORKED - TODO, UPDATE LEDMAP README** 
 ```c
 void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer) {
     const ledmap *l = &(ledmaps[layer]);

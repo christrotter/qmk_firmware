@@ -31,8 +31,6 @@
     #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
     #define AUTO_MOUSE_DEFAULT_LAYER 1
     #define AUTO_MOUSE_DEBOUNCE 25
-    #define PMW33XX_CPI 700       // your mouse cpi (DPI) setting (how fast the ball tracks); note when usb main is on the left half this config needs to be 900
-    #define DRAGSCROLL_CPI 100    // dragscroll cpi - interestingly, can't be set below 100?
 #endif
 
 // tuning the scroll responsiveness

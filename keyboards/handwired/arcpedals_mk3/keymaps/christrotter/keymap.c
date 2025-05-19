@@ -189,6 +189,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // now, on layer change, we want to emit the layer number to the app, as a guarantee that the led colour will be correct.
 layer_state_t layer_state_set_user(layer_state_t state) {
+  // this could potentially be improved by changing to send_layer_colour(get_highest_layer(state));
   switch (get_highest_layer(state)) {
   case 0:
       send_layer_colour(1);
