@@ -92,12 +92,15 @@ report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
 bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
 #ifdef POINTING_DEVICE_ENABLE
     switch (keycode) {
-        case DRAGSCROLL_MODE:
-            kb_set_pointer_dragscroll_enabled(record->event.pressed);
-            break;
+        // case DRAGSCROLL_MODE:
+        //     kb_set_pointer_dragscroll_enabled(record->event.pressed);
+        //     xprintf("process_record_kb: DRAGSCROLL_MODE");
+        //     debug_kb_config_to_console(&kb_config);
+        //     break;
         case DRAGSCROLL_MODE_TOGGLE:
             if (record->event.pressed) {
                 kb_set_pointer_dragscroll_enabled(!kb_get_pointer_dragscroll_enabled());
+                xprintf("process_record_kb: DRAGSCROLL_MODE_TOGGLE");
                 debug_kb_config_to_console(&kb_config);
             }
             break;
