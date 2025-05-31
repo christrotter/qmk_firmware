@@ -19,52 +19,56 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *
 __attribute__((weak)) void post_process_record_keymap(uint16_t keycode, keyrecord_t *record) {}
 void                       post_process_record_user(uint16_t keycode, keyrecord_t *record) { post_process_record_keymap(keycode, record); }
 
-void toggle_keyboard_dragscroll(void) {
-  uint8_t data[32];
-  memset(data, 0, 32);
-  data[0] = _RELAY_FROM_DEVICE;
-  data[1] = _TOGGLE_DRAGSCROLL;
-  printf("Raw-hid: Send data: %u %u %u\n", data[0], data[1], data[2]);
-  raw_hid_send(data, 32);
-}
+// todo - a lot of refactoring needed here!
+#if defined(RAW_ENABLE)
+  void toggle_keyboard_dragscroll(void) {
+    uint8_t data[32];
+    memset(data, 0, 32);
+    // todo this should be a var or constant or whatever
+    data[0] = (uint8_t)(PRODUCT_ID >> 8) & 0xFF;
+    data[1] = (uint8_t)(PRODUCT_ID & 0xFF);
+    data[2] = _DRAGSCROLL;
+    xprintf("Raw-hid: Toggle dragscroll: 0x%02x 0x%02x 0x%02x 0x%02x\n", data[0], data[1], data[2], data[3]);
+    raw_hid_send(data, 32);
+  }
 
-void toggle_keyboard_oneshot_gui(void) {
-  uint8_t data[32];
-  memset(data, 0, 32);
-  data[0] = _RELAY_FROM_DEVICE;
-  data[1] = _TOGGLE_ONESHOT_GUI;
-  printf("Raw-hid: Send data: %u %u %u\n", data[0], data[1], data[2]);
-  raw_hid_send(data, 32);
-}
+  void toggle_keyboard_oneshot_gui(void) {
+    uint8_t data[32];
+    memset(data, 0, 32);
+    data[0] = (uint8_t)(PRODUCT_ID >> 8) & 0xFF;
+    data[1] = (uint8_t)(PRODUCT_ID & 0xFF);
+    data[2] = _ONESHOT;
+    data[3] = _ONESHOT_LGUI;
+    xprintf("Raw-hid: Oneshot LGUI: 0x%02x 0x%02x 0x%02x\n", data[0], data[1], data[2]);
+    raw_hid_send(data, 32);
+  }
 
-void toggle_keyboard_rect(void) {
-  uint8_t data[32];
-  memset(data, 0, 32);
-  data[0] = _RELAY_FROM_DEVICE;
-  data[1] = _TOGGLE_KB_RECT;
-  printf("Raw-hid: Send data: %u %u %u\n", data[0], data[1], data[2]);
-  raw_hid_send(data, 32);
-}
+  void toggle_keyboard_rect(void) {
+    uint8_t data[32];
+    memset(data, 0, 32);
+    data[0] = (uint8_t)(PRODUCT_ID >> 8) & 0xFF;
+    data[1] = (uint8_t)(PRODUCT_ID & 0xFF);
+    data[2] = _TOGGLE_KB_RECT;
+    xprintf("Raw-hid: Toggle layer RECT: %u %u %u\n", data[0], data[1], data[2]);
+    raw_hid_send(data, 32);
+  }
 
-void send_layer_colour(uint8_t layer_colour) {
-  uint8_t data[32];
-  memset(data, 0, 32);
-  // data[0] = _DIRECT_TO_HOST;
-  data[0] = _RELAY_FROM_DEVICE;
-  data[1] = _DIRECT_TO_HOST;
-  data[2] = layer_colour;
-  xprintf("Raw-hid: Send layer colour: %u %u %u\n", data[0], data[1], data[2]);
-  raw_hid_send(data, 32);
-}
+  void send_layer_colour(uint8_t layer_colour) {
+    uint8_t data[32];
+    memset(data, 0, 32);
+    // data[0] = _DIRECT_TO_HOST;
+    data[0] = (uint8_t)(PRODUCT_ID >> 8) & 0xFF;
+    data[1] = (uint8_t)(PRODUCT_ID & 0xFF);
+    data[2] = _WLED;
+    data[3] = layer_colour;
+    xprintf("Raw-hid: Send layer colour: 0x%02x 0x%02x 0x%02x 0x%02x\n", data[0], data[1], data[2], data[3]);
+    raw_hid_send(data, 32);
+  }
+#endif // RAW_ENABLE
 
 #if defined(CONSOLE_ENABLE)
     #include "print.h"
     void keyboard_post_init_user(void) {
-        // if (is_keyboard_left()) {
-        //     print("I AM THE LEFT SIDE.");
-        // } else {
-        //     print("I AM THE RIGHT SIDE.");
-        // }
         // Customise these values to desired behaviour
         debug_enable=true;
         // debug_matrix=true;
@@ -149,19 +153,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       switch (keycode) {
         case KC_KB_DRAGSCROLL:
           if (record->event.pressed) {
-              toggle_keyboard_dragscroll();
+              #if defined(RAW_ENABLE)
+                toggle_keyboard_dragscroll();
+              #endif
               return false;
           }
           return true;
         case KC_KB_ONESHOT_GUI:
           if (record->event.pressed) {
-              toggle_keyboard_oneshot_gui();
+              #if defined(RAW_ENABLE)
+                toggle_keyboard_oneshot_gui();
+              #endif
               return false;
           }
           return true;
         case KC_KB_RECT:
           if (record->event.pressed) {
-              toggle_keyboard_rect();
+              #if defined(RAW_ENABLE)
+                toggle_keyboard_rect();
+              #endif
               return false;
           }
           return true;
@@ -191,15 +201,61 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 layer_state_t layer_state_set_user(layer_state_t state) {
   // this could potentially be improved by changing to send_layer_colour(get_highest_layer(state));
   switch (get_highest_layer(state)) {
-  case 0:
-      send_layer_colour(1);
-      break;
-  case 1:
-      send_layer_colour(3);
-      break;
-  case 2:
-      send_layer_colour(4);
-      break;
-  }
-return state;
+    case 0:
+        send_layer_colour(1);
+        break;
+    case 1:
+        send_layer_colour(3); // ordering is off cuz wled has old data
+        break;
+    case 2:
+        send_layer_colour(4);
+        break;
+    }
+  return state;
 }
+
+#if defined(RAW_ENABLE)
+  void raw_hid_receive(uint8_t *data, uint8_t length) {
+    const hid_msg_t *msg = (hid_msg_t *)data;
+    uint16_t incoming_pid = __builtin_bswap16(msg->source_id);
+    if (incoming_pid == 0xF003) {
+      xprintf("Raw-hid: we sent this, dropping rebroadcast packet. \n");
+      return;
+    }
+    switch (msg->type) {
+      case _APPSENSE:
+          switch (msg->type_id) {
+              case _APP_VSCODE:
+                  layer_move(0);
+              break;
+
+              case _APP_FUSION:
+                  layer_on(_FUSION);
+                  break;
+          
+              case _APP_OTHER:
+                  layer_move(0);
+                  break;
+              
+              default:
+                  xprintf("Raw-hid: unknown app command: %02x \n", data[1]);
+                  xprintf("Raw-hid: 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x \n", data[0], data[1], data[2], data[3], data[4]);
+                  break;
+          }
+          break;
+      case _LAYER:
+          switch (msg->type_id) {
+              case _TOGGLE_KB_RECT:
+                  set_oneshot_layer(4, ONESHOT_START);
+                  clear_oneshot_layer_state(ONESHOT_PRESSED);
+                  break;
+          }
+          break;
+
+      default:
+          xprintf("Raw-hid: received unexpected type: %02x \n", msg->type);
+          xprintf("Raw-hid: 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x \n", data[0], data[1], data[2], data[3], data[4]);
+          break;
+  }
+}
+#endif

@@ -4,7 +4,10 @@
 #include QMK_KEYBOARD_H
 #include "arcboard_mk19.h"
 #include "keymap.h"
-#include "raw_hid.h"
+
+#if defined(RAW_ENABLE)
+    #include "hid_functionality.h"
+#endif
 
 #if defined(CONSOLE_ENABLE)
     #include "print.h"
@@ -38,36 +41,10 @@ void keyboard_post_init_user(void) {
     init_ui();   // Initialise the display
 }
 
-void oneshot_mods_changed_user(uint8_t mods) {
-    if (mods & MOD_MASK_SHIFT) {
-      xprintf("Oneshot mods SHIFT\n");
-    }
-    if (mods & MOD_MASK_CTRL) {
-      xprintf("Oneshot mods CTRL\n");
-    }
-    if (mods & MOD_MASK_ALT) {
-      xprintf("Oneshot mods ALT\n");
-    }
-    if (mods & MOD_MASK_GUI) {
-      xprintf("Oneshot mods GUI\n");
-    }
-    if (!mods) {
-      xprintf("Oneshot mods off\n");
-    }
-  }
-
 __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
 __attribute__((weak)) void post_process_record_keymap(uint16_t keycode, keyrecord_t *record) {}
 void                       post_process_record_user(uint16_t keycode, keyrecord_t *record) { post_process_record_keymap(keycode, record); }
 
-void cycle_pedal_layer(void) {
-    uint8_t data[32];
-    memset(data, 0, 32);
-    data[0] = _RELAY_FROM_DEVICE;
-    data[1] = _CYCLE_PEDAL_LAYERS;
-    printf("Raw-hid: Send data: %u %u %u\n", data[0], data[1], data[2]);
-    raw_hid_send(data, 32);
-}
 
 /*
 row0 = 8 keys in thumb row, but two are disconnected/useless, just leds in chain
@@ -311,7 +288,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_PD_LAYER:
             if (record->event.pressed) {
                 // xprintf("KC_PD_LAYER pressed\n");
-                cycle_pedal_layer();
+                #if defined(RAW_ENABLE)
+                    cycle_pedal_layer();
+                #endif
                 return false;
             }
             return true;
@@ -324,8 +303,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case AM_Toggle:
             if(record->event.pressed) { // key down
                 auto_mouse_toggle();
+                return false;
             } // do nothing on key up
-            return false; // prevent further processing of keycode
+            return true; // prevent further processing of keycode
     }
     return true;
 }
@@ -343,50 +323,4 @@ void matrix_scan_user(void) {
       unregister_code(KC_LGUI);
     }
   }
-}
-
-void raw_hid_receive(uint8_t *data, uint8_t length) {
-    switch (data[1]) {
-        case _TOGGLE_DRAGSCROLL:
-        kb_set_pointer_dragscroll_enabled(!kb_get_pointer_dragscroll_enabled());
-            xprintf("Raw-hid: toggled dragscroll \n");
-            break;
-        
-        case _TOGGLE_ONESHOT_GUI:
-            set_oneshot_mods(MOD_LGUI);
-            xprintf("Raw-hid: toggled oneshot gui \n");
-            break;
-        
-        case _TOGGLE_KB_RECT:
-            set_oneshot_layer(4, ONESHOT_START);
-            clear_oneshot_layer_state(ONESHOT_PRESSED);
-            xprintf("Raw-hid: toggled oneshot gui \n");
-            break;
-        
-        default:
-            if (data[0] == _RELAY_FROM_APP) {
-                xprintf("Raw-hid: relay from app: %u %u %u \n", data[0], data[1], data[2]);
-                
-                switch (data[1]) {
-                    case _APP_VSCODE:
-                        layer_on(_VSCODE);
-                        xprintf("Raw-hid: VSCODE layer on \n");
-                        break;
-                    
-                    case _APP_OTHER:
-                        if (layer_state_is(_VSCODE)) {
-                            layer_off(_VSCODE);
-                        }
-                        xprintf("Raw-hid: VSCODE layer off \n");
-                        break;
-                    
-                    default:
-                        xprintf("Raw-hid: unknown app command: %u \n", data[1]);
-                        break;
-                }
-            } else {
-                xprintf("Raw-hid: unknown data: %u %u %u \n", data[0], data[1], data[2]);
-            }
-            break;
-    }
 }

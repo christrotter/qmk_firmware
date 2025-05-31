@@ -210,23 +210,3 @@ enum custom_keycodes {
     #define FAL4_L1_BT KC_MUTE
     #define FAL4_L2_BT KC_NO
     #define FAL4_L3_BT MAGIPLY
-
-// usb-hid config
-typedef enum {
-    _TIME = 0xAA, // random value that does not conflict with VIA, must match companion app
-    _VOLUME,
-    _LAYOUT,
-    _MEDIA_ARTIST,
-    _MEDIA_TITLE,
-    _CYCLE_PEDAL_LAYERS = 0xBA,
-
-    _RELAY_FROM_DEVICE = 0xCC,
-    _RELAY_TO_DEVICE = 0xCD,
-    _RELAY_FROM_APP = 0xCF,
-    _TOGGLE_DRAGSCROLL = 0xDD,
-    _TOGGLE_ONESHOT_GUI = 0xDE,
-    _TOGGLE_KB_RECT = 0xDF,
-
-    _APP_OTHER = 0x00,
-    _APP_VSCODE = 0x01,
-} hid_data_type;
