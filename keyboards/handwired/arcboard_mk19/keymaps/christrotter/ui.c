@@ -9,7 +9,8 @@
 #include "graphics/disappointed_guy.qgf.h"
 #include "graphics/roger.qgf.h"
 #include "graphics/qmk-logo.qgf.h"
-#include "graphics/vscode.h"
+// #include "graphics/ui_img_816699078.c"
+// #include "graphics/vscode_hi_res.c"
 
 bool lcd_power;
 
@@ -22,6 +23,7 @@ static painter_device_t display1;
 static painter_device_t display2;
 
 static lv_obj_t* layer_label = NULL; // Label to display current layer name
+// static lv_obj_t* vscode_image = NULL; // VSCode image object
 
 const char *current_layer_name(void) {
     switch (get_highest_layer(layer_state)) {
@@ -84,13 +86,23 @@ void create_ring_widget(void) {
     // Style the label to be white and larger
     lv_obj_set_style_text_color(layer_label, lv_color_white(), 0);
     lv_obj_set_style_text_font(layer_label, &lv_font_montserrat_48, 0); 
+    
+    // Create the VSCode image once but hide it initially
+    // vscode_image = lv_img_create(lv_scr_act());
+    // lv_img_set_src(vscode_image, &ui_img_816699078);
+    // // lv_img_set_src(vscode_image, &vscode_hi_res);
+    // lv_obj_set_width( vscode_image, LV_SIZE_CONTENT);  /// 1
+    // lv_obj_set_height( vscode_image, LV_SIZE_CONTENT);   /// 1
+    // lv_obj_set_align(vscode_image, LV_ALIGN_CENTER);
+    // lv_obj_add_flag( vscode_image, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+    // lv_obj_add_flag(vscode_image, LV_OBJ_FLAG_HIDDEN); // Hide initially
 }
 
 // void add_lvgl_image(void) {
-//     LV_IMG_DECLARE(vscode);
-//     lv_obj_t * vscode_icon = lv_image_create(lv_screen_active());
-//     lv_image_set_src(img1, &vscode);
-//     lv_obj_align(vscode_icon, LV_ALIGN_CENTER, 0, 0);
+//     // lv_scr_act() is how you call the current screen
+//     lv_obj_t * ui_logovscode = lv_img_create(lv_scr_act());
+//     lv_img_set_src(ui_logovscode, &ui_img_816699078);
+//     lv_obj_set_align( ui_logovscode, LV_ALIGN_CENTER );
 // }
 
 /* 
@@ -106,7 +118,7 @@ void init_ui(void) {
 
     display1 = qp_gc9a01_make_spi_device(240, 240, DISPLAY2_CS_PIN, DISPLAY_DC_PIN, DISPLAY_RST_PIN, DISPLAY_SPI_DIVISOR, DISPLAY_SPI_MODE);
     if (is_keyboard_left()) {
-        qp_init(display1, QP_ROTATION_90); // this is not working
+        qp_init(display1, QP_ROTATION_90); // the rotation is not working
     } else {
         qp_init(display1, QP_ROTATION_0);
     }
@@ -137,6 +149,11 @@ void update_layer_display(void) {
         last_layer_state = layer_state;
         
         if (layer_label != NULL) {
+            // Hide the VSCode image for all layers first
+            // if (vscode_image != NULL) {
+            //     lv_obj_add_flag(vscode_image, LV_OBJ_FLAG_HIDDEN);
+            // }
+            
             // Update the label text with the current layer name
             lv_label_set_text(layer_label, current_layer_name());
             
@@ -159,6 +176,10 @@ void update_layer_display(void) {
                     break;
                 case _VSCODE:
                     lv_obj_set_style_text_color(layer_label, lv_color_hex(0xFF55FF), 0); // Magenta
+                    // Show the VSCode image
+                    // if (vscode_image != NULL) {
+                    //     lv_obj_clear_flag(vscode_image, LV_OBJ_FLAG_HIDDEN);
+                    // }
                     break;
             }
         }
