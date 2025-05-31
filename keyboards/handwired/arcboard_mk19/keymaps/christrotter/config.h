@@ -34,7 +34,7 @@
 #endif
 
 // tuning the scroll responsiveness
-#define MOUSEKEY_WHEEL_INTERVAL 5      // Time between wheel movements
-#define MOUSEKEY_WHEEL_DELTA 7          // Wheel movement step size, bigger is more
+#define MOUSEKEY_WHEEL_INTERVAL 1      // Time between wheel movements
+#define MOUSEKEY_WHEEL_DELTA 30          // Wheel movement step size, bigger is more
 #define MOUSEKEY_WHEEL_MAX_SPEED 30     // Maximum number of scroll steps per scroll action
-#define MOUSEKEY_WHEEL_TIME_TO_MAX 5    // Time until maximum scroll speed is reached
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 0    // Time until maximum scroll speed is reached
