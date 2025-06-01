@@ -3,7 +3,7 @@
 
 #pragma once
 
-#define DEBOUNCE 25
+#define DEBOUNCE 1
 
 // only used for testing matrix/led issues
 // #define	SPLIT_HAND_PIN_LOW_IS_LEFT
