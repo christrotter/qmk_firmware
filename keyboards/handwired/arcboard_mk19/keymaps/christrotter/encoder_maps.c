@@ -5,13 +5,18 @@
 #include "arcboard_mk19.h"
 #include "keymap.h"
 
+// left, flat: scroll: down, up
+// left, angled: left, right
+// right, angled: left, right
+// right, flat: scroll: up, down
+
 #if defined(ENCODER_MAP_ENABLE)
     const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
         [_QWERTY]   =  {
-            ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP), // Left,  flat
+            ENCODER_CCW_CW(KC_NO, KC_NO), // Left,  flat
             ENCODER_CCW_CW(SFT_ALT_TAB, ALT_TAB),       // Left,  angled
-            ENCODER_CCW_CW(KC_TAB_L, KC_TAB_R),         // Right, angled
-            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  // Right, flat
+            ENCODER_CCW_CW(KC_VOLD, KC_VOLU),         // Right, angled
+            ENCODER_CCW_CW(KC_NO, KC_NO)  // Right, flat
         },
         [_MOUSE]    =  {
             ENCODER_CCW_CW(KC_NO, KC_NO),               // Left,  flat
@@ -28,8 +33,8 @@
         [_NAV]      =  {
             ENCODER_CCW_CW(KC_NO, KC_NO),               // Left,  flat
             ENCODER_CCW_CW(KC_NO, KC_NO),               // Left,  angled
-            ENCODER_CCW_CW(KC_VOLD, KC_VOLU),           // Right, angled
-            ENCODER_CCW_CW(SHEET_LEFT, SHEET_RIGHT)           // Right, flat
+            ENCODER_CCW_CW(KC_NO, KC_NO),           // Right, angled
+            ENCODER_CCW_CW(KC_NO, KC_NO)           // Right, flat
         },
         [_RECT]      =  {
             ENCODER_CCW_CW(KC_NO, KC_NO),               // Left,  flat
@@ -38,10 +43,10 @@
             ENCODER_CCW_CW(KC_NO, KC_NO)           // Right, flat
         },
         [_VSCODE]      =  {
-            ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP), // Left,  flat
+            ENCODER_CCW_CW(KC_NO, KC_NO), // Left,  flat
             ENCODER_CCW_CW(SFT_ALT_TAB, ALT_TAB),       // Left,  angled
-            ENCODER_CCW_CW(KC_TAB_L, KC_TAB_R),         // Right, angled
-            ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN)  // Right, flat
+            ENCODER_CCW_CW(KC_VOLD, KC_VOLU),         // Right, angled
+            ENCODER_CCW_CW(KC_NO, KC_NO)  // Right, flat
         },
     };
 #endif

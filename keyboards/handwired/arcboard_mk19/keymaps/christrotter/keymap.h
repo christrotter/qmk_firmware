@@ -152,41 +152,41 @@ enum custom_keycodes {
     // FAL4 = right2(flat)
 
     // left, flat
-    #define FAL1_IN_L0 HSV_CYAN
-    #define FAL1_OUT_L0 HSV_BLUE
-    #define FAL1_IN_L1 HSV_RED
-    #define FAL1_OUT_L1 HSV_ORANGE
-    #define FAL1_IN_L2 HSV_CORAL
-    #define FAL1_OUT_L2 HSV_GREEN
+    #define FAL1_IN_L0 HSV_MOONLANDER
+    #define FAL1_OUT_L0 HSV_MOONLANDER
+    #define FAL1_IN_L1 HSV_MOONLANDER
+    #define FAL1_OUT_L1 HSV_MOONLANDER
+    #define FAL1_IN_L2 HSV_MOONLANDER
+    #define FAL1_OUT_L2 HSV_MOONLANDER
     #define FAL1_IN_L3 HSV_MOONLANDER
     #define FAL1_OUT_L3 HSV_MOONLANDER
     // left, angled
     #define FAL2_IN_L0 HSV_GOLDENROD
     #define FAL2_OUT_L0 HSV_GOLD
-    #define FAL2_IN_L1 HSV_YELLOW
-    #define FAL2_OUT_L1 HSV_GREEN
-    #define FAL2_IN_L2 HSV_BLUE
-    #define FAL2_OUT_L2 HSV_SPRINGGREEN
+    #define FAL2_IN_L1 HSV_MOONLANDER
+    #define FAL2_OUT_L1 HSV_MOONLANDER
+    #define FAL2_IN_L2 HSV_MOONLANDER
+    #define FAL2_OUT_L2 HSV_MOONLANDER
     #define FAL2_IN_L3 HSV_MOONLANDER
-    #define FAL2_OUT_L3 HSV_BLUE
+    #define FAL2_OUT_L3 HSV_MOONLANDER
     // right, angled
     #define FAL3_IN_L0 HSV_CYAN
-    #define FAL3_OUT_L0 HSV_SPRINGGREEN
-    #define FAL3_IN_L1 HSV_SPRINGGREEN
-    #define FAL3_OUT_L1 HSV_CYAN
+    #define FAL3_OUT_L0 HSV_GREEN
+    #define FAL3_IN_L1 HSV_MOONLANDER
+    #define FAL3_OUT_L1 HSV_MOONLANDER
     #define FAL3_IN_L2 HSV_MOONLANDER
     #define FAL3_OUT_L2 HSV_MOONLANDER
-    #define FAL3_IN_L3 HSV_SPRINGGREEN
-    #define FAL3_OUT_L3 HSV_GREEN
+    #define FAL3_IN_L3 HSV_MOONLANDER
+    #define FAL3_OUT_L3 HSV_MOONLANDER
     // right, flat
-    #define FAL4_IN_L0 HSV_CYAN
-    #define FAL4_OUT_L0 HSV_BLUE
-    #define FAL4_IN_L1 HSV_BLUE
-    #define FAL4_OUT_L1 HSV_PURPLE
+    #define FAL4_IN_L0 HSV_MOONLANDER
+    #define FAL4_OUT_L0 HSV_MOONLANDER
+    #define FAL4_IN_L1 HSV_MOONLANDER
+    #define FAL4_OUT_L1 HSV_MOONLANDER
     #define FAL4_IN_L2 HSV_MOONLANDER
     #define FAL4_OUT_L2 HSV_MOONLANDER
-    #define FAL4_IN_L3 HSV_SPRINGGREEN
-    #define FAL4_OUT_L3 HSV_GREEN
+    #define FAL4_IN_L3 HSV_MOONLANDER
+    #define FAL4_OUT_L3 HSV_MOONLANDER
 #endif
 
 // encoder button mapping // uhhh why do we have this again...
@@ -201,12 +201,12 @@ enum custom_keycodes {
     #define FAL2_L2_BT KC_NO
     #define FAL2_L3_BT KC_NO
     // right, angled - full-time layer selector
-    #define FAL3_L0_BT KC_LAYER_RESET
-    #define FAL3_L1_BT KC_LAYER_RESET
-    #define FAL3_L2_BT KC_LAYER_RESET
-    #define FAL3_L3_BT KC_LAYER_RESET
+    #define FAL3_L0_BT KC_NO
+    #define FAL3_L1_BT KC_NO
+    #define FAL3_L2_BT KC_NO
+    #define FAL3_L3_BT KC_NO
     // right, flat
-    #define FAL4_L0_BT KC_MACSHOT
-    #define FAL4_L1_BT KC_MUTE
+    #define FAL4_L0_BT KC_NO
+    #define FAL4_L1_BT KC_NO
     #define FAL4_L2_BT KC_NO
-    #define FAL4_L3_BT MAGIPLY
+    #define FAL4_L3_BT KC_NO
