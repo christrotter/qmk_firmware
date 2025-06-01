@@ -73,7 +73,7 @@ enum userspace_layers {
 
 #if defined(POINTING_DEVICE_ENABLE)
     enum board_keycodes {
-        DRAGSCROLL_MODE,
+        DRAGSCROLL_MODE = 0xFFF0, // copilot suggests not reusing SAFE_RANGE, so using 0x7E00
         DRAGSCROLL_MODE_TOGGLE,
     };
     #define DRGSCRL DRAGSCROLL_MODE
