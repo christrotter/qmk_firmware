@@ -116,6 +116,7 @@ void init_ui(void) {
     roger = qp_load_image_mem(gfx_roger);
     qmk_logo = qp_load_image_mem(gfx_qmk_logo);
 
+    // lol display2_cs_pin for display1?
     display1 = qp_gc9a01_make_spi_device(240, 240, DISPLAY2_CS_PIN, DISPLAY_DC_PIN, DISPLAY_RST_PIN, DISPLAY_SPI_DIVISOR, DISPLAY_SPI_MODE);
     if (is_keyboard_left()) {
         qp_init(display1, QP_ROTATION_90); // the rotation is not working
