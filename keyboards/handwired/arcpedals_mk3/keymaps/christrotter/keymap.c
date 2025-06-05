@@ -9,7 +9,7 @@
 // 1st layer on the cycle
 #define LAYER_CYCLE_START 0
 // Last layer on the cycle
-#define LAYER_CYCLE_END   2
+#define LAYER_CYCLE_END   7
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     #include "rgb_ledmaps.h"
@@ -97,9 +97,29 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
 // MS_WH_ things are inverted for reasons i did not dig into
 // top toe are in order on both sides for reasons i did not dig into
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_SCROLL] = LAYOUT(
+    [_QWERTY] = LAYOUT(
         KC_MS_WH_DOWN, KC_MS_WH_DOWN, KC_KB_ONESHOT_GUI, KC_KB_ONESHOT_GUI,      _______,    KC_MS_WH_UP, KC_MS_WH_UP, KC_KB_ONESHOT_GUI, KC_KB_ONESHOT_GUI,          _______,
         KC_KB_DRAGSCROLL, KC_KB_RECT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,          _______,    KC_KB_DRAGSCROLL, KC_KB_RECT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
+    ),
+    [_MOUSE] = LAYOUT(
+        _______, _______, _______, _______,    _______,                           _______, _______, _______, _______,    _______,
+        _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
+    ),
+    [_SYMBOLS] = LAYOUT(
+      _______, _______, _______, _______,    _______,                           _______, _______, _______, _______,    _______,
+      _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
+    ),
+    [_NAV] = LAYOUT(
+      _______, _______, _______, _______,    _______,                           _______, _______, _______, _______,    _______,
+      _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
+    ),    
+    [_RECT] = LAYOUT(
+      _______, _______, _______, _______,    _______,                           _______, _______, _______, _______,    _______,
+      _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
+    ),
+    [_VSCODE] = LAYOUT(
+      _______, _______, _______, _______,    _______,                           _______, _______, _______, _______,    _______,
+      _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
     ),
     [_FUSION] = LAYOUT(
         _______, KC_LGUI, _______, _______,                                 _______,    KC_MS_BTN3, _______, _______, _______,                              _______,
@@ -124,13 +144,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // these need to match the wiring flippage;
 const ledmap ledmaps[] = {
-    [_SCROLL]   = LEDMAP(
+    [_QWERTY]   = LEDMAP(
       L_B1_L0,L_B1_L0,L_B1_L0,L_B2_L0,L_B2_L0,L_B2_L0,L_B3_L0,L_B3_L0,L_B3_L0,L_B4_L0,L_B4_L0,L_B4_L0,L_B5_L0,L_B5_L0,L_B5_L0,L_B6_L0,L_B6_L0,L_B6_L0,L_B7_L0,L_B7_L0,L_B7_L0,L_B8_L0,L_B8_L0,L_B8_L0, \
       R_B1_L0,R_B1_L0,R_B1_L0,R_B2_L0,R_B2_L0,R_B2_L0,R_B3_L0,R_B3_L0,R_B3_L0,R_B4_L0,R_B4_L0,R_B4_L0,R_B5_L0,R_B5_L0,R_B5_L0,R_B6_L0,R_B6_L0,R_B6_L0,R_B7_L0,R_B7_L0,R_B7_L0,R_B8_L0,R_B8_L0,R_B8_L0
     ),
-    [_FUSION]   = LEDMAP(
+    [_MOUSE]   = LEDMAP(
+      L_B1_L1,L_B1_L1,L_B1_L1,L_B2_L1,L_B2_L1,L_B2_L1,L_B3_L1,L_B3_L1,L_B3_L1,L_B4_L1,L_B4_L1,L_B4_L1,L_B5_L1,L_B5_L1,L_B5_L1,L_B6_L1,L_B6_L1,L_B6_L1,L_B7_L1,L_B7_L1,L_B7_L1,L_B8_L1,L_B8_L1,L_B8_L1, \
+      R_B1_L1,R_B1_L1,R_B1_L1,R_B2_L1,R_B2_L1,R_B2_L1,R_B3_L1,R_B3_L1,R_B3_L1,R_B4_L1,R_B4_L1,R_B4_L1,R_B5_L1,R_B5_L1,R_B5_L1,R_B6_L1,R_B6_L1,R_B6_L1,R_B7_L1,R_B7_L1,R_B7_L1,R_B8_L1,R_B8_L1,R_B8_L1
+    ),
+    [_SYMBOLS] = LEDMAP(
       L_B1_L2,L_B1_L2,L_B1_L2,L_B2_L2,L_B2_L2,L_B2_L2,L_B3_L2,L_B3_L2,L_B3_L2,L_B4_L2,L_B4_L2,L_B4_L2,L_B5_L2,L_B5_L2,L_B5_L2,L_B6_L2,L_B6_L2,L_B6_L2,L_B7_L2,L_B7_L2,L_B7_L2,L_B8_L2,L_B8_L2,L_B8_L2, \
       R_B1_L2,R_B1_L2,R_B1_L2,R_B2_L2,R_B2_L2,R_B2_L2,R_B3_L2,R_B3_L2,R_B3_L2,R_B4_L2,R_B4_L2,R_B4_L2,R_B5_L2,R_B5_L2,R_B5_L2,R_B6_L2,R_B6_L2,R_B6_L2,R_B7_L2,R_B7_L2,R_B7_L2,R_B8_L2,R_B8_L2,R_B8_L2
+    ),
+    [_NAV]     = LEDMAP(
+      L_B1_L3,L_B1_L3,L_B1_L3,L_B2_L3,L_B2_L3,L_B2_L3,L_B3_L3,L_B3_L3,L_B3_L3,L_B4_L3,L_B4_L3,L_B4_L3,L_B5_L3,L_B5_L3,L_B5_L3,L_B6_L3,L_B6_L3,L_B6_L3,L_B7_L3,L_B7_L3,L_B7_L3,L_B8_L3,L_B8_L3,L_B8_L3, \
+      R_B1_L3,R_B1_L3,R_B1_L3,R_B2_L3,R_B2_L3,R_B2_L3,R_B3_L3,R_B3_L3,R_B3_L3,R_B4_L3,R_B4_L3,R_B4_L3,R_B5_L3,R_B5_L3,R_B5_L3,R_B6_L3,R_B6_L3,R_B6_L3,R_B7_L3,R_B7_L3,R_B7_L3,R_B8_L3,R_B8_L3,R_B8_L3
+    ),
+    [_RECT]    = LEDMAP(
+      L_B1_L4,L_B1_L4,L_B1_L4,L_B2_L4,L_B2_L4,L_B2_L4,L_B3_L4,L_B3_L4,L_B3_L4,L_B4_L4,L_B4_L4,L_B4_L4,L_B5_L4,L_B5_L4,L_B5_L4,L_B6_L4,L_B6_L4,L_B6_L4,L_B7_L4,L_B7_L4,L_B7_L4,L_B8_L4,L_B8_L4,L_B8_L4, \
+      R_B1_L4,R_B1_L4,R_B1_L4,R_B2_L4,R_B2_L4,R_B2_L4,R_B3_L4,R_B3_L4,R_B3_L4,R_B4_L4,R_B4_L4,R_B4_L4,R_B5_L4,R_B5_L4,R_B5_L4,R_B6_L4,R_B6_L4,R_B6_L4,R_B7_L4,R_B7_L4,R_B7_L4,R_B8_L4,R_B8_L4,R_B8_L4
+    ),
+    [_VSCODE]  = LEDMAP(
+      L_B1_L5,L_B1_L5,L_B1_L5,L_B2_L5,L_B2_L5,L_B2_L5,L_B3_L5,L_B3_L5,L_B3_L5,L_B4_L5,L_B4_L5,L_B4_L5,L_B5_L5,L_B5_L5,L_B5_L5,L_B6_L5,L_B6_L5,L_B6_L5,L_B7_L5,L_B7_L5,L_B7_L5,L_B8_L5,L_B8_L5,L_B8_L5, \
+      R_B1_L5,R_B1_L5,R_B1_L5,R_B2_L5,R_B2_L5,R_B2_L5,R_B3_L5,R_B3_L5,R_B3_L5,R_B4_L5,R_B4_L5,R_B4_L5,R_B5_L5,R_B5_L5,R_B5_L5,R_B6_L5,R_B6_L5,R_B6_L5,R_B7_L5,R_B7_L5,R_B7_L5,R_B8_L5,R_B8_L5,R_B8_L5
+    ),
+    [_FUSION]   = LEDMAP(
+      L_B1_L6,L_B1_L6,L_B1_L6,L_B2_L6,L_B2_L6,L_B2_L6,L_B3_L6,L_B3_L6,L_B3_L6,L_B4_L6,L_B4_L6,L_B4_L6,L_B5_L6,L_B5_L6,L_B5_L6,L_B6_L6,L_B6_L6,L_B6_L6,L_B7_L6,L_B7_L6,L_B7_L6,L_B8_L6,L_B8_L6,L_B8_L6, \
+      R_B1_L6,R_B1_L6,R_B1_L6,R_B2_L6,R_B2_L6,R_B2_L6,R_B3_L6,R_B3_L6,R_B3_L6,R_B4_L6,R_B4_L6,R_B4_L6,R_B5_L6,R_B5_L6,R_B5_L6,R_B6_L6,R_B6_L6,R_B6_L6,R_B7_L6,R_B7_L6,R_B7_L6,R_B8_L6,R_B8_L6,R_B8_L6
     ),
     [_MGMT]     = LEDMAP(
       L_B1_L3,L_B1_L3,L_B1_L3,L_B2_L3,L_B2_L3,L_B2_L3,L_B3_L3,L_B3_L3,L_B3_L3,L_B4_L3,L_B4_L3,L_B4_L3,L_B5_L3,L_B5_L3,L_B5_L3,L_B6_L3,L_B6_L3,L_B6_L3,L_B7_L3,L_B7_L3,L_B7_L3,L_B8_L3,L_B8_L3,L_B8_L3, \
@@ -205,12 +245,27 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         send_layer_colour(1);
         break;
     case 1:
-        send_layer_colour(3); // ordering is off cuz wled has old data
+        send_layer_colour(2);
         break;
     case 2:
+        send_layer_colour(3);
+        break;
+    case 3:
         send_layer_colour(4);
         break;
-    }
+    case 4:
+        send_layer_colour(5);
+        break;
+    case 5:
+        send_layer_colour(6);
+        break;
+    case 6:
+        send_layer_colour(7);
+        break;
+    case 7:
+        send_layer_colour(8);
+        break;
+  }
   return state;
 }
 
@@ -226,7 +281,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       case _APPSENSE:
           switch (msg->type_id) {
               case _APP_VSCODE:
-                  layer_move(0);
+                  layer_move(_VSCODE);
               break;
 
               case _APP_FUSION:

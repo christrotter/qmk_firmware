@@ -68,7 +68,9 @@ enum userspace_layers {
     _SYMBOLS,
     _NAV,
     _RECT,
-    _VSCODE
+    _VSCODE,
+    _FUSION,
+    _MGMT,
 };
 
 #if defined(POINTING_DEVICE_ENABLE)

@@ -48,5 +48,17 @@
             ENCODER_CCW_CW(KC_VOLD, KC_VOLU),         // Right, angled
             ENCODER_CCW_CW(KC_NO, KC_NO)  // Right, flat
         },
+        [_FUSION]      =  {
+            ENCODER_CCW_CW(KC_NO, KC_NO), // Left,  flat
+            ENCODER_CCW_CW(SFT_ALT_TAB, ALT_TAB),       // Left,  angled
+            ENCODER_CCW_CW(MS_WHLU, MS_WHLD),         // Right, angled
+            ENCODER_CCW_CW(KC_NO, KC_NO)  // Right, flat
+        },
+        [_MGMT]      =  {
+            ENCODER_CCW_CW(KC_NO, KC_NO), // Left,  flat
+            ENCODER_CCW_CW(KC_NO, KC_NO),       // Left,  angled
+            ENCODER_CCW_CW(KC_NO, KC_NO),         // Right, angled
+            ENCODER_CCW_CW(KC_NO, KC_NO)  // Right, flat
+        },
     };
 #endif

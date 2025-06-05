@@ -86,6 +86,22 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             case 2:
                 set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, LAYER_2_COLOUR, RGB_INDICATOR_BRIGHTNESS);
                 break;
+            case 3:
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, LAYER_3_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 4:
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, LAYER_4_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 5:
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, LAYER_5_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 6:
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, LAYER_6_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 7:
+                set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, LAYER_7_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+
             default:
                 break;
         }
@@ -101,6 +117,21 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 break;
             case 2:
                 set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, LAYER_2_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 3:
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, LAYER_3_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 4:
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, LAYER_4_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 5:
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, LAYER_5_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 6:
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, LAYER_6_COLOUR, RGB_INDICATOR_BRIGHTNESS);
+                break;
+            case 7:
+                set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, LAYER_7_COLOUR, RGB_INDICATOR_BRIGHTNESS);
                 break;
 
             default:
