@@ -41,6 +41,8 @@ const char *current_layer_name(void) {
             return "vscode";
         case _FUSION:
             return "fusion";
+        case _CHROME:
+            return "chrome";
         case _MGMT:
             return "mgmt";
     }
@@ -185,6 +187,9 @@ void update_layer_display(void) {
                 case _FUSION:
                     lv_obj_set_style_text_color(layer_label, lv_color_hex(0xFF7800), 0); // orange
                     break;
+                case _CHROME:
+                    lv_obj_set_style_text_color(layer_label, lv_color_hex(0x00FFFF), 0); // cyan
+                    break;
                 case _MGMT:
                     lv_obj_set_style_text_color(layer_label, lv_color_hex(0xFF0000), 0); // red
                     break;
@@ -192,7 +197,9 @@ void update_layer_display(void) {
                     // if (vscode_image != NULL) {
                     //     lv_obj_clear_flag(vscode_image, LV_OBJ_FLAG_HIDDEN);
                     // }
-                    
+                default:
+                    lv_obj_set_style_text_color(layer_label, lv_color_white(), 0); // Default to white
+                    break;
             }
         }
     }

@@ -70,6 +70,7 @@ enum userspace_layers {
     _RECT,
     _VSCODE,
     _FUSION,
+    _CHROME,
     _MGMT,
 };
 

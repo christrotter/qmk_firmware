@@ -16,14 +16,15 @@
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     // note: these cannot have braces e.g. #define HRM_SFT {GREEN} blows up the evaluation of the [3] part of the int[KEYS_COUNT][3]; sees it as one item
     #define ___n___ {0, 0, 0}
-    #define LAYER_0_COLOUR HSV_CYAN         // qwerty
+    #define LAYER_0_COLOUR HSV_WHITE         // qwerty
     #define LAYER_1_COLOUR HSV_ORANGE       // mouse
     #define LAYER_2_COLOUR HSV_PINK        // symbols  
     #define LAYER_3_COLOUR HSV_CHARTREUSE   // nav
     #define LAYER_4_COLOUR HSV_RED          // rect
     #define LAYER_5_COLOUR HSV_PURPLE       // vscode
     #define LAYER_6_COLOUR HSV_ORANGE       // fusion
-    #define LAYER_7_COLOUR HSV_RED          // mgmt
+    #define LAYER_7_COLOUR HSV_CYAN       // chrome
+    #define LAYER_8_COLOUR HSV_RED          // mgmt
     #define LAYER_FUSION ORANGE
     #define LAYER_MGMT RED
     #define BLANK {HSV_WHITE}
@@ -183,24 +184,43 @@
     #define R_B7_L6 CYCLE
     #define R_B8_L6 CYCLE
 
-    // MGMT
+    // CHROME
     #define L_B1_L7 {HSV_WHITE}  // outside, lower big toe
-    #define L_B2_L7 {HSV_WHITE}  // inside, upper big toe
-    #define L_B3_L7 {HSV_ORANGE} // top inside
-    #define L_B4_L7 {HSV_RED}    // top outside
-    #define L_B5_L7 {HSV_WHITE}  // side inside
-    #define L_B6_L7 {HSV_WHITE}  // side outside
+    #define L_B2_L7 CMD // inside, upper big toe
+    #define L_B3_L7 {HSV_WHITE}  // top inside
+    #define L_B4_L7 {HSV_WHITE}  // top outside
+    #define L_B5_L7 {HSV_GREEN} // side inside
+    #define L_B6_L7 {HSV_RED}    // side outside
     #define L_B7_L7 CYCLE
     #define L_B8_L7 CYCLE
     
-    #define R_B1_L7 {HSV_WHITE}  // inside, upper big toe
-    #define R_B2_L7 {HSV_WHITE}  // outside, lower big toe
-    #define R_B3_L7 {HSV_RED}    // top inside
-    #define R_B4_L7 {HSV_ORANGE} // top outside
-    #define R_B5_L7 {HSV_WHITE}  // side inside
-    #define R_B6_L7 {HSV_WHITE}  // side outside
+    #define R_B1_L7 {HSV_PINK}  // inside, upper big toe
+    #define R_B2_L7 {HSV_WHITE} // outside, lower big toe
+    #define R_B3_L7 {HSV_WHITE} // top inside
+    #define R_B4_L7 {HSV_WHITE} // top outside
+    #define R_B5_L7 {HSV_GREEN} // side inside
+    #define R_B6_L7 {HSV_RED}  // side outside
     #define R_B7_L7 CYCLE
     #define R_B8_L7 CYCLE
+
+    // MGMT
+    #define L_B1_L8 {HSV_WHITE}  // outside, lower big toe
+    #define L_B2_L8 {HSV_WHITE}  // inside, upper big toe
+    #define L_B3_L8 {HSV_ORANGE} // top inside
+    #define L_B4_L8 {HSV_RED}    // top outside
+    #define L_B5_L8 {HSV_WHITE}  // side inside
+    #define L_B6_L8 {HSV_WHITE}  // side outside
+    #define L_B7_L8 CYCLE
+    #define L_B8_L8 CYCLE
+    
+    #define R_B1_L8 {HSV_WHITE}  // inside, upper big toe
+    #define R_B2_L8 {HSV_WHITE}  // outside, lower big toe
+    #define R_B3_L8 {HSV_RED}    // top inside
+    #define R_B4_L8 {HSV_ORANGE} // top outside
+    #define R_B5_L8 {HSV_WHITE}  // side inside
+    #define R_B6_L8 {HSV_WHITE}  // side outside
+    #define R_B7_L8 CYCLE
+    #define R_B8_L8 CYCLE
 #endif
 
 enum custom_keycodes {

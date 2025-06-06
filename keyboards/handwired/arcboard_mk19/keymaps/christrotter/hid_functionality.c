@@ -17,6 +17,12 @@
 
 // probably should separate this out into another file
 #if defined(RAW_ENABLE)
+void turn_appsense_layer_off(void) {
+    if (get_highest_layer(layer_state | default_layer_state) != 0) {
+        layer_off(get_highest_layer(layer_state | default_layer_state));
+    }
+}
+
 // [2byte src identifier][1byte type][1byte type id][n bytes data]
     void raw_hid_receive(uint8_t *data, uint8_t length) {
         const hid_msg_t *msg = (hid_msg_t *)data;
@@ -25,15 +31,28 @@
         if (incoming_pid == 0xF002) {
             xprintf("Raw-hid: we sent this, dropping rebroadcast packet. \n");
             return;
-        } 
+        }
+
+        // if the current layer is not the first layer, we want to layer_off that layer
 
         switch (msg->type) {
             case _APPSENSE:
                 switch (msg->type_id) {
                     case _APP_VSCODE:
+                        turn_appsense_layer_off();
                         layer_on(_VSCODE);
                         break;
-                
+                    
+                    case _APP_FUSION:
+                        turn_appsense_layer_off();
+                        layer_on(_FUSION);
+                        break;
+
+                    case _APP_CHROME:
+                        turn_appsense_layer_off();
+                        layer_on(_CHROME);
+                        break;   
+                                
                     case _APP_OTHER:
                         layer_move(0);
                         break;
