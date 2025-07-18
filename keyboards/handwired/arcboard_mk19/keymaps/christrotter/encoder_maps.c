@@ -15,7 +15,7 @@
         [_QWERTY]   =  {
             ENCODER_CCW_CW(KC_NO, KC_NO),                   // Left,  flat
             ENCODER_CCW_CW(SFT_ALT_TAB, ALT_TAB),           // Left,  angled
-            ENCODER_CCW_CW(KC_VOLD, KC_VOLU),               // Right, angled
+            ENCODER_CCW_CW(KC_TAB_L, KC_TAB_R),               // Right, angled
             ENCODER_CCW_CW(KC_NO, KC_NO)                    // Right, flat
         },
         [_MOUSE]    =  {
@@ -26,7 +26,7 @@
         },
         [_SYMBOLS]  =  {
             ENCODER_CCW_CW(_______, _______),               // Left,  flat
-            ENCODER_CCW_CW(GDOCZMOU, GDOCZMIN),             // Left,  angled
+            ENCODER_CCW_CW(_______, _______),             // Left,  angled
             ENCODER_CCW_CW(_______, _______),               // Right, angled
             ENCODER_CCW_CW(_______, _______)                // Right, flat
         },
@@ -58,7 +58,7 @@
         [_CHROME]      =  {
             ENCODER_CCW_CW(_______, _______),               // Left,  flat
             ENCODER_CCW_CW(_______, _______),               // Left,  angled
-            ENCODER_CCW_CW(KC_TAB_L, KC_TAB_R),             // Right, angled
+            ENCODER_CCW_CW(_______, _______),             // Right, angled
             ENCODER_CCW_CW(_______, _______)                // Right, flat
         },
         [_MGMT]      =  {
