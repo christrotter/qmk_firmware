@@ -21,6 +21,7 @@
 // move between tabs // this sort of worked...
 #define KC_TAB_L	LGUI(LALT(KC_LEFT))
 #define KC_TAB_R	LGUI(LALT(KC_RIGHT))
+#define KC_CHROMEWIN LGUI(KC_TILD)
 
 #define KC_MULTILNE	LGUI(LALT(KC_LSFT))
 
