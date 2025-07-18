@@ -89,6 +89,16 @@ report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
     return mouse_report;
 }
 
+bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
+    switch(keycode) {
+        case QK_LAYER_LOCK:
+            return true;
+        default:
+            return false;
+    }
+    return  is_mouse_record_user(keycode, record);
+}
+
 bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
 #ifdef POINTING_DEVICE_ENABLE
     switch (keycode) {
