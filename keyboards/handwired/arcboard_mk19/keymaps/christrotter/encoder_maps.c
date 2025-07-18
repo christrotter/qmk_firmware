@@ -61,6 +61,12 @@
             ENCODER_CCW_CW(_______, _______),             // Right, angled
             ENCODER_CCW_CW(_______, _______)                // Right, flat
         },
+        [_KICAD]      =  {
+            ENCODER_CCW_CW(_______, _______),               // Left,  flat
+            ENCODER_CCW_CW(_______, _______),               // Left,  angled
+            ENCODER_CCW_CW(_______, _______),             // Right, angled
+            ENCODER_CCW_CW(_______, _______)                // Right, flat
+        },
         [_MGMT]      =  {
             ENCODER_CCW_CW(_______, _______),               // Left,  flat
             ENCODER_CCW_CW(_______, _______),               // Left,  angled

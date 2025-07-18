@@ -29,6 +29,7 @@
         _APP_VSCODE = 0x01,
         _APP_CHROME = 0x02,
         _APP_FUSION = 0x03,
+        _APP_KICAD = 0x04,
     } hid_appsense_apps;
     
     typedef enum {

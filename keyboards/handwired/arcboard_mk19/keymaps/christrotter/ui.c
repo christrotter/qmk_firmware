@@ -43,6 +43,8 @@ const char *current_layer_name(void) {
             return "fusion";
         case _CHROME:
             return "chrome";
+        case _KICAD:
+            return "kicad";
         case _MGMT:
             return "mgmt";
     }
@@ -189,6 +191,9 @@ void update_layer_display(void) {
                     break;
                 case _CHROME:
                     lv_obj_set_style_text_color(layer_label, lv_color_hex(0x00FFFF), 0); // cyan
+                    break;
+                case _KICAD:
+                    lv_obj_set_style_text_color(layer_label, lv_color_hex(0x5cacf0), 0); // bluey
                     break;
                 case _MGMT:
                     lv_obj_set_style_text_color(layer_label, lv_color_hex(0xFF0000), 0); // red

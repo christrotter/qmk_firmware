@@ -51,7 +51,12 @@ void turn_appsense_layer_off(void) {
                     case _APP_CHROME:
                         turn_appsense_layer_off();
                         layer_on(_CHROME);
-                        break;   
+                        break;
+                    
+                    case _APP_KICAD:
+                        turn_appsense_layer_off();
+                        layer_on(_KICAD);
+                        break;
                                 
                     case _APP_OTHER:
                         layer_move(0);

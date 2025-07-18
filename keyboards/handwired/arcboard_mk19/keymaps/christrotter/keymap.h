@@ -85,6 +85,8 @@
 #define MEET_MUTE   LGUI(KC_D)
 #define MEET_VID    LGUI(KC_E)
 
+#define KC_KICAD_INSPECT LGUI(LSFT(KC_M)) // kicad inspect
+
 // single button to reset layer
 #define KC_LAYRST TO(_QWERTY)
 
@@ -142,6 +144,7 @@ enum custom_keycodes {
     #define HRM_ALT YELLOW
     #define HRM_GUI PURPLE
     #define HRM_SFT GREEN
+    #define KICAD_INSPECT {92, 172, 240}
 #endif
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
