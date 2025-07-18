@@ -24,7 +24,8 @@
     #define LAYER_5_COLOUR HSV_PURPLE       // vscode
     #define LAYER_6_COLOUR HSV_ORANGE       // fusion
     #define LAYER_7_COLOUR HSV_CYAN       // chrome
-    #define LAYER_8_COLOUR HSV_RED          // mgmt
+    #define LAYER_8_COLOUR HSV_PINK       // chrome
+    #define LAYER_9_COLOUR HSV_RED          // mgmt
     #define LAYER_FUSION ORANGE
     #define LAYER_MGMT RED
     #define BLANK {HSV_WHITE}
@@ -203,24 +204,43 @@
     #define R_B7_L7 CYCLE
     #define R_B8_L7 CYCLE
 
-    // MGMT
+    // KICAD
     #define L_B1_L8 {HSV_WHITE}  // outside, lower big toe
-    #define L_B2_L8 {HSV_WHITE}  // inside, upper big toe
-    #define L_B3_L8 {HSV_ORANGE} // top inside
-    #define L_B4_L8 {HSV_RED}    // top outside
+    #define L_B2_L8 {HSV_PINK}  // inside, upper big toe
+    #define L_B3_L8 {HSV_WHITE} // top inside
+    #define L_B4_L8 {HSV_WHITE}    // top outside
     #define L_B5_L8 {HSV_WHITE}  // side inside
     #define L_B6_L8 {HSV_WHITE}  // side outside
     #define L_B7_L8 CYCLE
     #define L_B8_L8 CYCLE
     
-    #define R_B1_L8 {HSV_WHITE}  // inside, upper big toe
+    #define R_B1_L8 {HSV_PINK}  // inside, upper big toe
     #define R_B2_L8 {HSV_WHITE}  // outside, lower big toe
-    #define R_B3_L8 {HSV_RED}    // top inside
-    #define R_B4_L8 {HSV_ORANGE} // top outside
+    #define R_B3_L8 {HSV_WHITE}    // top inside
+    #define R_B4_L8 {HSV_WHITE} // top outside
     #define R_B5_L8 {HSV_WHITE}  // side inside
     #define R_B6_L8 {HSV_WHITE}  // side outside
     #define R_B7_L8 CYCLE
     #define R_B8_L8 CYCLE
+
+    // MGMT
+    #define L_B1_L9 {HSV_WHITE}  // outside, lower big toe
+    #define L_B2_L9 {HSV_WHITE}  // inside, upper big toe
+    #define L_B3_L9 {HSV_ORANGE} // top inside
+    #define L_B4_L9 {HSV_RED}    // top outside
+    #define L_B5_L9 {HSV_WHITE}  // side inside
+    #define L_B6_L9 {HSV_WHITE}  // side outside
+    #define L_B7_L9 CYCLE
+    #define L_B8_L9 CYCLE
+    
+    #define R_B1_L9 {HSV_WHITE}  // inside, upper big toe
+    #define R_B2_L9 {HSV_WHITE}  // outside, lower big toe
+    #define R_B3_L9 {HSV_ORANGE}    // top inside
+    #define R_B4_L9 {HSV_RED} // top outside
+    #define R_B5_L9 {HSV_WHITE}  // side inside
+    #define R_B6_L9 {HSV_WHITE}  // side outside
+    #define R_B7_L9 CYCLE
+    #define R_B8_L9 CYCLE
 #endif
 
 enum custom_keycodes {
@@ -259,6 +279,7 @@ enum custom_keycodes {
         _APP_VSCODE = 0x01,
         _APP_CHROME = 0x02,
         _APP_FUSION = 0x03,
+        _APP_KICAD = 0x04,
     } hid_appsense_apps;
     
     typedef enum {

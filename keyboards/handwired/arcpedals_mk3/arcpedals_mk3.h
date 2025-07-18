@@ -68,6 +68,7 @@ enum userspace_layers {
     _VSCODE,
     _FUSION,
     _CHROME,
+    _KICAD,
     _MGMT,
 };
     

@@ -9,7 +9,7 @@
 // 1st layer on the cycle
 #define LAYER_CYCLE_START 0
 // Last layer on the cycle
-#define LAYER_CYCLE_END   7
+#define LAYER_CYCLE_END   9
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     #include "rgb_ledmaps.h"
@@ -122,15 +122,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
     ),
     [_FUSION] = LAYOUT(
-        _______, KC_LGUI, _______, _______,                                 _______,    KC_MS_BTN3, _______, _______, _______,                              _______,
-        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,    KC_MS_WH_UP, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
+        _______, KC_LGUI, _______, _______, _______,                                  KC_MS_BTN3, _______, _______, _______,                              _______,
+        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,     KC_MS_WH_UP, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
     ),
     [_CHROME] = LAYOUT(
       _______, _______, _______, _______,    _______,                           _______, _______, _______, _______,    _______,
       _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
-    ),  
+    ),
+    [_KICAD] = LAYOUT(
+      _______, _______, _______, _______, KC_MS_BTN3,                           KC_MS_BTN3, _______, _______, _______,    _______,
+      _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
+    ),
     [_MGMT] = LAYOUT(
-        _______, _______, QK_BOOT, EE_CLR,                                  _______,    _______, _______, EE_CLR, QK_BOOT,                                  _______,
+        _______, _______, QK_BOOT, EE_CLR,                                  _______,    _______, _______, QK_BOOT, EE_CLR,                                  _______,
         _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,                 _______,    _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,                 _______
     )
 };
@@ -180,9 +184,13 @@ const ledmap ledmaps[] = {
       L_B1_L7,L_B1_L7,L_B1_L7,L_B2_L7,L_B2_L7,L_B2_L7,L_B3_L7,L_B3_L7,L_B3_L7,L_B4_L7,L_B4_L7,L_B4_L7,L_B5_L7,L_B5_L7,L_B5_L7,L_B6_L7,L_B6_L7,L_B6_L7,L_B7_L7,L_B7_L7,L_B7_L7,L_B8_L7,L_B8_L7,L_B8_L7, \
       R_B1_L7,R_B1_L7,R_B1_L7,R_B2_L7,R_B2_L7,R_B2_L7,R_B3_L7,R_B3_L7,R_B3_L7,R_B4_L7,R_B4_L7,R_B4_L7,R_B5_L7,R_B5_L7,R_B5_L7,R_B6_L7,R_B6_L7,R_B6_L7,R_B7_L7,R_B7_L7,R_B7_L7,R_B8_L7,R_B8_L7,R_B8_L7
     ),
+    [_CHROME]   = LEDMAP(
+      L_B1_L8,L_B1_L8,L_B1_L8,L_B2_L8,L_B2_L8,L_B2_L8,L_B3_L8,L_B3_L8,L_B3_L8,L_B4_L8,L_B4_L8,L_B4_L8,L_B5_L8,L_B5_L8,L_B5_L8,L_B6_L8,L_B6_L8,L_B6_L8,L_B7_L8,L_B7_L8,L_B7_L8,L_B8_L8,L_B8_L8,L_B8_L8, \
+      R_B1_L8,R_B1_L8,R_B1_L8,R_B2_L8,R_B2_L8,R_B2_L8,R_B3_L8,R_B3_L8,R_B3_L8,R_B4_L8,R_B4_L8,R_B4_L8,R_B5_L8,R_B5_L8,R_B5_L8,R_B6_L8,R_B6_L8,R_B6_L8,R_B7_L8,R_B7_L8,R_B7_L8,R_B8_L8,R_B8_L8,R_B8_L8
+    ),
     [_MGMT]     = LEDMAP(
-      L_B1_L3,L_B1_L3,L_B1_L3,L_B2_L3,L_B2_L3,L_B2_L3,L_B3_L3,L_B3_L3,L_B3_L3,L_B4_L3,L_B4_L3,L_B4_L3,L_B5_L3,L_B5_L3,L_B5_L3,L_B6_L3,L_B6_L3,L_B6_L3,L_B7_L3,L_B7_L3,L_B7_L3,L_B8_L3,L_B8_L3,L_B8_L3, \
-      R_B1_L3,R_B1_L3,R_B1_L3,R_B2_L3,R_B2_L3,R_B2_L3,R_B3_L3,R_B3_L3,R_B3_L3,R_B4_L3,R_B4_L3,R_B4_L3,R_B5_L3,R_B5_L3,R_B5_L3,R_B6_L3,R_B6_L3,R_B6_L3,R_B7_L3,R_B7_L3,R_B7_L3,R_B8_L3,R_B8_L3,R_B8_L3
+      L_B1_L9,L_B1_L9,L_B1_L9,L_B2_L9,L_B2_L9,L_B2_L9,L_B3_L9,L_B3_L9,L_B3_L9,L_B4_L9,L_B4_L9,L_B4_L9,L_B5_L9,L_B5_L9,L_B5_L9,L_B6_L9,L_B6_L9,L_B6_L9,L_B7_L9,L_B7_L9,L_B7_L9,L_B8_L9,L_B8_L9,L_B8_L9, \
+      R_B1_L9,R_B1_L9,R_B1_L9,R_B2_L9,R_B2_L9,R_B2_L9,R_B3_L9,R_B3_L9,R_B3_L9,R_B4_L9,R_B4_L9,R_B4_L9,R_B5_L9,R_B5_L9,R_B5_L9,R_B6_L9,R_B6_L9,R_B6_L9,R_B7_L9,R_B7_L9,R_B7_L9,R_B8_L9,R_B8_L9,R_B8_L9
     )
 };
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
@@ -276,6 +284,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     case 8:
         send_layer_colour(9);
         break;
+    case 9:
+        send_layer_colour(10);
+        break;
   }
   return state;
 }
@@ -296,11 +307,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
               break;
 
               case _APP_FUSION:
-                  layer_on(_FUSION);
+                  layer_move(_FUSION);
                   break;
 
               case _APP_CHROME:
-                  layer_on(_CHROME);
+                  layer_move(_CHROME);
+                  break;
+
+              case _APP_KICAD:
+                  layer_move(_KICAD);
                   break;
           
               case _APP_OTHER:
