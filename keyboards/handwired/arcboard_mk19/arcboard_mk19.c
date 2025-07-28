@@ -93,6 +93,8 @@ bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
     switch(keycode) {
         case QK_LAYER_LOCK:
             return true;
+        case DRAGSCROLL_MODE_TOGGLE:
+            return true;
         default:
             return false;
     }
