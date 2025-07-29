@@ -1,0 +1,34 @@
+{
+    "manufacturer": "christrotter",
+    "keyboard_name": "handwired/arcboard_mk19_tft_test",
+    "maintainer": "christrotter",
+    "bootloader": "rp2040",
+    "diode_direction": "ROW2COL",
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": true,
+        "extrakey": true,
+        "mousekey": false,
+        "nkro": true,
+        "quantum_painter": true
+    },
+    "matrix_pins": {
+        "rows": ["GP18"],
+        "cols": ["GP19"]
+      },
+    "processor": "RP2040",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0xF009",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0, "y": 0}
+            ]
+        }
+    }
+}
