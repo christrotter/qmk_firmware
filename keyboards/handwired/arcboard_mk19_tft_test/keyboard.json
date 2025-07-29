@@ -5,10 +5,10 @@
     "bootloader": "rp2040",
     "diode_direction": "ROW2COL",
     "features": {
-        "bootmagic": true,
+        "bootmagic": false,
         "command": false,
         "console": true,
-        "extrakey": true,
+        "extrakey": false,
         "mousekey": false,
         "nkro": true,
         "quantum_painter": true
