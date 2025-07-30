@@ -17,8 +17,11 @@
 #pragma once
 
 #define HAL_USE_SPI TRUE
+#define HAL_USE_PWM TRUE
 
-// #define SPI_USE_WAIT TRUE
-// #define SPI_SELECT_MODE SPI_SELECT_MODE_PAD
+// #define SPI_USE_WAIT TRUE // this did nothing
+// #define SPI_SELECT_MODE SPI_SELECT_MODE_PAD // this did nothing
+// #define HAL_USE_PAL TRUE // this did nothing
+
 
 #include_next <halconf.h>
