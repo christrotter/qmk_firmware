@@ -16,7 +16,7 @@
 
 #define SPI_DRIVER SPID1
 
-#define DISPLAY_SPI_DIVISOR 16
+#define DISPLAY_SPI_DIVISOR 32
 // div16, 12, 8,  = small box of static
 // div12 = small box of static
 // 
@@ -31,7 +31,12 @@
 
 #define DISPLAY_SPI_MODE 3
 
-
+// ST7789 specific color format settings
+// #define ST7789_NO_AUTOMATIC_VIEWPORT_OFFSETS
+// #define ST7789_BGR_MODE  // this did not work
+// #define ST7789_COLOR_ORDER BGR // this did not work either
+// #define ST7789_MADCTL_BGR // this did not work either
+// #define ST77XX_MADCTL_BGR 0b00001000
+// #define ST77XX_MADCTL_RGB 0b00000000
 // #define QUANTUM_PAINTER_TASK_THROTTLE 50 // trying to reduce the scan rate impact
-// #define QUANTUM_PAINTER_DISPLAY_TIMEOUT 0 // this is super important - you get a white screen after 30s otherwise
-// #define QUANTUM_PAINTER_SUPPORTS_NATIVE_COLORS true
+#define QUANTUM_PAINTER_DISPLAY_TIMEOUT 0 // this is super important - you get a white screen after 30s otherwise

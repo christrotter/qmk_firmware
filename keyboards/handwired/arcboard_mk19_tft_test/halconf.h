@@ -20,7 +20,7 @@
 #define HAL_USE_PWM TRUE
 
 // #define SPI_USE_WAIT TRUE // this did nothing
-// #define SPI_SELECT_MODE SPI_SELECT_MODE_PAD // this did nothing
+// #define SPI_SELECT_MODE SPI_SELECT_MODE_PAD // none, pad, port, line, lld // port, line, lld are not a thing anymore
 // #define HAL_USE_PAL TRUE // this did nothing
 
 
