@@ -10,4 +10,13 @@
 enum userspace_layers {
     _QWERTY             = 0,
     FIRST_DEFAULT_LAYER = 0,
+    _MOUSE,
+    _SYMBOLS,
+    _NAV,
+    _RECT,
+    _VSCODE,
+    _FUSION,
+    _CHROME,
+    _KICAD,
+    _MGMT,
 };

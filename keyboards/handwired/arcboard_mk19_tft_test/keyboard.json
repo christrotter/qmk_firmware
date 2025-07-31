@@ -8,8 +8,8 @@
         "bootmagic": false,
         "command": false,
         "console": true,
-        "extrakey": false,
-        "mousekey": false,
+        "extrakey": true,
+        "mousekey": true,
         "nkro": true,
         "quantum_painter": true
     },
