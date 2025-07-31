@@ -5,12 +5,46 @@
 #include "arcboard_mk19.h"
 #include "print.h"
 
+#include "qp_internal.h"
+#include "qp_comms.h"
+#include "qp_st77xx_opcodes.h"
+#include "qp_st7789_opcodes.h"
+#include "qp_tft_panel.h"
+
 #include <qp.h>
 #include "qp_st7789.h"
 static painter_device_t display;
 
 #include "graphics/futura40.qff.c"
 static painter_font_handle_t font;
+
+// this is required to invert the colours on the display
+bool qp_st7789_init(painter_device_t device, painter_rotation_t rotation) {
+    // clang-format off
+    const uint8_t st7789_init_sequence[] = {
+        // Command,                 Delay, N, Data[N]
+        ST77XX_CMD_RESET,            120,  0,
+        ST77XX_CMD_SLEEP_OFF,          5,  0,
+        ST77XX_SET_PIX_FMT,            0,  1, 0x55,
+        ST77XX_CMD_INVERT_OFF,          0,  0,
+        ST77XX_CMD_NORMAL_ON,          0,  0,
+        ST77XX_CMD_DISPLAY_ON,        20,  0
+    };
+    // clang-format on
+    qp_comms_bulk_command_sequence(device, st7789_init_sequence, sizeof(st7789_init_sequence));
+
+    // Configure the rotation (i.e. the ordering and direction of memory writes in GRAM)
+    const uint8_t madctl[] = {
+        [QP_ROTATION_0]   = ST77XX_MADCTL_RGB,
+        [QP_ROTATION_90]  = ST77XX_MADCTL_RGB | ST77XX_MADCTL_MX | ST77XX_MADCTL_MV,
+        [QP_ROTATION_180] = ST77XX_MADCTL_RGB | ST77XX_MADCTL_MX | ST77XX_MADCTL_MY,
+        [QP_ROTATION_270] = ST77XX_MADCTL_RGB | ST77XX_MADCTL_MV | ST77XX_MADCTL_MY,
+    };
+    qp_comms_command_databyte(device, ST77XX_SET_MADCTL, madctl[rotation]);
+
+    return true;
+}
+
 
 void keyboard_post_init_user(void) {
     // Customise these values to desired behaviour
@@ -59,7 +93,7 @@ void housekeeping_task_user(void) {
         qp_rect(display, 
             0, 0, 
             284, 76, 
-            0, 0, 255,  // White: H=0, S=0, V=255
+            HSV_RED,  // White: H=0, S=0, V=255
             true
         );
     }
@@ -79,8 +113,8 @@ void housekeeping_task_user(void) {
         // Black: H=0, S=0, V=0 (no brightness)
         // White: H=0, S=0, V=255 (max brightness, no saturation)
         qp_drawtext_recolor(display, x_centered, y_centered, font, text, 
-                           0, 0, 0,    // foreground: black (H, S, V)
-                           0, 0, 255); // background: white (H, S, V)
+                           HSV_BLUE,    // foreground: black (H, S, V)
+                           HSV_RED); // background: white (H, S, V)
         // qp_flush(display);
     }
 }
