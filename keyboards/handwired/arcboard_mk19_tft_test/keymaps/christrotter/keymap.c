@@ -60,25 +60,25 @@ bool qp_st7789_init(painter_device_t device, painter_rotation_t rotation) {
 const char *current_layer_name(void) {
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
-            return "qwerty";
+            return "qw";
         case _NAV:
-            return "nav";
+            return "na";
         case _SYMBOLS:
-            return "symbols";
+            return "sy";
         case _MOUSE:
-            return "mouse";
+            return "mo";
         case _RECT:
-            return "rect";
+            return "re";
         case _VSCODE:
-            return "vscode";
+            return "vs";
         case _FUSION:
-            return "fusion";
+            return "fu";
         case _CHROME:
-            return "chrome";
+            return "ch";
         case _KICAD:
-            return "kicad";
+            return "ki";
         case _MGMT:
-            return "mgmt";
+            return "mg";
     }
     return "unknown";
 }
@@ -145,10 +145,10 @@ void keyboard_post_init_user(void) {
     writePinLow(DISPLAY_BL_PIN);
     
     display = qp_st7789_make_spi_device(76, 284, DISPLAY_CS_PIN, DISPLAY_DC_PIN, DISPLAY_RST_PIN, DISPLAY_SPI_DIVISOR, DISPLAY_SPI_MODE);
-    qp_set_viewport_offsets(display, 81, 17); // for qp_rotation_0
+    qp_set_viewport_offsets(display, 82, 18); // for qp_rotation_0
     // if using horizontal orientation, use below, and reverse your x and y numbers when using QP draw functions
     // display = qp_st7789_make_spi_device(284, 76, DISPLAY_CS_PIN, DISPLAY_DC_PIN, DISPLAY_RST_PIN, DISPLAY_SPI_DIVISOR, DISPLAY_SPI_MODE);
-    // qp_set_viewport_offsets(display, 17, 81); // for qp_rotation_270
+    // qp_set_viewport_offsets(display, 18, 82); // for qp_rotation_270
     qp_init(display, QP_ROTATION_0);
 
     if (qp_lvgl_attach(display)) {     // Attach LVGL to the display
