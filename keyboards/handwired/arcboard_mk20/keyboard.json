@@ -1,0 +1,40 @@
+{
+    "manufacturer": "Chris Trotter",
+    "keyboard_name": "arcboard_mk20",
+    "maintainer": "Chris Trotter",
+    "bootloader": "stm32-dfu",
+    "diode_direction": "ROW2COL",
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": true,
+        "extrakey": true,
+        "mousekey": true,
+        "encoder": true,
+        "nkro": true
+    },
+    "matrix_pins": {
+        "cols": ["B6","C15","C14","C13","B4","B5","B3","C12","C11","C10"],
+        "rows": ["C0", "C1", "C2", "C3", "A0", "A1", "A2"]
+    },
+    "encoder": {
+        "enabled": true,
+        "rotary": [
+            { "pin_a": "C8", "pin_b": "C7", "resolution": 2 }
+        ]
+    },
+    "processor": "STM32F405",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT_ortho_1x1": {
+            "layout": [
+                {"matrix": [4, 0], "x": 0, "y": 0}
+            ]
+        }
+    }
+}
