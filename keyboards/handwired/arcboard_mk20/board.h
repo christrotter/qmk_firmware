@@ -4,3 +4,4 @@
 
 #undef STM32_HSECLK
 #define STM32_HSECLK 8000000U
+

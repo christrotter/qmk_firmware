@@ -5,7 +5,7 @@ KB_DIR=$HOME_DIR/keyboards/$KB_PATH
 USER_DIR=$HOME_DIR/users/christrotter
 
 BUILD_CORES=12
-KEYMAP='default'
+KEYMAP='christrotter'
 KEYBOARD='handwired/arcboard_mk20'
 
 if [ -z "$1" ];then
