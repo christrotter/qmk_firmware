@@ -28,51 +28,6 @@
 
 #define RGB_MATRIX_DEFAULT_HUE 5
 #define RGB_MATRIX_DEFAULT_SAT 5
-// we have 94 leds per side
-#define RGB_TOT_IND_L 64
-#define RGB_TOT_IND_R 64
-
-// left side
-#define RGB_KEYS_L_START 0 // 30 leds in keys + 4 in dpad + 3 in paddle-keys
-#define RGB_KEYS_L_END 36
-#define RGB_RING_L_START 37 // 18 leds in the ring
-#define RGB_RING_L_END 54
-#define RGB_INDICATOR_L_START 55 // 8 leds in the indicator
-#define RGB_INDICATOR_L_END 62
-// now we split it up for multi-function display
-#define RGB_INDICATOR_L1_START RGB_INDICATOR_L_START
-#define RGB_INDICATOR_L1_END 59
-#define RGB_INDICATOR_L2_START 60
-#define RGB_INDICATOR_L2_END RGB_INDICATOR_L_END
-
-#define RGB_INNER_INTAKE_L_START 63 // there are 10 leds in the inner intake
-#define RGB_INNER_INTAKE_L_END 72
-#define RGB_OUTER_INTAKE_L_START 73 // there are 24 leds in the outer intake
-// there are 24 leds in the outer intake
-#define RGB_OUTER_INTAKE_L_END 96
-// there are 12 leds in the logo
-#define RGB_LOGO_L_START 97
-#define RGB_LOGO_L_END 108 // 109 per side means 218 total
-
-// right side
-#define RGB_KEYS_R_START 111
-#define RGB_KEYS_R_END 147
-#define RGB_RING_R_START 148
-#define RGB_RING_R_END 167
-#define RGB_INDICATOR_R_START 168
-#define RGB_INDICATOR_R_END 175
-#define RGB_INDICATOR_R1_START RGB_INDICATOR_R_START
-#define RGB_INDICATOR_R1_END 171
-#define RGB_INDICATOR_R2_START 172
-#define RGB_INDICATOR_R2_END RGB_INDICATOR_R_END
-
-#define RGB_INNER_INTAKE_R_START 176
-#define RGB_INNER_INTAKE_R_END 183
-#define RGB_OUTER_INTAKE_R_START 184
-#define RGB_OUTER_INTAKE_R_END 207
-#define RGB_LOGO_R_START 208
-#define RGB_LOGO_R_END 219
-
 
 #define QUANTUM_PAINTER_DISPLAY_TIMEOUT 0
 
