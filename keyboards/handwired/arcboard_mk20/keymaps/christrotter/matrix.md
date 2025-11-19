@@ -276,3 +276,30 @@ ok, it's the col that must be wrong.
 OHHHH
 i've forgotten that the middle paddle and dpad item are duplicated.
 so the matrix is not 7x7, it's (7x7)-1
+
+
+thumb keys are out of order...
+1-0=0
+2-1=1
+3-2=5
+4-3=3
+5-4=2
+6-5=6
+
+So this needs to transform....
+```json
+                {"matrix": [0, 0], "x": 0, "y": 0},
+                {"matrix": [0, 1], "x": 1, "y": 0},
+                {"matrix": [0, 2], "x": 2, "y": 0},
+                {"matrix": [0, 3], "x": 3, "y": 0},
+                {"matrix": [0, 4], "x": 4, "y": 0},
+                {"matrix": [0, 5], "x": 5, "y": 0},
+
+
+                {"matrix": [0, 0], "x": 0, "y": 0},
+                {"matrix": [0, 1], "x": 1, "y": 0},
+                {"matrix": [0, 4], "x": 2, "y": 0},
+                {"matrix": [0, 3], "x": 3, "y": 0},
+                {"matrix": [0, 2], "x": 4, "y": 0},
+                {"matrix": [0, 5], "x": 5, "y": 0},
+```

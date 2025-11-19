@@ -1,7 +1,8 @@
 #pragma once
 
-#include QMK_KEYBOARD_H
+#include "quantum.h"
 #include "color.h"
+#include QMK_KEYBOARD_H
 
 // really want to have these in the keymap....
 enum userspace_layers {
@@ -83,4 +84,19 @@ enum userspace_layers {
     bool kb_get_pointer_dragscroll_enabled(void);
     void kb_set_pointer_dragscroll_enabled(bool enable);
 #endif // POINTING_DEVICE_ENABLE
+
+bool kb_get_super_alt_tab_state(void);
+void kb_set_super_alt_tab_active(void);
+void kb_set_super_alt_tab_off(void);
+
+bool kb_get_alt_tab_state(void);
+void kb_set_alt_tab_active(void);
+void kb_set_alt_tab_off(void);
+
+void keyboard_post_init_transport_sync(void);
+void housekeeping_task_transport_sync(void);
+
+void matrix_init_sub_kb(void);
+void matrix_scan_sub_kb(void);
+bool process_record_user_rgb_matrix(uint16_t keycode, keyrecord_t *record); //_user should not be in the keyboard.c
 

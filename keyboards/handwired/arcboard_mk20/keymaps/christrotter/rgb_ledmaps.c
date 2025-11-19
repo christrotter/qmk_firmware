@@ -60,7 +60,6 @@ void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer) {
     }
 }
 
-
 void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int val, int val_override) {
     if (val_override) {
         val = val_override;
@@ -81,12 +80,54 @@ void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int 
 }
 
 bool rgb_matrix_indicators_user() {
+    bool is_shifted = (get_mods() | get_weak_mods()) & MOD_MASK_SHIFT;
+    bool is_oneshot_shift = (get_oneshot_mods() | get_mods()) & MOD_MASK_SHIFT;
+
+    bool is_lguied = (get_mods() | get_weak_mods()) & MOD_MASK_GUI;
+    bool is_oneshot_gui = (get_oneshot_mods() | get_mods()) & MOD_MASK_GUI;
     if (is_keyboard_left()) {
         // set LEFT per-key leds by ledmap
         set_rgb_ledmap(RGB_KEYS_L_START, RGB_KEYS_L_END, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
+
+        set_rgb_range(RGB_RING_L_START, RGB_RING_L_END, HSV_BLUE, INDICATOR_BRIGHTNESS);
+        set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, HSV_YELLOW, INDICATOR_BRIGHTNESS);
+        set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
+        set_rgb_range(RGB_LOGO_L_START, RGB_LOGO_L_END, HSV_RED, INDICATOR_BRIGHTNESS);
+
+        if (is_shifted || (is_oneshot_shift && !is_oneshot_gui)) {
+            set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
+        } else if (kb_get_pointer_dragscroll_enabled()) {
+            // this never runs...the set_scrolling bool is never sync'd to the slave
+            set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
+        } else if (is_lguied || (is_oneshot_gui && !is_oneshot_shift)) {
+            set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
+        } else if (is_oneshot_gui && is_oneshot_shift) {
+            set_rgb_range(RGB_INDICATOR_L1_START, RGB_INDICATOR_L1_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
+            set_rgb_range(RGB_INDICATOR_L2_START, RGB_INDICATOR_L2_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
+        } else {
+            set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_MOONLANDER, INDICATOR_IDLE_BRIGHTNESS);
+        }
     } else {
         // set RIGHT per-key leds by ledmap
         set_rgb_ledmap(RGB_KEYS_R_START, RGB_KEYS_R_END, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
+
+        set_rgb_range(RGB_RING_R_START, RGB_RING_R_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
+        // set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, HSV_YELLOW, INDICATOR_BRIGHTNESS);
+        // set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
+        // set_rgb_range(RGB_LOGO_R_START, RGB_LOGO_R_END, HSV_RED, INDICATOR_BRIGHTNESS);
+
+        if (is_shifted || (is_oneshot_shift && !is_oneshot_gui)) {
+            set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
+        } else if (kb_get_pointer_dragscroll_enabled()) {
+            set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
+        } else if (is_lguied || (is_oneshot_gui && !is_oneshot_shift)) {
+            set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
+        } else if (is_oneshot_gui && is_oneshot_shift) {
+            set_rgb_range(RGB_INDICATOR_R1_START, RGB_INDICATOR_R1_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
+            set_rgb_range(RGB_INDICATOR_R2_START, RGB_INDICATOR_R2_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
+        } else {
+            set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_MOONLANDER, INDICATOR_IDLE_BRIGHTNESS);
+        }
     }
     return true;
 }

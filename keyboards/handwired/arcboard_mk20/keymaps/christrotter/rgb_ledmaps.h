@@ -30,6 +30,17 @@
     in our case, we are passing in the ledmaps[] arrays like _QWERTY as an ordered array, and 
     this is sending them to the led driver?... 
     so what is ingesting the output array?
+
+                    {"matrix": [0, 0], "x": 0, "y": 0},
+                {"matrix": [0, 1], "x": 1, "y": 0},
+                {"matrix": [0, 4], "x": 2, "y": 0},
+                {"matrix": [0, 3], "x": 3, "y": 0},
+                {"matrix": [0, 2], "x": 4, "y": 0},
+                {"matrix": [0, 5], "x": 5, "y": 0},
+                RED, TOG_NAV, RED, ___n___, SPRING, RED,
+                RED, TOG_NAV, ORANGE, ___n___, SPRING, BLUE,
+                red, nav, spring, blank, orange, blue
+
 */
 #define LEDMAP( \
     L_40, L_41, L_42, L_43, L_44, L_45,                             R_40, R_41, R_42, R_43, R_44, R_45, \
@@ -37,7 +48,7 @@
     L_20, L_21, L_22, L_23, L_24, L_25,                             R_20, R_21, R_22, R_23, R_24, R_25, \
     L_10, L_11, L_12, L_13, L_14, L_15,                             R_10, R_11, R_12, R_13, R_14, R_15, \
     L_00, L_01, L_02, L_03, L_04, L_05,                             R_00, R_01, R_02, R_03, R_04, R_05, \
-    L_50, L_51, L_52, L_53, L_54, L_55,                             R_50, R_51, R_52, R_53, R_54, R_55 \
+    L_50, L_51, L_52, L_53, L_54, L_55, L_56,                       R_50, R_51, R_52, R_53, R_54, R_55, R_56 \
 ) { \
     L_30, L_20, L_10, L_40, \
     L_31, L_21, L_11, L_41, \
@@ -45,16 +56,16 @@
     L_33, L_23, L_13, L_43, \
     L_34, L_24, L_14, L_44, \
     L_35, L_25, L_15, L_45, \
-    L_00, L_01, L_02, L_03, L_04, L_05, \
-    L_50, L_51, L_52, L_53, L_54, L_55, \
+    L_05, L_02, L_03, L_04, L_01, L_00, \
+    L_50, L_53, L_52, L_51, L_54, L_55, L_56, \
     R_30, R_20, R_10, R_40, \
     R_31, R_21, R_11, R_41, \
     R_32, R_22, R_12, R_42, \
     R_33, R_23, R_13, R_43, \
     R_34, R_24, R_14, R_44, \
     R_35, R_25, R_15, R_45, \
-    R_00, R_01, R_02, R_03, R_04, R_05, \
-    R_50, R_51, R_52, R_53, R_54, R_55 \
+    R_05, R_02, R_03, R_04, R_01, R_00, \
+    R_50, R_51, R_52, R_53, R_54, R_55, R_56 \
 }
 
 #define ___t___ {255, 255} // Transparent color that inherits from lower layers
