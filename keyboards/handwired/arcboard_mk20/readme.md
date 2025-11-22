@@ -1,8 +1,18 @@
 # arcboard_mk20
+*You should not build this.  Probably mk21 will be much better.*
 
-matrix pins
+Where to begin.
 
-dfu-util -a 0 --dfuse-address 0x08000000 -D /Users/christrotter/Downloads/stm32f405rg_arcboard_mk20/tinyuf2-stm32f405rg_arcboard_mk20.bin
+
+# Bringing the mainboard to life
+Run this:
+`dfu-util -a 0 --dfuse-address 0x08000000 -D /path/to/your/bootloader.bin`
+After running dfu-util, you'll see the device in ioreg.
+Now, run the tinyuf2 qmk flash:
+`qmk flash -kb $KEYBOARD -km $KEYMAP -j $BUILD_CORES`
+Now the device has qmk and behaves as such.
+
+
 
 18 leds on encoder ring
 12 on indicator bar // 8 now
@@ -18,3 +28,4 @@ classic 'right side a tire fire only solved by getting counts correct' problems.
 and the left side outer intake stopped working.
 30 cyboard, 4 dpad, 3 paddle, 18 ring, 8 indicator, 10, or 12? shouldn't matter...ah but it does, cuz the count crossing over to 
 37 + 18 + 8 = 63 + 46 = 109
+

@@ -37,7 +37,7 @@
     "rgb_matrix": {
         "driver": "ws2812",
         "max_brightness": 90,
-        "split_count": [101,103],
+        "split_count": [103,103],
         "layout": [
              {"flags": 4, "x": 4, "y": 0},
              {"flags": 4, "x": 4, "y": 0},

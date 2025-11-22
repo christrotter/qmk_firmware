@@ -25,7 +25,7 @@ enum userspace_layers {
 
 #define _MACROS _MOUSE
 
-#define HSV_MOONLANDER 5, 5, 255
+// #define HSV_MOONLANDER 5, 5, KEYS_BRIGHTNESS
 // Just a handy defines to make our ledmaps look better
 // braces work here because
 #define RED \
@@ -64,8 +64,8 @@ enum userspace_layers {
     { HSV_PINK }
 #define BLACK \
     { HSV_BLACK }
-#define WHITE \
-    { HSV_MOONLANDER }
+#define BACKGROUND_SILVER 25, 25, KEYS_BRIGHTNESS
+
 
 // indicator colours
 #define INDICATOR_BG \

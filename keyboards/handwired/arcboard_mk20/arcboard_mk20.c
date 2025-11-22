@@ -127,6 +127,8 @@ void keyboard_post_init_kb(void) {
     // turn on the backlight
     setPinOutput(DISPLAY_BL_PIN);
     writePinLow(DISPLAY_BL_PIN);
+    maybe_update_pointing_device_cpi(&kb_config);
+    transaction_register_rpc(RPC_ID_KB_CONFIG_SYNC, kb_config_sync_handler);
     keyboard_post_init_user();
 }
 

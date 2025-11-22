@@ -120,6 +120,17 @@ enum custom_keycodes {
 #define GDOCZMOU LGUI(LALT(KC_PMNS))
 
 
+#define LAYER_0_COLOUR BACKGROUND_SILVER         // qwerty
+#define LAYER_1_COLOUR HSV_ORANGE       // mouse
+#define LAYER_2_COLOUR HSV_PINK        // symbols  
+#define LAYER_3_COLOUR HSV_CHARTREUSE   // nav
+#define LAYER_4_COLOUR HSV_RED          // rect
+#define LAYER_5_COLOUR HSV_PURPLE       // vscode
+#define LAYER_6_COLOUR HSV_ORANGE       // fusion
+#define LAYER_7_COLOUR HSV_CYAN       // chrome
+#define LAYER_8_COLOUR HSV_PINK       // chrome
+#define LAYER_9_COLOUR HSV_RED          // mgmt
+
 // constants across all layers, vs. setting key-led-slots individually
 // note: these cannot have braces e.g. #define HRM_SFT {GREEN} blows up the evaluation of the [3] part of the int[KEYS_COUNT][3]; sees it as one item
 #define ___n___ {0, 0, 0}

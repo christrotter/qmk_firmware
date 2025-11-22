@@ -64,7 +64,7 @@ void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int 
     if (val_override) {
         val = val_override;
     } else {
-        val = 75;
+        val = INDICATOR_BRIGHTNESS;
     }
     for (int i = first_led; i <= last_led; i++) {
         hsv_t hsv = {
@@ -87,12 +87,57 @@ bool rgb_matrix_indicators_user() {
     bool is_oneshot_gui = (get_oneshot_mods() | get_mods()) & MOD_MASK_GUI;
     if (is_keyboard_left()) {
         // set LEFT per-key leds by ledmap
-        set_rgb_ledmap(RGB_KEYS_L_START, RGB_KEYS_L_END, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
+        set_rgb_ledmap(RGB_KEYS_L_START, RGB_KEYS_L_END, KEYS_BRIGHTNESS, get_highest_layer(layer_state | default_layer_state));
+        
+        // todo have these change on layers
+        set_rgb_range(RGB_RING_L_START, RGB_RING_L_END, HSV_GREEN, INDICATOR_BRIGHTNESS_RING); 
+        set_rgb_range(RGB_LOGO_L_START, RGB_LOGO_L_END, HSV_CYAN, INDICATOR_BRIGHTNESS);
 
-        set_rgb_range(RGB_RING_L_START, RGB_RING_L_END, HSV_SPRINGGREEN, INDICATOR_BRIGHTNESS);
-        set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, HSV_YELLOW, INDICATOR_BRIGHTNESS);
-        set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
-        set_rgb_range(RGB_LOGO_L_START, RGB_LOGO_L_END, HSV_RED, INDICATOR_BRIGHTNESS);
+        switch(get_highest_layer(layer_state|default_layer_state)) {
+            case 0:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_0_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_0_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 1:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_1_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_1_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 2:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_2_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_2_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 3:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_3_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_3_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 4:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_4_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_4_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 5:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_5_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_5_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 6:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_6_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_6_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 7:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_7_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_7_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 8:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_8_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_8_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 9:
+                set_rgb_range(RGB_INNER_INTAKE_L_START, RGB_INNER_INTAKE_L_END, LAYER_9_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_L_START, RGB_OUTER_INTAKE_L_END, LAYER_9_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+
+            default:
+                break;
+        }
 
         if (is_shifted || (is_oneshot_shift && !is_oneshot_gui)) {
             set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
@@ -104,17 +149,62 @@ bool rgb_matrix_indicators_user() {
             set_rgb_range(RGB_INDICATOR_L1_START, RGB_INDICATOR_L1_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
             set_rgb_range(RGB_INDICATOR_L2_START, RGB_INDICATOR_L2_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
         } else {
-            set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, HSV_MOONLANDER, INDICATOR_IDLE_BRIGHTNESS);
+            set_rgb_range(RGB_INDICATOR_L_START, RGB_INDICATOR_L_END, BACKGROUND_SILVER, INDICATOR_BRIGHTNESS_IDLE);
         }
     } else {
         // set RIGHT per-key leds by ledmap
-        set_rgb_ledmap(RGB_KEYS_R_START, RGB_KEYS_R_END, rgb_matrix_get_val(), get_highest_layer(layer_state | default_layer_state));
+        set_rgb_ledmap(RGB_KEYS_R_START, RGB_KEYS_R_END, KEYS_BRIGHTNESS, get_highest_layer(layer_state | default_layer_state));
 
-        set_rgb_range(RGB_RING_R_START, RGB_RING_R_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
-        set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, HSV_YELLOW, INDICATOR_BRIGHTNESS);
-        set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, HSV_ORANGE, INDICATOR_BRIGHTNESS);
-        set_rgb_range(RGB_LOGO_R_START, RGB_LOGO_R_END, HSV_RED, INDICATOR_BRIGHTNESS);
+        // todo have these change on layers
+        set_rgb_range(RGB_RING_R_START, RGB_RING_R_END, HSV_GOLD, INDICATOR_BRIGHTNESS_RING);
+        set_rgb_range(RGB_LOGO_R_START, RGB_LOGO_R_END, HSV_CYAN, INDICATOR_BRIGHTNESS);
         
+        switch(get_highest_layer(layer_state|default_layer_state)) {
+            case 0:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_0_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_0_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 1:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_1_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_1_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 2:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_2_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_2_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 3:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_3_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_3_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 4:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_4_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_4_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 5:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_5_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_5_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 6:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_6_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_6_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 7:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_7_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_7_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 8:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_8_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_8_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+            case 9:
+                set_rgb_range(RGB_INNER_INTAKE_R_START, RGB_INNER_INTAKE_R_END, LAYER_9_COLOUR, INDICATOR_BRIGHTNESS);
+                set_rgb_range(RGB_OUTER_INTAKE_R_START, RGB_OUTER_INTAKE_R_END, LAYER_9_COLOUR, INDICATOR_BRIGHTNESS);
+                break;
+
+            default:
+                break;
+        }
+
         if (is_shifted || (is_oneshot_shift && !is_oneshot_gui)) {
             set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
         } else if (kb_get_pointer_dragscroll_enabled()) {
@@ -125,7 +215,7 @@ bool rgb_matrix_indicators_user() {
             set_rgb_range(RGB_INDICATOR_R1_START, RGB_INDICATOR_R1_END, HSV_GREEN, INDICATOR_BRIGHTNESS);
             set_rgb_range(RGB_INDICATOR_R2_START, RGB_INDICATOR_R2_END, HSV_PURPLE, INDICATOR_BRIGHTNESS);
         } else {
-            set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, HSV_MOONLANDER, INDICATOR_IDLE_BRIGHTNESS);
+            set_rgb_range(RGB_INDICATOR_R_START, RGB_INDICATOR_R_END, BACKGROUND_SILVER, INDICATOR_BRIGHTNESS_IDLE);
         }
     }
     return true;
