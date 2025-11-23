@@ -25,27 +25,30 @@ Thanks to `burkfers`, `Wimads` (cactus), `Drashna`, `GeorgeN`, `Yingeling`, `Das
   - 2x near LCD screen, w. 25mm silicone ring for grip
   - 1x large gear-driven ring around thumbcluster, w. translucent TPU grip
 - USB-C connectivity for main and split
-- 2.25" LCD screen
+- [2.25" LCD screen](https://www.aliexpress.com/item/1005009184422205.html)
 - a _lot_ of LEDs
   - ring encoder illumination
   - indicator bar (_e.g. shift-lock on_)
   - "intake" lighting incl. logo illumination
 - custom PCBs
-  - STM32 mainboard
-  - custom FFC for columns/thumbs
-  - EC10 to FFC
-  - SKRHACE010 to FFC (_dpad, w. 4x LEDs_)
-  - SKRHACE010 to FFC (_paddles, w. 1x LED_)
-  - LCD pins to FFC
-  - PMW3360 to FFC
-- designed for the Cyboard column PCB kit
+  - [STM32 mainboard](https://github.com/christrotter/arcboard-stm32)
+  - [custom FFC for columns/thumbs](https://github.com/christrotter/mk19-flex-pcb)
+  - [EC10 to FFC](https://github.com/christrotter/mouse-encoder-pcb)
+  - [SKRHACE010 to FFC (_dpad, w. 4x LEDs_)](https://github.com/christrotter/led-pad)
+  - [SKRHACE010 to FFC (_paddles, w. 1x LED_)](https://github.com/christrotter/paddle-dpad-pcb)
+  - LCD pins to FFC (*aliexpress*)
+  - [PMW3360 to FFC](https://github.com/christrotter/charybdis-pmw-3360-sensor-pcb/tree/arcboarding) (*forked from* [Charybdis](https://github.com/Bastardkb/charybdis-pmw-3360-sensor-pcb))
+- designed for ([the Cyboard column PCB kit](https://cyboard.digital/products/dactyl-flex-pcbs))
 - boot/reset buttons in palm rest
 - 6mm Grifiti palm rest pad (_template cut to fit_)
 - printed w. PLA in mind; clamshell assembly
 
 ## Firmware features
 - application sensing companion app for automatic layer switching (_works, but early days_)
+  - also integrates the keyboard with the mk3 pedals
+  - also integrates the keyboard/pedals with the monitor LED surround
 - basic UI (_under dev, rather poor_)
+- improved ledmap code, much toil reduction
 - the usual QMK goodness (_layer hold!_)
 - aesthetic lighting changes w. layers
 
@@ -59,6 +62,32 @@ Some new methods that made life much better.
 - **clamshell** - Bottom shell, then components assembly, then top shell.  Many packaging/fabrication lessons learned here, wow.
 - **remote-mount USB-C ports** (*vs. being soldered directly to the mainboard*)
 - **multi-colour printing** - I tried doing inlays & CA glue for the bottom shell graphics and it was a sad time.  burkfers encouraged/shamed me into trying multi-filament and wow, what a game-changer.  (*I don't have an automatic change system, either, and still amazing.*)
+
+# Links
+- Reddit posts
+  - https://www.reddit.com/r/ErgoMechKeyboards/comments/1cfgai1/arcboard_mk19_the_learning_continues/
+  - https://www.reddit.com/r/ErgoMechKeyboards/comments/1goqo3v/the_next_step_arcpedals_mk3/
+  - https://www.reddit.com/r/ErgoMechKeyboards/comments/1kphv10/arcboard_mk20_dev_demo_appsense_for_qmk_or_mild/
+- QMK
+  - https://github.com/christrotter/qmk_firmware/tree/arcboard-series/keyboards/handwired/arcboard_mk19
+  - https://github.com/christrotter/qmk_firmware/tree/arcboard-series/keyboards/handwired/arcpedals_mk3
+- PCBs
+  - dpad: https://github.com/christrotter/led-pad
+  - paddle: https://github.com/christrotter/paddle-dpad-pcb
+  - stm32 mainboard: https://github.com/christrotter/arcboard-stm32
+  - ec10 encoder to ffc: https://github.com/christrotter/mouse-encoder-pcb
+  - my fork of the Charybdis PMW pcb: https://github.com/christrotter/charybdis-pmw-3360-sensor-pcb/tree/arcboarding
+  - Cyboard connector: https://github.com/christrotter/mk19-flex-pcb
+# Prototype videos
+- Paddle switch prototype: https://youtu.be/c5nMtVwbkb0?si=nyleiMdXyoZ9cqYi
+- Ring encoder prototypes:
+  - https://youtu.be/lQFwvmERC6w?si=Wq_1y33K7FKhAAh9
+  - https://youtu.be/TqfIjvzGV10?si=Oi7gQAPyGjwN09Q8
+  - https://youtu.be/iZfNFKMe5Hg?si=l5-QiT3U4LrNl27g
+  - https://youtu.be/t9WXgvk5tNE?si=ZtXXiSQfZwNoUTdk
+  - https://youtu.be/0Gul08TXhzs?si=-Fqa02d69KASMguV
+- AppSense demo: https://youtu.be/pHvF_KDkxHM?si=VKkWK1cEtEMsvbvx
+- Monitor surround: https://youtu.be/IdejM_AcEIY?si=hktS4YOHlLD4JPLp
 
 # More pictures, please
 [Imgur gallery here](https://imgur.com/a/g7PXRzy).  Much more detail into the development process. 
@@ -75,11 +104,6 @@ Some new methods that made life much better.
 <a href="https://i.imgur.com/OBkJhMV.png"><img src="https://i.imgur.com/OBkJhMV.png" width="800"></a>
 <a href="https://i.imgur.com/6gFmnHj.png"><img src="https://i.imgur.com/6gFmnHj.png" width="800"></a>
 
-# Build overview
-Where to begin.  1000 hours over 6.5 months, 650+ page build journal & 8500+ post build thread, dozens of CAD components, 4? kilograms of prototype plastic printed, 6 Kicad projects, 7 JLC orders, and so...much...learning...
-
-
-
 
 # Bringing the mainboard to life
 For 
@@ -90,7 +114,7 @@ Now, run the tinyuf2 qmk flash:
 `qmk flash -kb $KEYBOARD -km $KEYMAP -j $BUILD_CORES`
 Now the device has qmk and behaves as such.
 
-# 
-
-# Managing the rgb matrix
-
+# ToDo
+## Managing the rgb matrix, ledmaps, indicators
+## Troubleshooting custom PMW installs
+## 
