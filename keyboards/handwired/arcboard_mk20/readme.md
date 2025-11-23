@@ -3,7 +3,7 @@
 
 The next iteration of the ArcBoard is here...mk20 comes with a lot of improvements pretty much across the board.
 
-<img src="images/mk20-profile.png"  width="1200">
+<a href="https://i.imgur.com/qV5I5p4.png"><img src="https://i.imgur.com/qV5I5p4.png" width="1200"></a>
 
 ## But y, tho
 Very important to note that this design isn't for everyone.  I have fibromyalgia which requires my hands to be in a resting position - can't use a mouse, can't rest on any edges, all sorts of restrictions.  Failure to abide by 'resting position' leads to a bad time, and without this keyboard layout (trackball location, specifically), I would not be able to do my day job (software stuff).
@@ -63,22 +63,20 @@ Some new methods that made life much better.
 # More pictures, please
 [Imgur gallery here](https://imgur.com/a/g7PXRzy).  Much more detail into the development process. 
 
+<a href="https://i.imgur.com/a0HeC0H.png"><img src="https://i.imgur.com/a0HeC0H.png" width="800"></a>
+<a href="https://i.imgur.com/xmHka58.png"><img src="https://i.imgur.com/xmHka58.png" width="800"></a>
 
-<img src="images/header.png"  width="800">
-<img src="images/paddles.png"  width="800">
+<a href="https://i.imgur.com/CdsrMOP.png"><img src="https://i.imgur.com/CdsrMOP.png" width="800"></a>
+<a href="https://i.imgur.com/HogVive.png"><img src="https://i.imgur.com/HogVive.png" width="800"></a>
 
-<img src="images/trackball.png"  width="800">
-<img src="images/right-half.png"  width="800">
+<a href="https://i.imgur.com/ka6fmzS.png"><img src="https://i.imgur.com/ka6fmzS.png" width="800"></a>
+<a href="https://i.imgur.com/MhT0z1k.png"><img src="https://i.imgur.com/MhT0z1k.png" width="800"></a>
 
-<img src="images/left-half.png"  width="800">
-<img src="images/ring-encoder.png"  width="800">
-
-<img src="images/bottom.png"  width="800">
-<img src="images/palm-buttons.png"  width="800">
-
+<a href="https://i.imgur.com/OBkJhMV.png"><img src="https://i.imgur.com/OBkJhMV.png" width="800"></a>
+<a href="https://i.imgur.com/6gFmnHj.png"><img src="https://i.imgur.com/6gFmnHj.png" width="800"></a>
 
 # Build overview
-Where to begin.  1000 hours over 6.5 months, 650+ page build journal & 8500+ post build thread, dozens of CAD components, many kilograms of prototype plastic printed, many constraints navigated...
+Where to begin.  1000 hours over 6.5 months, 650+ page build journal & 8500+ post build thread, dozens of CAD components, 4? kilograms of prototype plastic printed, 6 Kicad projects, 7 JLC orders, and so...much...learning...
 
 
 
