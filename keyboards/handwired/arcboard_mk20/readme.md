@@ -71,6 +71,7 @@ Some new methods that made life much better.
 - Lessons learned
   - https://docs.google.com/document/d/1k8chGCqfj4JBooXbeX9SU0YzzGC2gb9ey4XtdSIj2rA/edit?usp=sharing
 - Reddit posts
+  - https://www.reddit.com/r/ErgoMechKeyboards/comments/1p4ogme/arcboard_mk20_is_finally_done/
   - https://www.reddit.com/r/ErgoMechKeyboards/comments/1cfgai1/arcboard_mk19_the_learning_continues/
   - https://www.reddit.com/r/ErgoMechKeyboards/comments/1goqo3v/the_next_step_arcpedals_mk3/
   - https://www.reddit.com/r/ErgoMechKeyboards/comments/1kphv10/arcboard_mk20_dev_demo_appsense_for_qmk_or_mild/
