@@ -119,6 +119,8 @@ enum custom_keycodes {
 #define GDOCZMIN LGUI(LALT(KC_PPLS))
 #define GDOCZMOU LGUI(LALT(KC_PMNS))
 
+// superwhisper
+#define WHISP_REC   LSFT(LGUI(LALT(KC_R)))
 
 #define LAYER_0_COLOUR BACKGROUND_SILVER         // qwerty
 #define LAYER_1_COLOUR HSV_ORANGE       // mouse

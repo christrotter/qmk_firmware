@@ -31,7 +31,7 @@
 
 #define QUANTUM_PAINTER_DISPLAY_TIMEOUT 0
 
-#define USB_VBUS_PIN D2
+// #define USB_VBUS_PIN D2
 #define SERIAL_USART_DRIVER SD1
 #define SERIAL_USART_TX_PIN A9
 #define SERIAL_USART_RX_PIN A10
@@ -59,7 +59,6 @@
     #define SPLIT_POINTING_ENABLE               // required for telling the master side about slave trackball state, i.e. if usb left, and tb right
     #define POINTING_DEVICE_RIGHT
     #define POINTING_DEVICE_INVERT_Y
-    // #define POINTING_DEVICE_INVERT_X
     #define ROTATIONAL_TRANSFORM_ANGLE 90
     #define DRAGSCROLL_BUFFER_SIZE 0
     #define PMW33XX_CPI 600       // your mouse cpi (DPI) setting (how fast the ball tracks); note when usb main is on the left half this config needs to be 900
@@ -67,9 +66,11 @@
 #endif
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
-    #define INDICATOR_BRIGHTNESS 30
-    #define INDICATOR_BRIGHTNESS_IDLE 10
-    #define INDICATOR_BRIGHTNESS_RING 70
+    #define INDICATOR_BRIGHTNESS 150
+    #define INDICATOR_BRIGHTNESS_IDLE 70
+    #define INTAKE_BRIGHTNESS 50
+    #define LOGO_BRIGHTNESS 90
+    #define INDICATOR_BRIGHTNESS_RING 200
     #define KEYS_BRIGHTNESS 90
 
     // 103-37 = 66

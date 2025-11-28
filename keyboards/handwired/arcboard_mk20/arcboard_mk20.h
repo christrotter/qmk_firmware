@@ -65,7 +65,7 @@ enum userspace_layers {
 #define BLACK \
     { HSV_BLACK }
 #define BACKGROUND_SILVER 25, 25, KEYS_BRIGHTNESS
-
+#define RING_ORANGE 15, 255, INDICATOR_BRIGHTNESS_RING
 
 // indicator colours
 #define INDICATOR_BG \

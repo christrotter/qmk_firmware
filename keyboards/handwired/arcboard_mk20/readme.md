@@ -64,6 +64,10 @@ Some new methods that made life much better.
 - **multi-colour printing** - I tried doing inlays & CA glue for the bottom shell graphics and it was a sad time.  burkfers encouraged/shamed me into trying multi-filament and wow, what a game-changer.  (*I don't have an automatic change system, either, and still amazing.*)
 
 # Links
+- Build journal
+  - https://docs.google.com/document/d/1H42WKKSJjMTwKAtwSacicEkNXHAzItHnSK0OiVTYifs/edit?usp=sharing
+- Lessons learned
+  - https://docs.google.com/document/d/1k8chGCqfj4JBooXbeX9SU0YzzGC2gb9ey4XtdSIj2rA/edit?usp=sharing
 - Reddit posts
   - https://www.reddit.com/r/ErgoMechKeyboards/comments/1cfgai1/arcboard_mk19_the_learning_continues/
   - https://www.reddit.com/r/ErgoMechKeyboards/comments/1goqo3v/the_next_step_arcpedals_mk3/
