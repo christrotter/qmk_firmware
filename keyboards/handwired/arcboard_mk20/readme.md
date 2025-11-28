@@ -66,6 +66,8 @@ Some new methods that made life much better.
 # Links
 - Build journal
   - https://docs.google.com/document/d/1H42WKKSJjMTwKAtwSacicEkNXHAzItHnSK0OiVTYifs/edit?usp=sharing
+- Print list
+  - https://docs.google.com/document/d/19vgn_IOVY2ncgV_MKY-XW2Omr_Vd-NVtJHTEubr_N-U/edit?tab=t.0#heading=h.80pmugz15mks
 - Lessons learned
   - https://docs.google.com/document/d/1k8chGCqfj4JBooXbeX9SU0YzzGC2gb9ey4XtdSIj2rA/edit?usp=sharing
 - Reddit posts
