@@ -14,6 +14,17 @@
         printf("Raw-hid: Send data: %u %u %u\n", data[0], data[1], data[2]);
         raw_hid_send(data, 32);
     }
+    // send a wled layer change
+    void send_wled_layer(uint8_t layer) {
+        uint8_t data[32];
+        memset(data, 0, 32);
+        data[0] = (uint8_t)(PRODUCT_ID >> 8) & 0xFF;
+        data[1] = (uint8_t)(PRODUCT_ID & 0xFF);
+        data[2] = _WLED;
+        data[3] = layer;
+        printf("Raw-hid: Send WLED layer data: %u %u %u %u\n", data[0], data[1], data[2], data[3]);
+        raw_hid_send(data, 32);
+    }
 #endif
 
 // probably should separate this out into another file
