@@ -90,6 +90,9 @@
 // single button to reset layer
 #define KC_LAYRST TO(_QWERTY)
 
+// superwhisper
+#define WHISP_REC   LSFT(LGUI(LALT(KC_R)))
+
 enum custom_keycodes {
     KC_YAY = SAFE_RANGE,
     DRAG_SCROLL,

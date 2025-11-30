@@ -111,8 +111,8 @@ So we need the pcb to output dpad on row5, macropad on row2&3.
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        _______, _______, _______, _______, _______, _______,         KC_FINDER, KC_ESC, OSM(MOD_LSFT), _______, OSM(MOD_LSFT),      _______,_______,_______,_______, _______, _______,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
-        KC_TILD,LGUI(KC_1),_______,KC_TAB_L,_______,AM_Toggle,     KC_NO, _______, SUP_ALT_TAB,                                      KC_MACSHOT,QK_LAYER_LOCK,KC_TAB_R,MAGIPLAY, LGUI(KC_9), KC_EQUAL,     KC_NO, KC_CHROMEWIN, _______,
+        _______, _______, _______, _______, _______, _______,         KC_FINDER, KC_ESC, OSM(MOD_LSFT), WHISP_REC, OSM(MOD_LSFT),      _______,_______,_______,_______, _______, _______,                KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT,_______,
+        KC_TILD,LGUI(KC_1),_______,KC_TAB_L,QK_LAYER_LOCK,AM_Toggle,     KC_NO, _______, SUP_ALT_TAB,                                      KC_MACSHOT,KC_CHROMEWIN,KC_TAB_R,MAGIPLAY, LGUI(KC_9), KC_EQUAL,     KC_NO, KC_CHROMEWIN, _______,
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T,             KC_PD_LAYER, _______, _______, _______,                           KC_Y, KC_U, LT(0,KC_I),KC_O, KC_P, KC_MINUS,                     _______, _______, _______, _______,
         _______, KC_A, KC_S,  KC_D,  KC_F, KC_G,                _______, _______, _______, _______,                             KC_H, KC_J, KC_K, HOME_L, KC_QUOT, KC_SCLN,                        _______, _______, _______, _______,
         DRAGSCROLL_MODE_TOGGLE, KC_Z, KC_X, KC_C, KC_V, KC_B,                                                         LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,OSM(MOD_LGUI),
@@ -204,7 +204,7 @@ const ledmap ledmaps[] = {
 
    [_QWERTY]   = LEDMAP(
     ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,    ___n___, BLUE, GREEN, RED,         ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,        GREEN, GREEN, GREEN, GREEN,
-    CYAN, CYAN, ___n___, RED, ___n___, SPRING,                                                 ORANGE, SPRING, GREEN, PINK, CYAN,    CYAN,
+    CYAN, CYAN, ___n___, RED, SPRING, SPRING,                                                 ORANGE, SPRING, GREEN, PINK, CYAN,    CYAN,
     GOLD   , ___n___, ___n___, ___n___, ___n___, ___n___,                                       ___n___, ___n___, ___n___, ___n___, ___n___,    CYAN, 
     ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,                                       ___n___, ___n___, ___n___, HRM_ALT, ___n___, ___n___, 
     ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,                                        ___n___, HRM_CTL, ___n___, ___n___, ___n___,     HRM_GUI,
