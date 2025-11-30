@@ -43,4 +43,4 @@
 #endif // RAW_ENABLE
 
 void cycle_pedal_layer(void);
-void send_wled_layer(uint8_t layer);
+void send_wled_layer(layer_state_t layer);
