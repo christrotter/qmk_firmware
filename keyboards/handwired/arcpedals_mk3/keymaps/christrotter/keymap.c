@@ -52,18 +52,6 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
     xprintf("Raw-hid: Toggle layer RECT: %u %u %u\n", data[0], data[1], data[2]);
     raw_hid_send(data, 32);
   }
-
-  void send_layer_colour(uint8_t layer_colour) {
-    uint8_t data[32];
-    memset(data, 0, 32);
-    // data[0] = _DIRECT_TO_HOST;
-    data[0] = (uint8_t)(PRODUCT_ID >> 8) & 0xFF;
-    data[1] = (uint8_t)(PRODUCT_ID & 0xFF);
-    data[2] = _WLED;
-    data[3] = layer_colour;
-    xprintf("Raw-hid: Send layer colour: 0x%02x 0x%02x 0x%02x 0x%02x\n", data[0], data[1], data[2], data[3]);
-    raw_hid_send(data, 32);
-  }
 #endif // RAW_ENABLE
 
 #if defined(CONSOLE_ENABLE)
@@ -75,11 +63,6 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
         // debug_keyboard=true;
         // debug_mouse=true;
         // eeconfig_init();
-        
-        // now, we want to reset the led indicator on the monitor to the correct layer
-        // have to put a wait in as other stuff is starting up in the background
-        wait_ms(2000);
-        send_layer_colour(1);
     }
 #endif
 
@@ -253,52 +236,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-// now, on layer change, we want to emit the layer number to the app, as a guarantee that the led colour will be correct.
-layer_state_t layer_state_set_user(layer_state_t state) {
-  // this could potentially be improved by changing to send_layer_colour(get_highest_layer(state));
-  switch (get_highest_layer(state)) {
-    case 0:
-        send_layer_colour(1);
-        break;
-    case 1:
-        send_layer_colour(2);
-        break;
-    case 2:
-        send_layer_colour(3);
-        break;
-    case 3:
-        send_layer_colour(4);
-        break;
-    case 4:
-        send_layer_colour(5);
-        break;
-    case 5:
-        send_layer_colour(6);
-        break;
-    case 6:
-        send_layer_colour(7);
-        break;
-    case 7:
-        send_layer_colour(8);
-        break;
-    case 8:
-        send_layer_colour(9);
-        break;
-    case 9:
-        send_layer_colour(10);
-        break;
-  }
-  return state;
-}
-
 #if defined(RAW_ENABLE)
   void raw_hid_receive(uint8_t *data, uint8_t length) {
     const hid_msg_t *msg = (hid_msg_t *)data;
     uint16_t incoming_pid = __builtin_bswap16(msg->source_id);
     if (incoming_pid == 0xF003) {
-      xprintf("Raw-hid: we sent this, dropping rebroadcast packet. \n");
+      // xprintf("Raw-hid: we sent this, dropping rebroadcast packet. \n");
       return;
     }
+    // i think this can be entirely swapped out for 'layer move(layer_sent_to_me)
     switch (msg->type) {
       case _APPSENSE:
           switch (msg->type_id) {
