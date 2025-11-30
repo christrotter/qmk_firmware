@@ -18,6 +18,10 @@
     void send_wled_layer(layer_state_t layer) {
         // we need to convert the layer from a bitmask to an integer
         layer = get_highest_layer(layer);
+        if (is_auto_mouse_active()) { 
+            layer = 1;
+        };
+
         uint8_t data[32];
         memset(data, 0, 32);
         data[0] = (uint8_t)(PRODUCT_ID >> 8) & 0xFF;
