@@ -80,7 +80,7 @@ void keyboard_post_init_user(void) {
     // debug_keyboard=true;
     // debug_mouse=true;
     #if defined(QUANTUM_PAINTER_ENABLE)
-        display = qp_st7789_make_spi_device(76, 284, DISPLAY_CS_PIN, DISPLAY_DC_PIN, DISPLAY_RST_PIN, DISPLAY_SPI_DIVISOR, DISPLAY_SPI_MODE);
+        display = qp_st7789_make_spi_device(LCD_WIDTH, LCD_HEIGHT, DISPLAY_CS_PIN, DISPLAY_DC_PIN, DISPLAY_RST_PIN, DISPLAY_SPI_DIVISOR, DISPLAY_SPI_MODE);
         qp_set_viewport_offsets(display, 82, 18); // for qp_rotation_0
 
         font = qp_load_font_mem(font_futura40);
@@ -96,8 +96,8 @@ void keyboard_post_init_user(void) {
         qp_init(display, QP_ROTATION_0);
         qp_clear(display);
         // blank out the display to clear static
-        qp_rect(display, 0, 0, 76, 284, HSV_BLACK, true);
-        qp_drawimage(display, (76 - icon_qmk->width) / 2, (76 - icon_qmk->height) / 2, icon_qmk);
+        qp_rect(display, 0, 0, LCD_WIDTH, LCD_HEIGHT, HSV_BLACK, true);
+        qp_drawimage(display, (LCD_WIDTH - icon_qmk->width) / 2, (LCD_HEIGHT - icon_qmk->height) / 2, icon_qmk);
         qp_flush(display);
 
     #endif
@@ -127,68 +127,92 @@ void keyboard_post_init_user(void) {
 //     }
 // }
 
+/*
+int16_t qp_drawtext_recolor(
+    painter_device_t device, 
+    uint16_t x, uint16_t y, 
+    painter_font_handle_t font, 
+    const char *str, 
+    uint8_t hue_fg, uint8_t sat_fg, uint8_t val_fg, 
+    uint8_t hue_bg, uint8_t sat_bg, uint8_t val_bg);
+
+*/
+
+void render_scan_rate(uint16_t x, uint16_t y) {
+    static uint32_t last_scan_rate = 0;
+    if (last_scan_rate != get_matrix_scan_rate()) {
+        last_scan_rate = get_matrix_scan_rate();
+        char buf[6]    = {0};
+        x += qp_drawtext_recolor(display, x, y, font_thintel, "SCANS: ", HSV_WHITE, HSV_BLACK);
+        snprintf(buf, sizeof(buf), "%5lu", get_matrix_scan_rate());
+        qp_drawtext_recolor(display, x, y, font_thintel, buf, HSV_WHITE, HSV_BLACK);
+    }    
+}
+
 #if defined(QUANTUM_PAINTER_ENABLE)
 void draw_mouse(void) {
-    qp_drawimage(display, (76 - icon_mouse->width) / 2, (76 - icon_mouse->height) / 2, icon_mouse);
+    qp_drawimage(display, (LCD_WIDTH - icon_mouse->width) / 2, (LCD_HEIGHT - icon_mouse->height) / 2, icon_mouse);
 }
 
 void update_layer_display(void) {
     // Only update if the layer has changed
     static uint32_t last_layer_state = 0;
     bool automouse = false;
-    if (is_auto_mouse_active()) {
-        automouse = true;
-    }
+    // ummm is this actually even checking against the layer state?
     if (last_layer_state != layer_state) {
-        qp_rect(display, 0, 0, 76, 76, HSV_BLACK, true);
+        if (is_auto_mouse_active()) {
+            automouse = true;
+        }
+        qp_rect(display, 0, 0, LCD_WIDTH, (LCD_WIDTH), HSV_BLACK, true);
         last_layer_state = layer_state;
-            switch (get_highest_layer(layer_state)) {
-                case _QWERTY:
-                    qp_drawimage(display, (76 - icon_default->width) / 2, (76 - icon_default->height) / 2, icon_default);
-                    break;
-                case _NAV:
-                    break;
-                case _SYMBOLS:
-                    break;
-                case _MOUSE:
+        switch (get_highest_layer(layer_state)) {
+            case _QWERTY:
+                qp_drawimage(display, (LCD_WIDTH - icon_default->width) / 2, (LCD_HEIGHT - icon_default->height) / 2, icon_default);
+                break;
+            case _NAV:
+                break;
+            case _SYMBOLS:
+                break;
+            case _MOUSE:
+                draw_mouse();
+                break;
+            case _RECT:
+                break;
+            case _VSCODE:
+                if (automouse) {
                     draw_mouse();
                     break;
-                case _RECT:
+                }
+                qp_drawimage(display, (LCD_WIDTH - icon_vscode->width) / 2, (LCD_HEIGHT - icon_vscode->height) / 2, icon_vscode);
+                break;
+            case _FUSION:
+                if (automouse) {
+                    draw_mouse();
                     break;
-                case _VSCODE:
-                    if (automouse) {
-                        draw_mouse();
-                        break;
-                    }
-                    qp_drawimage(display, (76 - icon_vscode->width) / 2, (76 - icon_vscode->height) / 2, icon_vscode);
+                }
+                qp_drawimage(display, (LCD_WIDTH - icon_fusion->width) / 2, (LCD_HEIGHT - icon_fusion->height) / 2, icon_fusion);
+                break;
+            case _CHROME:
+                if (automouse) {
+                    draw_mouse();
                     break;
-                case _FUSION:
-                    if (automouse) {
-                        draw_mouse();
-                        break;
-                    }
-                    qp_drawimage(display, (76 - icon_fusion->width) / 2, (76 - icon_fusion->height) / 2, icon_fusion);
+                }
+                qp_drawimage(display, (LCD_WIDTH - icon_chrome->width) / 2, (LCD_HEIGHT - icon_chrome->height) / 2, icon_chrome);
+                break;
+            case _KICAD:
+                if (automouse) {
+                    draw_mouse();
                     break;
-                case _CHROME:
-                    if (automouse) {
-                        draw_mouse();
-                        break;
-                    }
-                    qp_drawimage(display, (76 - icon_chrome->width) / 2, (76 - icon_chrome->height) / 2, icon_chrome);
-                    break;
-                case _KICAD:
-                    if (automouse) {
-                        draw_mouse();
-                        break;
-                    }
-                    qp_drawimage(display, (76 - icon_kicad->width) / 2, (76 - icon_kicad->height) / 2, icon_kicad);
-                    break;
-                case _MGMT:
-                    break;
-                default:
-                    break;
-            }
+                }
+                qp_drawimage(display, (LCD_WIDTH - icon_kicad->width) / 2, (LCD_HEIGHT - icon_kicad->height) / 2, icon_kicad);
+                break;
+            case _MGMT:
+                break;
+            default:
+                break;
+        }
     }
+    render_scan_rate(5, 5);
     qp_flush(display);
 }
 #endif

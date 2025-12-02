@@ -14,7 +14,7 @@
 #if defined(CONSOLE_ENABLE)
     // Debug flags
     // #define QUANTUM_PAINTER_DEBUG
-    // #define DEBUG_MATRIX_SCAN_RATE
+    #define DEBUG_MATRIX_SCAN_RATE // need this to show scan rate on display
 #endif
 
 #if defined(POINTING_DEVICE_ENABLE)
