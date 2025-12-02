@@ -42,6 +42,9 @@ static painter_image_handle_t icon_kicad;
 #include "graphics/default-app.qgf.h"
 static painter_image_handle_t icon_default;
 
+#include "graphics/mouse-icon.qgf.h"
+static painter_image_handle_t icon_mouse;
+
 // this is required to invert the colours on the display
 bool qp_st7789_init(painter_device_t device, painter_rotation_t rotation) {
     // clang-format off
@@ -88,6 +91,7 @@ void keyboard_post_init_user(void) {
         icon_chrome = qp_load_image_mem(gfx_chrome_icon);
         icon_kicad = qp_load_image_mem(gfx_kicad_icon);
         icon_default = qp_load_image_mem(gfx_default_app);
+        icon_mouse = qp_load_image_mem(gfx_mouse_icon);
 
         qp_init(display, QP_ROTATION_0);
         qp_clear(display);
@@ -139,6 +143,7 @@ void update_layer_display(void) {
                 case _SYMBOLS:
                     break;
                 case _MOUSE:
+                    qp_drawimage(display, (76 - icon_mouse->width) / 2, (76 - icon_mouse->height) / 2, icon_mouse);
                     break;
                 case _RECT:
                     break;

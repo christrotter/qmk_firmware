@@ -15,5 +15,7 @@ SRC += graphics/chrome-icon.qgf.c
 SRC += graphics/qmk-icon.qgf.c
 SRC += graphics/kicad-icon.qgf.c
 SRC += graphics/default-app.qgf.c
+SRC += graphics/mouse-icon.qgf.c
+
 
 CAPS_WORD_ENABLE = yes
