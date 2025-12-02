@@ -45,6 +45,9 @@ static painter_image_handle_t icon_default;
 #include "graphics/mouse-icon.qgf.h"
 static painter_image_handle_t icon_mouse;
 
+#include "graphics/construction-icon.qgf.h"
+static painter_image_handle_t icon_construction;
+
 // this is required to invert the colours on the display
 bool qp_st7789_init(painter_device_t device, painter_rotation_t rotation) {
     // clang-format off
@@ -92,6 +95,7 @@ void keyboard_post_init_user(void) {
         icon_kicad = qp_load_image_mem(gfx_kicad_icon);
         icon_default = qp_load_image_mem(gfx_default_app);
         icon_mouse = qp_load_image_mem(gfx_mouse_icon);
+        icon_construction = qp_load_image_mem(gfx_construction_icon);
 
         qp_init(display, QP_ROTATION_0);
         qp_clear(display);
@@ -103,41 +107,6 @@ void keyboard_post_init_user(void) {
     #endif
 }
 
-// /**
-//  * @brief Render the matrix scan rate to the display
-//  *
-//  * @param device device to render to
-//  * @param font font to render with
-//  * @param x x position to start rendering
-//  * @param y y position to start rendering
-//  * @param force_redraw do we forcibly redraw the scan rate
-//  * @param curr_hsv painter colors
-//  */
-// void painter_render_scan_rate(painter_device_t device, painter_font_handle_t font, uint16_t x, uint16_t y,
-//                               bool force_redraw, dual_hsv_t *curr_hsv) {
-//     static uint32_t last_scan_rate = 0;
-//     if (last_scan_rate != get_matrix_scan_rate() || force_redraw) {
-//         last_scan_rate = get_matrix_scan_rate();
-//         char buf[6]    = {0};
-//         x += qp_drawtext_recolor(device, x, y, font, "SCANS: ", curr_hsv->primary.h, curr_hsv->primary.s,
-//                                  curr_hsv->primary.v, 0, 0, 0);
-//         snprintf(buf, sizeof(buf), "%5lu", get_matrix_scan_rate());
-//         qp_drawtext_recolor(device, x, y, font, buf, curr_hsv->secondary.h, curr_hsv->secondary.s,
-//                             curr_hsv->secondary.v, 0, 0, 0);
-//     }
-// }
-
-/*
-int16_t qp_drawtext_recolor(
-    painter_device_t device, 
-    uint16_t x, uint16_t y, 
-    painter_font_handle_t font, 
-    const char *str, 
-    uint8_t hue_fg, uint8_t sat_fg, uint8_t val_fg, 
-    uint8_t hue_bg, uint8_t sat_bg, uint8_t val_bg);
-
-*/
-
 void render_scan_rate(uint16_t x, uint16_t y) {
     static uint32_t last_scan_rate = 0;
     if (last_scan_rate != get_matrix_scan_rate()) {
@@ -148,6 +117,20 @@ void render_scan_rate(uint16_t x, uint16_t y) {
         qp_drawtext_recolor(display, x, y, font_thintel, buf, HSV_WHITE, HSV_BLACK);
     }    
 }
+// void render_dragtog_state() {
+//     static bool last_dragscroll_state = false;
+//     bool current_state = kb_get_pointer_dragscroll_enabled();
+//     if (last_dragscroll_state != current_state) {
+//         last_dragscroll_state = current_state;
+//         char buf[12]    = {0};
+//         if (current_state) {
+//             snprintf(buf, sizeof(buf), "DRAG: ON ");
+//         } else {
+//             snprintf(buf, sizeof(buf), "DRAG: OFF");
+//         }
+//         qp_drawtext_recolor(display, 5, LCD_HEIGHT - 20, font_thintel, buf, HSV_WHITE, HSV_BLACK);
+//     }
+// }
 
 #if defined(QUANTUM_PAINTER_ENABLE)
 void draw_mouse(void) {
@@ -163,7 +146,9 @@ void update_layer_display(void) {
         if (is_auto_mouse_active()) {
             automouse = true;
         }
-        qp_rect(display, 0, 0, LCD_WIDTH, (LCD_WIDTH), HSV_BLACK, true);
+        // we want this to draw a 76x76 square that is centered right in the middle of the display
+        // uhhh weird choice mr.AI, but ok
+        qp_rect(display, (LCD_WIDTH - 76) / 2, (LCD_HEIGHT - 76) / 2, 76, 76, HSV_BLACK, true);
         last_layer_state = layer_state;
         switch (get_highest_layer(layer_state)) {
             case _QWERTY:
@@ -207,6 +192,7 @@ void update_layer_display(void) {
                 qp_drawimage(display, (LCD_WIDTH - icon_kicad->width) / 2, (LCD_HEIGHT - icon_kicad->height) / 2, icon_kicad);
                 break;
             case _MGMT:
+                qp_drawimage(display, (LCD_WIDTH - icon_construction->width) / 2, (LCD_HEIGHT - icon_construction->height) / 2, icon_construction);
                 break;
             default:
                 break;
@@ -214,6 +200,12 @@ void update_layer_display(void) {
     }
     render_scan_rate(5, 5);
     qp_flush(display);
+}
+
+void oneshot_layer_changed_user(uint8_t layer) {
+  if (!layer) {
+    qp_rect(display, 0, 0, LCD_WIDTH, LCD_HEIGHT, HSV_BLACK, true);
+  }
 }
 #endif
 
