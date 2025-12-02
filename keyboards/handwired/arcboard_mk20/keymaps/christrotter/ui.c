@@ -128,9 +128,17 @@ void keyboard_post_init_user(void) {
 // }
 
 #if defined(QUANTUM_PAINTER_ENABLE)
+void draw_mouse(void) {
+    qp_drawimage(display, (76 - icon_mouse->width) / 2, (76 - icon_mouse->height) / 2, icon_mouse);
+}
+
 void update_layer_display(void) {
     // Only update if the layer has changed
     static uint32_t last_layer_state = 0;
+    bool automouse = false;
+    if (is_auto_mouse_active()) {
+        automouse = true;
+    }
     if (last_layer_state != layer_state) {
         qp_rect(display, 0, 0, 76, 76, HSV_BLACK, true);
         last_layer_state = layer_state;
@@ -143,20 +151,36 @@ void update_layer_display(void) {
                 case _SYMBOLS:
                     break;
                 case _MOUSE:
-                    qp_drawimage(display, (76 - icon_mouse->width) / 2, (76 - icon_mouse->height) / 2, icon_mouse);
+                    draw_mouse();
                     break;
                 case _RECT:
                     break;
                 case _VSCODE:
+                    if (automouse) {
+                        draw_mouse();
+                        break;
+                    }
                     qp_drawimage(display, (76 - icon_vscode->width) / 2, (76 - icon_vscode->height) / 2, icon_vscode);
                     break;
                 case _FUSION:
+                    if (automouse) {
+                        draw_mouse();
+                        break;
+                    }
                     qp_drawimage(display, (76 - icon_fusion->width) / 2, (76 - icon_fusion->height) / 2, icon_fusion);
                     break;
                 case _CHROME:
+                    if (automouse) {
+                        draw_mouse();
+                        break;
+                    }
                     qp_drawimage(display, (76 - icon_chrome->width) / 2, (76 - icon_chrome->height) / 2, icon_chrome);
                     break;
                 case _KICAD:
+                    if (automouse) {
+                        draw_mouse();
+                        break;
+                    }
                     qp_drawimage(display, (76 - icon_kicad->width) / 2, (76 - icon_kicad->height) / 2, icon_kicad);
                     break;
                 case _MGMT:

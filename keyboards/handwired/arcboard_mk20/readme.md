@@ -97,6 +97,7 @@ Some new methods that made life much better.
 - Monitor surround: https://youtu.be/IdejM_AcEIY?si=hktS4YOHlLD4JPLp
 # Icon attribution
 Default app icon: application by ridhobadal from <a href="https://thenounproject.com/browse/icons/term/application/" target="_blank" title="application Icons">Noun Project</a> (CC BY 3.0)
+Mouse layer icon: Mouse by Kim Sun Young from <a href="https://thenounproject.com/browse/icons/term/mouse/" target="_blank" title="Mouse Icons">Noun Project</a> (CC BY 3.0)
 
 # More pictures, please
 [Imgur gallery here](https://imgur.com/a/g7PXRzy).  Much more detail into the development process. 
