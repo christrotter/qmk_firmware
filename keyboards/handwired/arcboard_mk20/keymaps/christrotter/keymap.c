@@ -29,6 +29,7 @@ uint16_t alt_tab_timer = 0;
 uint16_t sup_alt_tab_timer = 0;
 
 
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         KC_TILD, LGUI(KC_1), _______, KC_TAB_L, QK_LAYER_LOCK, AM_Toggle, CW_TOGG,     KC_MACSHOT,KC_CHROMEWIN,KC_TAB_R,MAGIPLAY, LGUI(KC_9), KC_EQUAL, SUP_ALT_TAB,

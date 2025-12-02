@@ -29,3 +29,8 @@
     #define MOUSEKEY_WHEEL_MAX_SPEED 30     // Maximum number of scroll steps per scroll action
     #define MOUSEKEY_WHEEL_TIME_TO_MAX 0    // Time until maximum scroll speed is reached
 #endif
+
+#if defined(QUANTUM_PAINTER_ENABLE)
+    #define QUANTUM_PAINTER_SUPPORTS_256_PALETTE TRUE
+    #define QUANTUM_PAINTER_SUPPORTS_NATIVE_COLORS TRUE
+#endif

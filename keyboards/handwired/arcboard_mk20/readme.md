@@ -95,6 +95,8 @@ Some new methods that made life much better.
   - https://youtu.be/0Gul08TXhzs?si=-Fqa02d69KASMguV
 - AppSense demo: https://youtu.be/pHvF_KDkxHM?si=VKkWK1cEtEMsvbvx
 - Monitor surround: https://youtu.be/IdejM_AcEIY?si=hktS4YOHlLD4JPLp
+# Icon attribution
+Default app icon: application by ridhobadal from <a href="https://thenounproject.com/browse/icons/term/application/" target="_blank" title="application Icons">Noun Project</a> (CC BY 3.0)
 
 # More pictures, please
 [Imgur gallery here](https://imgur.com/a/g7PXRzy).  Much more detail into the development process. 
