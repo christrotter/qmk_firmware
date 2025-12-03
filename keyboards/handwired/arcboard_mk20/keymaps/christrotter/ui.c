@@ -4,6 +4,9 @@
 #include QMK_KEYBOARD_H
 #include "arcboard_mk20.h"
 
+extern bool heartbeat_state; // reference global variable
+extern uint32_t heartbeat_timer; // add this line
+
 #if defined(QUANTUM_PAINTER_ENABLE)
 #include <qp.h>
 #include "qp_internal.h"
@@ -112,9 +115,9 @@ void render_scan_rate(uint16_t x, uint16_t y) {
     if (last_scan_rate != get_matrix_scan_rate()) {
         last_scan_rate = get_matrix_scan_rate();
         char buf[6]    = {0};
-        x += qp_drawtext_recolor(display, x, y, font_thintel, "SCANS: ", HSV_WHITE, HSV_BLACK);
+        x += qp_drawtext_recolor(display, x, y, font_thintel, "SCANS: ", HSV_BLACK, HSV_WHITE);
         snprintf(buf, sizeof(buf), "%5lu", get_matrix_scan_rate());
-        qp_drawtext_recolor(display, x, y, font_thintel, buf, HSV_WHITE, HSV_BLACK);
+        qp_drawtext_recolor(display, x, y, font_thintel, buf, HSV_BLACK, HSV_WHITE);
     }    
 }
 // void render_dragtog_state() {
@@ -133,13 +136,32 @@ void render_scan_rate(uint16_t x, uint16_t y) {
 // }
 
 #if defined(QUANTUM_PAINTER_ENABLE)
-void draw_mouse(void) {
+void render_mouse_layer(void) {
     qp_drawimage(display, (LCD_WIDTH - icon_mouse->width) / 2, (LCD_HEIGHT - icon_mouse->height) / 2, icon_mouse);
+}
+
+void render_heartbeat(void) {
+    static bool last_heartbeat_state;
+
+    if (heartbeat_state && timer_elapsed32(heartbeat_timer) > 10000) {
+        xprintf("No heartbeat received in 10 seconds, setting heartbeat_state to false.\n");
+        heartbeat_state = false;
+    }
+
+    if (last_heartbeat_state != heartbeat_state) {
+        last_heartbeat_state = heartbeat_state;
+        if (heartbeat_state) {
+            qp_drawtext_recolor(display, LCD_WIDTH - 60, 15, font_thintel, "HB: ON ", HSV_BLACK, HSV_WHITE);
+        } else {
+            qp_drawtext_recolor(display, LCD_WIDTH - 60, 15, font_thintel, "HB: OFF", HSV_BLACK, HSV_WHITE);
+        }
+    }
 }
 
 void update_layer_display(void) {
     // Only update if the layer has changed
     static uint32_t last_layer_state = 0;
+    static uint32_t last_heartbeat_draw = 0; // timer for heartbeat rendering
     bool automouse = false;
     // ummm is this actually even checking against the layer state?
     if (last_layer_state != layer_state) {
@@ -159,34 +181,34 @@ void update_layer_display(void) {
             case _SYMBOLS:
                 break;
             case _MOUSE:
-                draw_mouse();
+                render_mouse_layer();
                 break;
             case _RECT:
                 break;
             case _VSCODE:
                 if (automouse) {
-                    draw_mouse();
+                    render_mouse_layer();
                     break;
                 }
                 qp_drawimage(display, (LCD_WIDTH - icon_vscode->width) / 2, (LCD_HEIGHT - icon_vscode->height) / 2, icon_vscode);
                 break;
             case _FUSION:
                 if (automouse) {
-                    draw_mouse();
+                    render_mouse_layer();
                     break;
                 }
                 qp_drawimage(display, (LCD_WIDTH - icon_fusion->width) / 2, (LCD_HEIGHT - icon_fusion->height) / 2, icon_fusion);
                 break;
             case _CHROME:
                 if (automouse) {
-                    draw_mouse();
+                    render_mouse_layer();
                     break;
                 }
                 qp_drawimage(display, (LCD_WIDTH - icon_chrome->width) / 2, (LCD_HEIGHT - icon_chrome->height) / 2, icon_chrome);
                 break;
             case _KICAD:
                 if (automouse) {
-                    draw_mouse();
+                    render_mouse_layer();
                     break;
                 }
                 qp_drawimage(display, (LCD_WIDTH - icon_kicad->width) / 2, (LCD_HEIGHT - icon_kicad->height) / 2, icon_kicad);
@@ -199,6 +221,12 @@ void update_layer_display(void) {
         }
     }
     render_scan_rate(5, 5);
+
+    if (timer_elapsed32(last_heartbeat_draw) > 2000) {
+        last_heartbeat_draw = timer_read32();
+        render_heartbeat();
+    }
+
     qp_flush(display);
 }
 

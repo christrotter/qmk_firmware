@@ -1,5 +1,3 @@
-
-
 #if defined(RAW_ENABLE)
     // raw-hid config
     typedef struct PACKED {
@@ -15,6 +13,7 @@
         _ONESHOT    = 0x03,
         _DRAGSCROLL = 0x04,
         _WLED       = 0x05,
+        _HEARTBEAT  = 0x06,
     } hid_types;
     
     typedef enum {
@@ -44,3 +43,6 @@
 
 void cycle_pedal_layer(void);
 void send_wled_layer(layer_state_t layer);
+
+extern bool heartbeat_state;
+extern uint32_t heartbeat_timer;

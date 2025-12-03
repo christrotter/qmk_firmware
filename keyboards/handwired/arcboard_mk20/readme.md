@@ -70,6 +70,7 @@ Some new methods that made life much better.
   - https://docs.google.com/document/d/19vgn_IOVY2ncgV_MKY-XW2Omr_Vd-NVtJHTEubr_N-U/edit?tab=t.0#heading=h.80pmugz15mks
 - Lessons learned
   - https://docs.google.com/document/d/1k8chGCqfj4JBooXbeX9SU0YzzGC2gb9ey4XtdSIj2rA/edit?usp=sharing
+- kbd.news: https://kbd.news/ArcBoard-mk20-2767.html
 - Reddit posts
   - https://www.reddit.com/r/ErgoMechKeyboards/comments/1p4ogme/arcboard_mk20_is_finally_done/
   - https://www.reddit.com/r/ErgoMechKeyboards/comments/1cfgai1/arcboard_mk19_the_learning_continues/

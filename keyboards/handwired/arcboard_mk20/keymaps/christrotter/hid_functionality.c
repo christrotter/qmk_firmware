@@ -3,6 +3,9 @@
 #include "raw_hid.h"
 #include "hid_functionality.h"
 
+bool heartbeat_state = false;
+uint32_t heartbeat_timer = 0; // add this line
+
 
 #if defined(RAW_ENABLE)
     void cycle_pedal_layer(void) {
@@ -52,8 +55,12 @@ void turn_appsense_layer_off(void) {
         }
 
         // if the current layer is not the first layer, we want to layer_off that layer
-
         switch (msg->type) {
+            case _HEARTBEAT:
+                // xprintf("Raw-hid: received heartbeat.\n");
+                heartbeat_state = true;
+                heartbeat_timer = timer_read32(); // reset timer on heartbeat
+                break;
             case _APPSENSE:
                 switch (msg->type_id) {
                     case _APP_VSCODE:
