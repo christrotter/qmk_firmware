@@ -16,6 +16,8 @@
 
 #pragma once
 
+#include "compiler_support.h"
+
 // DEPRECATED DEFINES - DO NOT USE
 #if defined(RGBLED_NUM)
 #    define RGBLIGHT_LED_COUNT RGBLED_NUM
@@ -184,8 +186,7 @@ typedef struct {
 #    define RGBLIGHT_USE_TIMER
 
 #    define RGBLIGHT_END_SEGMENT_INDEX (255)
-#    define RGBLIGHT_END_SEGMENTS \
-        { RGBLIGHT_END_SEGMENT_INDEX, 0, 0, 0 }
+#    define RGBLIGHT_END_SEGMENTS {RGBLIGHT_END_SEGMENT_INDEX, 0, 0, 0}
 #    ifndef RGBLIGHT_MAX_LAYERS
 #        define RGBLIGHT_MAX_LAYERS 8
 #    endif
@@ -200,10 +201,8 @@ typedef uint32_t rgblight_layer_mask_t;
 #    else
 #        error invalid RGBLIGHT_MAX_LAYERS value (must be <= 32)
 #    endif
-#    define RGBLIGHT_LAYER_SEGMENTS(...) \
-        { __VA_ARGS__, RGBLIGHT_END_SEGMENTS }
-#    define RGBLIGHT_LAYERS_LIST(...) \
-        { __VA_ARGS__, NULL }
+#    define RGBLIGHT_LAYER_SEGMENTS(...) {__VA_ARGS__, RGBLIGHT_END_SEGMENTS}
+#    define RGBLIGHT_LAYERS_LIST(...) {__VA_ARGS__, NULL}
 
 // Get/set enabled rgblight layers
 void rgblight_set_layer_state(uint8_t layer, bool enabled);
@@ -260,7 +259,7 @@ typedef union rgblight_config_t {
     };
 } rgblight_config_t;
 
-_Static_assert(sizeof(rgblight_config_t) == sizeof(uint64_t), "RGB Light EECONFIG out of spec.");
+STATIC_ASSERT(sizeof(rgblight_config_t) == sizeof(uint64_t), "RGB Light EECONFIG out of spec.");
 
 typedef struct _rgblight_status_t {
     uint8_t base_mode;

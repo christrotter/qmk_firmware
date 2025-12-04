@@ -41,6 +41,10 @@
 #    include "haptic.h"
 #endif
 
+#ifdef CONNECTION_ENABLE
+#    include "connection.h"
+#endif
+
 void nvm_eeconfig_erase(void) {
 #ifdef EEPROM_DRIVER
     eeprom_driver_format(false);
@@ -196,6 +200,15 @@ void nvm_eeconfig_update_haptic(const haptic_config_t *haptic_config) {
 }
 #endif // HAPTIC_ENABLE
 
+#ifdef CONNECTION_ENABLE
+void nvm_eeconfig_read_connection(connection_config_t *config) {
+    config->raw = eeprom_read_byte(EECONFIG_CONNECTION);
+}
+void nvm_eeconfig_update_connection(const connection_config_t *config) {
+    eeprom_update_byte(EECONFIG_CONNECTION, config->raw);
+}
+#endif // CONNECTION_ENABLE
+
 bool nvm_eeconfig_read_handedness(void) {
     return !!eeprom_read_byte(EECONFIG_HANDEDNESS);
 }
@@ -233,8 +246,8 @@ uint32_t nvm_eeconfig_update_kb_datablock(const void *data, uint32_t offset, uin
 void nvm_eeconfig_init_kb_datablock(void) {
     eeprom_update_dword(EECONFIG_KEYBOARD, (EECONFIG_KB_DATA_VERSION));
 
-    void *  start     = (void *)(uintptr_t)(EECONFIG_KB_DATABLOCK);
-    void *  end       = (void *)(uintptr_t)(EECONFIG_KB_DATABLOCK + EECONFIG_KB_DATA_SIZE);
+    void   *start     = (void *)(uintptr_t)(EECONFIG_KB_DATABLOCK);
+    void   *end       = (void *)(uintptr_t)(EECONFIG_KB_DATABLOCK + EECONFIG_KB_DATA_SIZE);
     long    remaining = end - start;
     uint8_t dummy[16] = {0};
     for (int i = 0; i < EECONFIG_KB_DATA_SIZE; i += sizeof(dummy)) {
@@ -277,8 +290,8 @@ uint32_t nvm_eeconfig_update_user_datablock(const void *data, uint32_t offset, u
 void nvm_eeconfig_init_user_datablock(void) {
     eeprom_update_dword(EECONFIG_USER, (EECONFIG_USER_DATA_VERSION));
 
-    void *  start     = (void *)(uintptr_t)(EECONFIG_USER_DATABLOCK);
-    void *  end       = (void *)(uintptr_t)(EECONFIG_USER_DATABLOCK + EECONFIG_USER_DATA_SIZE);
+    void   *start     = (void *)(uintptr_t)(EECONFIG_USER_DATABLOCK);
+    void   *end       = (void *)(uintptr_t)(EECONFIG_USER_DATABLOCK + EECONFIG_USER_DATA_SIZE);
     long    remaining = end - start;
     uint8_t dummy[16] = {0};
     for (int i = 0; i < EECONFIG_USER_DATA_SIZE; i += sizeof(dummy)) {
