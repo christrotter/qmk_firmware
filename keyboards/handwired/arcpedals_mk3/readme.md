@@ -14,7 +14,7 @@ After eight interrupted-but-busy months, here we are, with functional mk3 pedals
 - The [mk2 pedals](https://kbd.news/ArcBoard-ArcPedals-2162.html) were - though tremendously broken and semi-reliable - a huge help for my work.
 
 # relevant links
-- [Full Imgur album](https://imgur.com/gallery/arcpedals-mk3-build-1mGxVUc)
+- [Full Imgur album](https://imgur.com/a/arcpedals-mk3-dtsoAtp)
 - [Breakout PCB](https://github.com/christrotter/pedal-breakout-pcb)
 - [Button PCB](https://github.com/christrotter/microswitch-pcb)
 - [Keyboard journey main doc - links to all my build journals and more](https://docs.google.com/document/d/1714zAB5GvLr3M8TnRpMvAdutThKMioJDGraUgG2VCB4/edit?usp=sharing)
