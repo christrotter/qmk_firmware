@@ -1,6 +1,9 @@
 #include "arcboard_mk22.h"
-#include "transactions.h"
 #include <string.h>
+
+#ifdef SPLIT_KEYBOARD
+#include "transactions.h"
+#endif  // SPLIT_KEYBOARD
 
 typedef union {
     uint8_t raw;
@@ -121,21 +124,32 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
     return process_record_user(keycode, record);
 }
 
+#ifdef SPLIT_KEYBOARD
 void kb_config_sync_handler(uint8_t initiator2target_buffer_size, const void* initiator2target_buffer, uint8_t target2initiator_buffer_size, void* target2initiator_buffer) {
     if (initiator2target_buffer_size == sizeof(kb_config)) {
         memcpy(&kb_config, initiator2target_buffer, sizeof(kb_config));
     }
 }
+#endif  // SPLIT_KEYBOARD
 
 void keyboard_post_init_kb(void) {
+    // Turn on the RGB
+    gpio_set_pin_output(RGB_POWER_ENABLE_PIN);
+    gpio_write_pin_high(RGB_POWER_ENABLE_PIN);
+    
     #ifdef POINTING_DEVICE_ENABLE
     maybe_update_pointing_device_cpi(&kb_config);
     #endif  // POINTING_DEVICE_ENABLE
+
+    #ifdef SPLIT_KEYBOARD
     transaction_register_rpc(RPC_ID_KB_CONFIG_SYNC, kb_config_sync_handler);
+    #endif  // SPLIT_KEYBOARD
+
     keyboard_post_init_user();
 }
 
 void housekeeping_task_kb(void) {
+    #ifdef SPLIT_KEYBOARD
     if (is_keyboard_master()) {
         // Keep track of the last state, so that we can tell if we need to propagate to slave.
         static kb_config_t last_kb_config = {0};
@@ -159,4 +173,5 @@ void housekeeping_task_kb(void) {
             }
         }
     }
+    #endif  // SPLIT_KEYBOARD
 }
