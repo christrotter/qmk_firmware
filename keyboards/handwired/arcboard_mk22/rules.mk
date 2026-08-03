@@ -7,7 +7,7 @@ RAW_ENABLE = yes
 KEYBOARD_SHARED_EP = yes
 
 # LED settings
-RGB_MATRIX_LEDMAPS_ENABLED = no 	# turn on per-key colours
+RGB_MATRIX_LEDMAPS_ENABLED = yes 	# turn on per-key colours
 
 SERIAL_DRIVER = usart
 

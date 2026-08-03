@@ -32,7 +32,7 @@
 #define RGB_MATRIX_DEFAULT_HUE 5
 #define RGB_MATRIX_DEFAULT_SAT 5
 
-#define USB_VBUS_PIN D2
+#define USB_VBUS_PIN B15
 
 #define SERIAL_USART_DRIVER SD1
 #define SERIAL_USART_TX_PIN A9
@@ -84,69 +84,69 @@
     // 30 in keys + 4 in dpad + 3 in paddle-keys
     // 37 + 19 + 8 + 10 + 16 + 12 = 102
     // 102 - 37 = 65
-    #define RGB_LEDS_IN_KEYS 37
-    #define RGB_LEDS_IN_RING 20
-    #define RGB_LEDS_IN_INDICATOR 8
-    #define RGB_LEDS_IN_INDICATOR_SPLIT 4
-    #define RGB_LEDS_IN_INNER_INTAKE 10
-    #define RGB_LEDS_IN_OUTER_INTAKE 12
-    #define RGB_LEDS_IN_LOGO 12
+    #define RGB_LED_COUNT_KEYS 29
+    #define RGB_LED_COUNT_RING 16
+    #define RGB_LED_COUNT_INDICATOR 16
+    #define RGB_LED_COUNT_INDICATOR_SPLIT 4
+    #define RGB_LED_COUNT_INNER_INTAKE 10
+    #define RGB_LED_COUNT_OUTER_INTAKE 12
+    #define RGB_LED_COUNT_LOGO 12
 
     // left side led counts
     // keys
     #define RGB_KEYS_L_START 0
-    #define RGB_KEYS_L_END RGB_KEYS_L_START + RGB_LEDS_IN_KEYS
+    #define RGB_KEYS_L_END RGB_KEYS_L_START + RGB_LED_COUNT_KEYS
 
     // ring encoder
     #define RGB_RING_L_START RGB_KEYS_L_END
-    #define RGB_RING_L_END RGB_RING_L_START + RGB_LEDS_IN_RING
+    #define RGB_RING_L_END RGB_RING_L_START + RGB_LED_COUNT_RING
 
     // indicator bar // 8 leds in the indicator
     #define RGB_INDICATOR_L_START RGB_RING_L_END
-    #define RGB_INDICATOR_L_END RGB_INDICATOR_L_START + RGB_LEDS_IN_INDICATOR - 1 // uncertain why we need the -1, buuut we do!
+    #define RGB_INDICATOR_L_END RGB_INDICATOR_L_START + RGB_LED_COUNT_INDICATOR - 1 // uncertain why we need the -1, buuut we do!
 
     // now we split it up for multi-function display
     #define RGB_INDICATOR_L1_START RGB_INDICATOR_L_START
-    #define RGB_INDICATOR_L1_END RGB_INDICATOR_L_START + RGB_LEDS_IN_INDICATOR_SPLIT
+    #define RGB_INDICATOR_L1_END RGB_INDICATOR_L_START + RGB_LED_COUNT_INDICATOR_SPLIT
     #define RGB_INDICATOR_L2_START RGB_INDICATOR_L1_END
     #define RGB_INDICATOR_L2_END RGB_INDICATOR_L_END
 
     // intakes
     #define RGB_INNER_INTAKE_L_START RGB_INDICATOR_L_END // there are 10 leds in the inner intake
-    #define RGB_INNER_INTAKE_L_END RGB_INNER_INTAKE_L_START + RGB_LEDS_IN_INNER_INTAKE
+    #define RGB_INNER_INTAKE_L_END RGB_INNER_INTAKE_L_START + RGB_LED_COUNT_INNER_INTAKE
     #define RGB_OUTER_INTAKE_L_START RGB_INNER_INTAKE_L_END  // there are 24 leds in the outer intake
     // there are 24 leds in the outer intake
-    #define RGB_OUTER_INTAKE_L_END RGB_OUTER_INTAKE_L_START + RGB_LEDS_IN_OUTER_INTAKE
+    #define RGB_OUTER_INTAKE_L_END RGB_OUTER_INTAKE_L_START + RGB_LED_COUNT_OUTER_INTAKE
     // there are 12 leds in the logo
     #define RGB_LOGO_L_START RGB_OUTER_INTAKE_L_END
-    #define RGB_LOGO_L_END RGB_LOGO_L_START + RGB_LEDS_IN_LOGO
+    #define RGB_LOGO_L_END RGB_LOGO_L_START + RGB_LED_COUNT_LOGO
 
     // right side
     // keys
     #define RGB_KEYS_R_START RGB_LOGO_L_END
-    #define RGB_KEYS_R_END RGB_KEYS_R_START + RGB_LEDS_IN_KEYS
+    #define RGB_KEYS_R_END RGB_KEYS_R_START + RGB_LED_COUNT_KEYS
 
     // ring encoder
     #define RGB_RING_R_START RGB_KEYS_R_END + 4
-    #define RGB_RING_R_END RGB_RING_R_START + RGB_LEDS_IN_RING
+    #define RGB_RING_R_END RGB_RING_R_START + RGB_LED_COUNT_RING
 
     // indicator bar // 8 leds in the indicator
     #define RGB_INDICATOR_R_START RGB_RING_R_END
-    #define RGB_INDICATOR_R_END RGB_INDICATOR_R_START + RGB_LEDS_IN_INDICATOR
+    #define RGB_INDICATOR_R_END RGB_INDICATOR_R_START + RGB_LED_COUNT_INDICATOR
 
     // now we split it up for multi-function display
     #define RGB_INDICATOR_R1_START RGB_INDICATOR_R_START
-    #define RGB_INDICATOR_R1_END RGB_INDICATOR_R_START + RGB_LEDS_IN_INDICATOR_SPLIT
+    #define RGB_INDICATOR_R1_END RGB_INDICATOR_R_START + RGB_LED_COUNT_INDICATOR_SPLIT
     #define RGB_INDICATOR_R2_START RGB_INDICATOR_R1_END
     #define RGB_INDICATOR_R2_END RGB_INDICATOR_R_END
 
     // intakes
     #define RGB_INNER_INTAKE_R_START RGB_INDICATOR_R_END // there are 10 leds in the inner intake
-    #define RGB_INNER_INTAKE_R_END RGB_INNER_INTAKE_R_START + RGB_LEDS_IN_INNER_INTAKE
+    #define RGB_INNER_INTAKE_R_END RGB_INNER_INTAKE_R_START + RGB_LED_COUNT_INNER_INTAKE
     #define RGB_OUTER_INTAKE_R_START RGB_INNER_INTAKE_R_END  // there are 24 leds in the outer intake
     // there are 24 leds in the outer intake
-    #define RGB_OUTER_INTAKE_R_END RGB_OUTER_INTAKE_R_START + RGB_LEDS_IN_OUTER_INTAKE
+    #define RGB_OUTER_INTAKE_R_END RGB_OUTER_INTAKE_R_START + RGB_LED_COUNT_OUTER_INTAKE
     // there are 12 leds in the logo
     #define RGB_LOGO_R_START RGB_OUTER_INTAKE_R_END
-    #define RGB_LOGO_R_END RGB_LOGO_R_START + RGB_LEDS_IN_LOGO
+    #define RGB_LOGO_R_END RGB_LOGO_R_START + RGB_LED_COUNT_LOGO
 #endif

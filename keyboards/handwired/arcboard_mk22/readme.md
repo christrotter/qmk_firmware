@@ -3,6 +3,105 @@
 Note: using F405 instead of F407 b/c clock defaults.  Have to fix this...
 
 
+# mapping out rgb_matrix
+Total count: 30(keys) + 16(ring) + 4(enc1) + 4(dpad) + 4(enc2) + 16(indicator)
+But we want the indicator to be split up into 4 rows of 4.
+
+## actually getting rgb_matrix working
+Big things to check:
+1. config
+2. electrical
+3. keyboard.json
+
+But first, set up a simple `keyboard.json` config:
+```json
+    "ws2812": {
+        "pin": "C9",
+        "driver": "pwm"
+    },
+    "rgb_matrix": {
+        "driver": "ws2812",
+        "max_brightness": 90,
+        "split_count": [2,2],
+        "layout": [
+             {"flags": 1, "x": 0, "y": 0},
+             {"flags": 1, "x": 0, "y": 0},
+             {"flags": 1, "x": 0, "y": 0},
+             {"flags": 1, "x": 0, "y": 0},
+        ]
+    }    
+```
+And your basic config:
+```c
+// keyboard/mcuconf.h
+#undef STM32_PWM_USE_TIM3 // TIM = timer = driver (i think)
+#define STM32_PWM_USE_TIM3 TRUE
+
+// keyboard/config.h
+#define WS2812_PIN C9
+#define WS2812_PWM_DRIVER PWMD3 // TIM3
+#define WS2812_PWM_CHANNEL 4
+#define WS2812_PWM_PAL_MODE 2
+#define WS2812_PWM_DMA_STREAM STM32_DMA1_STREAM2
+#define WS2812_PWM_DMA_CHANNEL 5
+```
+
+This is enough to get you lights.
+
+## checking config
+Very important to ensure that you are using the right settings for your pin.
+
+1. the pin itself should be using a timer that is not tied up with anything else, or an 'advanced' timer
+   1. not all pins can be used for pwm, even if they are pwm-capable in the datasheet!
+   2. if you are doing MCU design, very very important to get this right
+2. channel is another pin-specific thing, the datasheet will tell you which 'TIM3_CH4' config that pin needs
+3. pal-mode == pin alternate mode; if this is wrong, it won't squarewave
+4. dma channel and bank/stream are also in the docs
+
+## checking electrical
+you can put a scope on the ws2812 output pin, the level-shifter input, the level-shifter output, or the first led in the chain's DI pin - should see squarewave.  if no squarewave, check config.
+
+once you have squarewave...
+...do you have power? ground?
+Easy to check on an exposed led's legs.
+
+You can have power, ground, and a good led chain electrically, but without squarewave, no light.
+
+You won't get squarewave unless every last single variable is 100% correct.
+
+## keyboard.json
+This file requires three things:
+1. the split count (how many per side; could be uneven)
+2. the matrix layout that includes flags and locations; you write it as 'all leds on left half' -> 'all leds on right half'
+3. the total of the split count and the total of the matrix layout must be equal; ideally you'd have this number be generated, and have flags for left/right?... anyways right now it's painful manual work (llm works ok for this)
+
+i.e. keys + ring + encoders + dpad + indicator + external/aesthetic leds; then the same layout for right half
+flag of 1 for keys, 4 for not-keys
+I think you can do custom flag numbers?  But i handle most of that logic in the ledmap functions.  maybe that's bad.
+
+Once that's figured out, you should get lights everywhere you expect, on both halves.
+
+## next, the logical flow
+The `keyboard.json` stuff just sets the background lighting.  I want all keys to be white unless I specify a colour.
+
+How the leds get updated is via `bool rgb_matrix_indicators_user()`, and there is logic for 'if right, do this, if left, do that'.
+That can probably be simplified.
+
+For each side: c/o `is_keyboard_left()`
+1. set_rgb_ledmap
+2. set_rgb_range (e.g. logo, ring) for static things
+3. set_rgb_range based on layer case
+4. set indicators
+   1. if shifted
+   2. if dragscroll
+   3. if lgui'd
+   4. if oneshotted
+
+## ledmaps
+I had to go back to mk17 to dig up ledmap docs, jeepers.
+Also have to remember that for mk20 a lot of improvements were made.
+
+
 
 
 # mapping out the layout
