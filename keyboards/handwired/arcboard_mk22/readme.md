@@ -122,6 +122,20 @@ right: mlr
 left: lrm
 
 i suspect that the pcb orientation will play a role here...ugh. right.
+electrically:
+- paddle pcb is row1,2,3, actually 7,8,9 on ffc/mcu
+- so it should just flip things
+- why we getting weird ordering
+                {"matrix": [7, 3], "x": 0, "y": 10},
+                {"matrix": [18, 3], "x": 0, "y": 10},
+
+                {"matrix": [8, 3], "x": 0, "y": 10},
+                {"matrix": [19, 3], "x": 0, "y": 10},
+
+                {"matrix": [9, 3], "x": 0, "y": 10},
+                {"matrix": [20, 3], "x": 0, "y": 10},
+- ohhhhhhhhhhhh b/c
+        KC_L, KC_M, KC_R,                               KC_L, KC_M, KC_R,
 
 and dpad; follow the clock from 12; should get same pattern
 method:

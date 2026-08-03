@@ -60,20 +60,19 @@ void kb_set_alt_tab_off(void) {
 }
 
 #ifdef POINTING_DEVICE_ENABLE
+#    ifdef CONSOLE_ENABLE
 static void debug_kb_config_to_console(kb_config_t* config) {
-    #    ifdef CONSOLE_ENABLE
-        dprintf("(arcboard) process_record_kb: config = {\n"
-                "\traw = 0x%X,\n"
-                "\t{\n"
-                "\t\tis_dragscroll_enabled=%u\n"
-                "\t\tis_super_alt_tab_active=%u\n"
-                "\t\tis_alt_tab_active=%u\n"
-                "\t}\n"
-                "}\n",
-                config->raw, config->is_dragscroll_enabled, config->is_super_alt_tab_active, config->is_alt_tab_active);
-    #    endif // CONSOLE_ENABLE
+    dprintf("(arcboard) process_record_kb: config = {\n"
+            "\traw = 0x%X,\n"
+            "\t{\n"
+            "\t\tis_dragscroll_enabled=%u\n"
+            "\t\tis_super_alt_tab_active=%u\n"
+            "\t\tis_alt_tab_active=%u\n"
+            "\t}\n"
+            "}\n",
+            config->raw, config->is_dragscroll_enabled, config->is_super_alt_tab_active, config->is_alt_tab_active);
 }
-
+#    endif // CONSOLE_ENABLE
 
 static void pointing_device_task_arcboard(report_mouse_t* mouse_report) {
     if (kb_config.is_dragscroll_enabled) {
@@ -136,6 +135,8 @@ void keyboard_post_init_kb(void) {
     // Turn on the RGB
     gpio_set_pin_output(RGB_POWER_ENABLE_PIN);
     gpio_write_pin_high(RGB_POWER_ENABLE_PIN);
+    gpio_set_pin_output(DISPLAY_POWER_PIN);
+    gpio_write_pin_high(DISPLAY_POWER_PIN);
     
     #ifdef POINTING_DEVICE_ENABLE
     maybe_update_pointing_device_cpi(&kb_config);

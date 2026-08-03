@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "quantum.h"
-#include "arcboard_mk20.h"
+#include "arcboard_mk22.h"
 #include "keymap.h"
 
 /*

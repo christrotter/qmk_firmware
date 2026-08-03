@@ -11,11 +11,12 @@
 #define ONESHOT_TIMEOUT 2000        /* Time (in ms) before the one shot key is released */
 #define CUSTOM_KEYCODES
 
-#if defined(CONSOLE_ENABLE)
-    // Debug flags
-    // #define QUANTUM_PAINTER_DEBUG
-    #define DEBUG_MATRIX_SCAN_RATE // need this to show scan rate on display
-#endif
+// #if defined(CONSOLE_ENABLE)
+//     // Debug flags
+//     // #define QUANTUM_PAINTER_DEBUG
+// #endif
+
+#define DEBUG_MATRIX_SCAN_RATE // need this to show scan rate on display
 
 #if defined(POINTING_DEVICE_ENABLE)
     #define ROTATIONAL_TRANSFORM_ANGLE 90

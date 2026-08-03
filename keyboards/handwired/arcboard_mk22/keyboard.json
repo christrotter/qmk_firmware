@@ -9,8 +9,9 @@
         "console": true,
         "extrakey": true,
         "mousekey": true,
-        "nkro": true,
+        "nkro": false,
         "encoder": true,
+        "quantum_painter": true,
         "rgb_matrix": true
     },
     "split": {
@@ -151,6 +152,7 @@
     "rgb_matrix": {
         "driver": "ws2812",
         "max_brightness": 90,
+        "split_count": [37,37],
         "layout": [
              {"flags": 1, "x": 4, "y": 0},
              {"flags": 1, "x": 4, "y": 0},

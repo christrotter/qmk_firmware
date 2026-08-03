@@ -1,25 +1,24 @@
 #pragma once
 
-// #define SPI_DRIVER SPID1
-// #define DISPLAY_SPI_DIVISOR 4
-// #define DISPLAY_SPI_MODE 3
-// 
-// #define SPI_SCK_PIN  A5
-// #define SPI_MISO_PIN A6
-// #define SPI_MOSI_PIN A7
-// 
+#define SPI_DRIVER SPID1
+#define DISPLAY_SPI_DIVISOR 4
+#define DISPLAY_SPI_MODE 3
+#define SPI_SCK_PIN  B3
+#define SPI_MISO_PIN B4
+#define SPI_MOSI_PIN B5
+
 #define ENCODER_DEFAULT_POS 3
 #define ENCODER_RESOLUTIONS { 2, 2, 2 }
 
-// #define DISPLAY_POWER_PIN B10
-// #define DISPLAY_BL_PIN B2
-// #define DISPLAY_RST_PIN B1
-// #define DISPLAY_DC_PIN B0
-// #define DISPLAY_CS_PIN C5
+#define DISPLAY_POWER_PIN B14
+#define DISPLAY_BL_PIN B1
+#define DISPLAY_RST_PIN E9
+#define DISPLAY_DC_PIN A7
+#define DISPLAY_CS_PIN C4
 
-// #define QUANTUM_PAINTER_DISPLAY_TIMEOUT 0
-// #define LCD_HEIGHT 284
-// #define LCD_WIDTH 76
+#define QUANTUM_PAINTER_DISPLAY_TIMEOUT 0
+#define LCD_HEIGHT 280
+#define LCD_WIDTH 240
 
 #define RGB_POWER_ENABLE_PIN D1
 
@@ -34,6 +33,7 @@
 #define RGB_MATRIX_DEFAULT_SAT 5
 
 #define USB_VBUS_PIN D2
+
 #define SERIAL_USART_DRIVER SD1
 #define SERIAL_USART_TX_PIN A9
 #define SERIAL_USART_RX_PIN A10
@@ -54,7 +54,8 @@
 #define SPLIT_TRANSACTION_IDS_KB RPC_ID_KB_CONFIG_SYNC
 
 #if defined(POINTING_DEVICE_ENABLE)
-    #define PMW33XX_CS_PIN C4
+    #define PMW33XX_CS_PIN E8
+
     #define PMW33XX_SPI_DIVISOR 16
     #define POINTING_DEVICE_TASK_THROTTLE_MS 10 // this ensures that the trackball sensor polling happens only every 10ms
     #define MOUSE_EXTENDED_REPORT
