@@ -78,8 +78,8 @@
 
     // 103-37 = 66
     // this is just really ugly.  required by the rgb_range code to handle the split numbering.
-    #define RGB_TOT_IND_L 66
-    #define RGB_TOT_IND_R 66
+    #define RGB_TOT_IND_L 45 // 74-29
+    #define RGB_TOT_IND_R 45
 
     // 30 in keys + 4 in dpad + 3 in paddle-keys
     // 37 + 19 + 8 + 10 + 16 + 12 = 102

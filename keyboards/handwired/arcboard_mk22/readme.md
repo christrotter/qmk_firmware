@@ -101,7 +101,22 @@ For each side: c/o `is_keyboard_left()`
 I had to go back to mk17 to dig up ledmap docs, jeepers.
 Also have to remember that for mk20 a lot of improvements were made.
 
+Ok, so the biggest thing to know is that the function `get_color_from_layer_stack` is tied to this variable `RGB_TOT_IND_L`.
+Without that set correctly, you get into crazy situations of buffer overrun and such - like the lighting combos won't make any sense at all - that is the biggest signal that you've got this problem.
+I should fix this.
 
+There's an electrical oddity too - the cyboard led ordering is kinda wacky due to how they routed the traces (b/c 3x6, 4x, 5x, 6x are all possible, so you need to place the connector somewhere that won't get clipped )
+
+
+Best order of operations:
+1. get left half leds sorted for the ledmap
+   1. with only a right half printed...this can end up w. mirroring issues - these can be fixed in the LEDMAP layout definition
+2. get the indicator leds mapped out
+3. at this point the implementation is correct - only counts will mess things up
+   1. using left/right flags could really help here...
+4. set your counts as best you can
+5. flip over to the right half, apply the ledmap and indicators
+6. if crazy led colours, you have a count problem
 
 
 # mapping out the layout

@@ -62,7 +62,7 @@
     R_33, R_23, R_13, R_43, \
     R_34, R_24, R_14, R_44, \
     R_35, R_25, R_15, R_45, \
-    R_00, R_01, R_02, R_03, R_04 \
+    R_04, R_03, R_02, R_01, R_00 \
 }
 
 #define ___t___ {255, 255} // Transparent color that inherits from lower layers

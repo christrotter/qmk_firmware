@@ -165,11 +165,11 @@ ledmap template
 // oooo we can't do dpad here...it's not next in line after keys
 const ledmap ledmaps[] = {
     [_QWERTY] = LEDMAP(
-        CYAN, CYAN, ___n___, RED, SPRING, SPRING,                       ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,
-        GOLD, ___n___, ___n___, ___n___, ___n___, ___n___,              ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,
-        ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,           ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,
-        ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,            ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,
-        RED, TOG_NAV, RED, SPRING, RED,                                 ___n___, ___n___, ___n___, ___n___, ___n___
+        CYAN, CYAN, ___n___, RED, SPRING, SPRING,                       ORANGE,   SPRING,   GREEN,    PINK,    CYAN,    CYAN,
+        GOLD, ___n___, ___n___, ___n___, ___n___, ___n___,              ___n___, ___n___, ___n___, ___n___, ___n___, CYAN,
+        ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,           ___n___, ___n___, ___n___, HRM_ALT, ___n___, ___n___,
+        ORANGE, ___n___, ___n___, ___n___, ___n___, ___n___,            ___n___, HRM_CTL, ___n___, ___n___, ___n___, HRM_GUI,
+        RED, TOG_NAV, RED, SPRING, RED,                                 SPACE, ENTER, TOG_SYM, TOG_NAV, TOG_RECT
     ),
     [_MOUSE] = LEDMAP(
         ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,           ___n___, ___n___, ___n___, ___n___, ___n___, ___n___,
