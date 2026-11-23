@@ -20,8 +20,8 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
         ENCODER_CCW_CW(ALT_TAB, SFT_ALT_TAB),
         ENCODER_CCW_CW(MS_WHLL, MS_WHLR),
         ENCODER_CCW_CW(ALT_TAB, SFT_ALT_TAB),
-        ENCODER_CCW_CW(MS_WHLD, MS_WHLU),
-        ENCODER_CCW_CW(KC_TAB_L, KC_TAB_R)
+        ENCODER_CCW_CW(KC_TAB_L, KC_TAB_R),
+        ENCODER_CCW_CW(KC_VOLD, KC_VOLU)
     },
     [_MOUSE] =  {
         ENCODER_CCW_CW(_______, _______),

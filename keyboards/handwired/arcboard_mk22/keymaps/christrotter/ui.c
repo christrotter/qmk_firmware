@@ -233,7 +233,7 @@ void update_layer_display(void) {
                 qp_drawimage(display, (LCD_WIDTH - icon_kicad->width) / 2, (LCD_HEIGHT - icon_kicad->height) / 2, icon_kicad);
                 break;
             case _MGMT:
-                qp_drawimage(display, (LCD_WIDTH - icon_construction->width) / 2, (LCD_HEIGHT - icon_construction->height) / 2, icon_construction);
+                // qp_drawimage(display, (LCD_WIDTH - icon_construction->width) / 2, (LCD_HEIGHT - icon_construction->height) / 2, icon_construction);
                 break;
             default:
                 break;
