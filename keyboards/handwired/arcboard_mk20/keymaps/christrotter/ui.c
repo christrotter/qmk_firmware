@@ -15,6 +15,9 @@ extern uint32_t heartbeat_timer; // add this line
 #include "qp_st7789_opcodes.h"
 #include "qp_tft_panel.h"
 
+// for power control
+bool lcd_power;
+
 // set up the display
 #include "qp_st7789.h"
 static painter_device_t display;
@@ -50,6 +53,15 @@ static painter_image_handle_t icon_mouse;
 
 #include "graphics/construction-icon.qgf.h"
 static painter_image_handle_t icon_construction;
+
+#include "graphics/heart-white.qgf.h"
+static painter_image_handle_t icon_heart_white;
+
+#include "graphics/heart-orange.qgf.h"
+static painter_image_handle_t icon_heart_orange;
+
+#include "graphics/heart-red.qgf.h"
+static painter_image_handle_t icon_heart_red;
 
 // this is required to invert the colours on the display
 bool qp_st7789_init(painter_device_t device, painter_rotation_t rotation) {
@@ -99,12 +111,17 @@ void keyboard_post_init_user(void) {
         icon_default = qp_load_image_mem(gfx_default_app);
         icon_mouse = qp_load_image_mem(gfx_mouse_icon);
         icon_construction = qp_load_image_mem(gfx_construction_icon);
+        icon_heart_white = qp_load_image_mem(gfx_heart_white);
+        icon_heart_orange = qp_load_image_mem(gfx_heart_orange);
+        icon_heart_red = qp_load_image_mem(gfx_heart_red);
 
         qp_init(display, QP_ROTATION_0);
         qp_clear(display);
         // blank out the display to clear static
         qp_rect(display, 0, 0, LCD_WIDTH, LCD_HEIGHT, HSV_BLACK, true);
+        // set the app logo space to be the qmk logo on boot
         qp_drawimage(display, (LCD_WIDTH - icon_qmk->width) / 2, (LCD_HEIGHT - icon_qmk->height) / 2, icon_qmk);
+        // set up the UI framework
         qp_flush(display);
 
     #endif
@@ -152,8 +169,10 @@ void render_heartbeat(void) {
         last_heartbeat_state = heartbeat_state;
         if (heartbeat_state) {
             qp_drawtext_recolor(display, LCD_WIDTH - 60, 15, font_thintel, "HB: ON ", HSV_BLACK, HSV_WHITE);
+            qp_drawimage(display, (LCD_WIDTH - icon_heart_red->width) / 2, ((LCD_HEIGHT - icon_heart_red->height) / 2) + 76, icon_heart_red);
         } else {
             qp_drawtext_recolor(display, LCD_WIDTH - 60, 15, font_thintel, "HB: OFF", HSV_BLACK, HSV_WHITE);
+            qp_drawimage(display, (LCD_WIDTH - icon_heart_white->width) / 2, ((LCD_HEIGHT - icon_heart_white->height) / 2) + 76, icon_heart_white);
         }
     }
 }
@@ -239,7 +258,18 @@ void oneshot_layer_changed_user(uint8_t layer) {
 
 void housekeeping_task_user(void) {
     #if defined(QUANTUM_PAINTER_ENABLE)
+        lcd_power = (last_input_activity_elapsed() < SCREEN_TIMEOUT) ? 1 : 0;
         static uint32_t last_draw = 0;
+
+        setPinOutput(DISPLAY_BL_PIN);
+        
+        if (lcd_power) {
+            // low = on
+            writePinLow(DISPLAY_BL_PIN);
+        } else {
+            writePinHigh(DISPLAY_BL_PIN);
+        }
+
         if (timer_elapsed32(last_draw) > 33) { // Throttle to 30fps
             last_draw = timer_read32();
             update_layer_display();

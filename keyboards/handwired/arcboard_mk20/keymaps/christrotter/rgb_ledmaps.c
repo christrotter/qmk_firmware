@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rgb_ledmaps.h"
-#include "arcboard_mk20.h"
+#include "arcboard_mk22.h"
 #include "keymap.h"
 
 bool process_record_user_rgb_matrix(uint16_t keycode, keyrecord_t *record) { return true; }

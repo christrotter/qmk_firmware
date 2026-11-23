@@ -17,5 +17,8 @@ SRC += graphics/kicad-icon.qgf.c
 SRC += graphics/default-app.qgf.c
 SRC += graphics/mouse-icon.qgf.c
 SRC += graphics/construction-icon.qgf.c
+SRC += graphics/heart-white.qgf.c
+SRC += graphics/heart-orange.qgf.c
+SRC += graphics/heart-red.qgf.c
 
 CAPS_WORD_ENABLE = yes

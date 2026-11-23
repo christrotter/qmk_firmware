@@ -33,4 +33,6 @@
 #if defined(QUANTUM_PAINTER_ENABLE)
     #define QUANTUM_PAINTER_SUPPORTS_256_PALETTE TRUE
     #define QUANTUM_PAINTER_SUPPORTS_NATIVE_COLORS TRUE
+    #define QUANTUM_PAINTER_NUM_IMAGES 32
+    #define SCREEN_TIMEOUT (900 * 1000) // shut off the displays after 15 minutes
 #endif
