@@ -81,7 +81,7 @@ void                       post_process_record_user(uint16_t keycode, keyrecord_
 // top toe are in order on both sides for reasons i did not dig into
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        KC_MS_WH_DOWN, KC_MS_WH_DOWN, KC_KB_ONESHOT_GUI, KC_KB_ONESHOT_GUI,      _______,    KC_MS_WH_UP, KC_MS_WH_UP, KC_KB_ONESHOT_GUI, KC_KB_ONESHOT_GUI,          _______,
+        MS_WHLD, MS_WHLD, KC_KB_ONESHOT_GUI, KC_KB_ONESHOT_GUI,      _______,    MS_WHLU, MS_WHLU, KC_KB_ONESHOT_GUI, KC_KB_ONESHOT_GUI,          _______,
         KC_KB_DRAGSCROLL, KC_KB_RECT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,          _______,    KC_KB_DRAGSCROLL, KC_KB_RECT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
     ),
     [_MOUSE] = LAYOUT(
@@ -105,15 +105,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
     ),
     [_FUSION] = LAYOUT(
-        _______, KC_LGUI, _______, _______, _______,                                  KC_MS_BTN3, _______, _______, _______,                              _______,
-        KC_MS_WH_RIGHT, KC_MS_WH_LEFT, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,     KC_MS_WH_UP, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
+        _______, KC_LGUI, _______, _______, _______,                                  MS_BTN3, _______, _______, _______,                              _______,
+        MS_WHLR, MS_WHLL, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS, _______,     MS_WHLU, MS_WHLD, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,       _______
     ),
     [_CHROME] = LAYOUT(
       _______, _______, _______, _______,    _______,                           _______, _______, _______, _______,    _______,
       _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
     ),
     [_KICAD] = LAYOUT(
-      _______, _______, _______, _______, KC_MS_BTN3,                           KC_MS_BTN3, _______, _______, _______,    _______,
+      _______, _______, _______, _______, MS_BTN3,                           MS_BTN3, _______, _______, _______,    _______,
       _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______,           _______, _______, KC_CYCLE_LAYERS, KC_CYCLE_LAYERS,    _______
     ),
     [_MGMT] = LAYOUT(

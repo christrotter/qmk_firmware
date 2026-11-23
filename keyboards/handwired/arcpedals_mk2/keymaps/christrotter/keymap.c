@@ -41,11 +41,20 @@ enum keycodes {
   KC_CYCLE_LAYERS = QK_USER,
   KC_PD_LAYER,
   KC_TEST,
+    KC_KB_DRAGSCROLL,
+    KC_KB_ONESHOT_GUI,
+    KC_KB_RECT,
 };
 // 1st layer on the cycle
 #define LAYER_CYCLE_START 0
 // Last layer on the cycle
 #define LAYER_CYCLE_END   3
+
+#if defined(RAW_ENABLE)
+static void toggle_keyboard_dragscroll(void);
+static void toggle_keyboard_oneshot_gui(void);
+static void toggle_keyboard_rect(void);
+#endif
 
 __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
 __attribute__((weak)) void post_process_record_keymap(uint16_t keycode, keyrecord_t *record) {}
@@ -56,16 +65,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // physical layout is:
     //      (LEFT)                                                   (RIGHT)
     // left, toe, ball, right                              -    left, toe, ball, right
-    KC_MS_BTN1, KC_MS_WH_DOWN, KC_CYCLE_LAYERS, KC_MS_WH_RIGHT,      KC_MS_WH_LEFT, KC_MS_WH_UP, KC_CYCLE_LAYERS, KC_MS_BTN3
+    MS_BTN1, MS_WHLD, KC_CYCLE_LAYERS, MS_WHLR,      MS_WHLL, MS_WHLU, KC_CYCLE_LAYERS, MS_BTN3
 ),
 [_MOUSE] = LAYOUT(
-    KC_NO, KC_MS_BTN3, KC_CYCLE_LAYERS, KC_MS_BTN1,                            KC_NO, KC_MS_BTN1, KC_CYCLE_LAYERS, KC_MS_BTN2
+    KC_NO, MS_BTN3, KC_CYCLE_LAYERS, MS_BTN1,                            KC_NO, MS_BTN1, KC_CYCLE_LAYERS, MS_BTN2
 ),
 [_FUSION] = LAYOUT(
-    KC_NO, KC_LGUI, KC_CYCLE_LAYERS, KC_MS_WH_DOWN,              KC_MS_WH_UP, KC_MS_BTN3, KC_CYCLE_LAYERS, KC_NO
+    KC_NO, KC_LGUI, KC_CYCLE_LAYERS, MS_WHLD,              MS_WHLU, MS_BTN3, KC_CYCLE_LAYERS, KC_NO
 ),
 [_MGMT] = LAYOUT(
-    KC_NO, EE_CLR, KC_CYCLE_LAYERS, KC_NO,                              KC_NO, QK_BOOT, KC_CYCLE_LAYERS, KC_NO
+    KC_KB_DRAGSCROLL, EE_CLR, KC_CYCLE_LAYERS, KC_KB_ONESHOT_GUI,       KC_KB_RECT, QK_BOOT, KC_CYCLE_LAYERS, KC_NO
 )
 };
 
@@ -86,21 +95,6 @@ const ledmap ledmaps[] = {
    )
 };
 #endif // RGB_MATRIX_LEDMAPS_ENABLED
-
-
-uint8_t cycle_pedal_layer(void) {
-    uint8_t current_layer = get_highest_layer(layer_state);
-    // Check if we are within the range, if not quit
-    if (current_layer > LAYER_CYCLE_END || current_layer < LAYER_CYCLE_START) {
-      return false;
-    }
-    uint8_t next_layer = current_layer + 1;
-    if (next_layer > LAYER_CYCLE_END) {
-        next_layer = LAYER_CYCLE_START;
-    }
-    layer_move(next_layer);
-    return next_layer;
-}
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -143,6 +137,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                   return false;
               }
               return true;
+            case KC_KB_DRAGSCROLL:
+              if (record->event.pressed) {
+                  #if defined(RAW_ENABLE)
+                    toggle_keyboard_dragscroll();
+                  #endif
+                  return false;
+              }
+              return true;
+            case KC_KB_ONESHOT_GUI:
+              if (record->event.pressed) {
+                  #if defined(RAW_ENABLE)
+                    toggle_keyboard_oneshot_gui();
+                  #endif
+                  return false;
+              }
+              return true;
+            case KC_KB_RECT:
+              if (record->event.pressed) {
+                  #if defined(RAW_ENABLE)
+                    toggle_keyboard_rect();
+                  #endif
+                  return false;
+              }
+              return true;
             case KC_TEST:
                 if (record->event.pressed) {
                     layer_move(0);
@@ -154,44 +172,66 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-void send_layer_colour(uint8_t layer_colour) {
-    uint8_t data[32];
-    memset(data, 0, 32);
-    // data[0] = _DIRECT_TO_HOST;
-    data[0] = _RELAY_FROM_DEVICE;
-    data[1] = _DIRECT_TO_HOST;
-    data[2] = layer_colour;
-    xprintf("Raw-hid: Send layer colour: %u %u %u\n", data[0], data[1], data[2]);
-    raw_hid_send(data, 32);
+#if defined(RAW_ENABLE)
+static void send_hid_message(uint8_t type, uint8_t type_id) {
+    uint8_t data[32] = {0};
+    data[0] = (uint8_t)(PRODUCT_ID >> 8);
+    data[1] = (uint8_t)(PRODUCT_ID & 0xFF);
+    data[2] = type;
+    data[3] = type_id;
+    raw_hid_send(data, sizeof(data));
 }
 
-// now, on layer change, we want to emit the layer number to the app, as a guarantee that the led colour will be correct.
-layer_state_t layer_state_set_user(layer_state_t state) {
-    switch (get_highest_layer(state)) {
-    case _SCROLL:
-        send_layer_colour(1);
-        break;
-    case _MOUSE:
-        send_layer_colour(2);
-        break;
-    case _FUSION:
-        send_layer_colour(3);
-        break;
-    case _MGMT:
-        send_layer_colour(4);
-        break;
-    }
-  return state;
+static void toggle_keyboard_dragscroll(void) {
+    send_hid_message(_DRAGSCROLL, 0);
 }
 
-typedef enum {
-    _LAYER = 0,
-} relay_data_type;
+static void toggle_keyboard_oneshot_gui(void) {
+    send_hid_message(_ONESHOT, _ONESHOT_LGUI);
+}
+
+static void toggle_keyboard_rect(void) {
+    send_hid_message(_TOGGLE_KB_RECT, 0);
+}
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
-    xprintf("Raw-hid: Receive %u bytes data: %u %u %u \n", length, data[0], data[1], data[2]);
-    if (data[1] == _CYCLE_PEDAL_LAYERS) {
-        // xprintf("Raw-hid: flag successful \n");
-        cycle_pedal_layer();
+    if (length < 4) {
+        return;
+    }
+
+    const hid_msg_t *msg = (const hid_msg_t *)data;
+    uint16_t incoming_pid = __builtin_bswap16(msg->source_id);
+    if (incoming_pid == PRODUCT_ID) {
+        return;
+    }
+
+    switch (msg->type) {
+        case _APPSENSE:
+            switch (msg->type_id) {
+                case _APP_FUSION:
+                    layer_move(_FUSION);
+                    break;
+                // mk2 has no dedicated app layers; these use its default Scroll layer.
+                case _APP_VSCODE:
+                case _APP_CHROME:
+                case _APP_KICAD:
+                case _APP_OTHER:
+                    layer_move(_SCROLL);
+                    break;
+                default:
+                    xprintf("Raw-hid: unknown app command: %02x\n", msg->type_id);
+                    break;
+            }
+            break;
+        case _LAYER:
+            if (msg->type_id == _TOGGLE_KB_RECT) {
+                // mk2 has no rectangle layer corresponding to mk3's layer 4.
+                xprintf("Raw-hid: rectangle layer command unsupported on mk2\n");
+            }
+            break;
+        default:
+            xprintf("Raw-hid: received unexpected type: %02x\n", msg->type);
+            break;
     }
 }
+#endif // RAW_ENABLE
