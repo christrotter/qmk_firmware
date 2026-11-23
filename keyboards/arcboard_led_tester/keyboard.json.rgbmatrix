@@ -1,0 +1,58 @@
+{
+    "manufacturer": "Chris Trotter",
+    "keyboard_name": "arcboard_led_tester",
+    "maintainer": "Chris Trotter",
+    "development_board": "kb2040",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "bootmagic": true,
+        "extrakey": true,
+        "mousekey": true,
+        "console": true,
+        "rgb_matrix": true,
+        "nkro": true
+    },
+    "matrix_pins": {
+        "cols": ["GP9"],
+        "rows": ["GP10"]
+    },
+    "ws2812": {
+        "pin": "GP22",
+        "driver": "vendor"
+    },
+    "rgb_matrix": {
+        "driver": "ws2812",
+        "max_brightness": 90,
+        "layout": [
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8},
+             {"flags": 1, "x": 5, "y": 8}
+        ]
+    },
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT_ortho_1x1": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0, "y": 0}
+            ]
+        }
+    }
+}
