@@ -25,7 +25,6 @@ enum userspace_layers {
 
 #define _MACROS _MOUSE
 
-// #define HSV_MOONLANDER 5, 5, KEYS_BRIGHTNESS
 // Just a handy defines to make our ledmaps look better
 // braces work here because
 #define RED \
@@ -64,14 +63,6 @@ enum userspace_layers {
     { HSV_PINK }
 #define BLACK \
     { HSV_BLACK }
-#define BACKGROUND_SILVER 25, 25, KEYS_BRIGHTNESS
-#define RING_ORANGE 15, 255, INDICATOR_BRIGHTNESS_RING
-
-// indicator colours
-#define INDICATOR_BG \
-    HSV_CYAN
-#define INDICATOR_SHIFT \
-    HSV_GREEN
 
 #if defined(POINTING_DEVICE_ENABLE)
     enum board_keycodes {
@@ -98,5 +89,4 @@ void housekeeping_task_transport_sync(void);
 
 void matrix_init_sub_kb(void);
 void matrix_scan_sub_kb(void);
-bool process_record_user_rgb_matrix(uint16_t keycode, keyrecord_t *record); //_user should not be in the keyboard.c
 

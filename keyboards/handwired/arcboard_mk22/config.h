@@ -68,90 +68,36 @@
     #define DRAGSCROLL_CPI 100    // dragscroll cpi - interestingly, can't be set below 100?
 #endif
 
+// ws2812 chain, per half; the right half's leds follow the left's, so add RGB_LEDS_PER_HALF on the right
+#define RGB_KEYS_START      0
+#define RGB_KEYS_COUNT      24 // 4 rows x 6 cols
+#define RGB_THUMBS_START    (RGB_KEYS_START + RGB_KEYS_COUNT)
+#define RGB_THUMBS_COUNT    5
+#define RGB_RING_START      (RGB_THUMBS_START + RGB_THUMBS_COUNT)
+#define RGB_RING_COUNT      16
+#define RGB_ENC1_START      (RGB_RING_START + RGB_RING_COUNT)
+#define RGB_ENC1_COUNT      4
+#define RGB_DPAD_START      (RGB_ENC1_START + RGB_ENC1_COUNT)
+#define RGB_DPAD_COUNT      4
+#define RGB_ENC2_START      (RGB_DPAD_START + RGB_DPAD_COUNT)
+#define RGB_ENC2_COUNT      4
+#define RGB_INDICATOR_START (RGB_ENC2_START + RGB_ENC2_COUNT)
+#define RGB_INDICATOR_COUNT 16 // 4 rows of 4
+#define RGB_PANEL_START     (RGB_INDICATOR_START + RGB_INDICATOR_COUNT)
+#define RGB_PANEL_COUNT     60 // wing insert, logo included
+#define RGB_LEDS_PER_HALF   (RGB_PANEL_START + RGB_PANEL_COUNT) // 133, must match split_count in keyboard.json
+
+// logo leds within the panel (0-based offsets from RGB_PANEL_START): two runs of 10
+#define RGB_PANEL_LOGO_A_START   17
+#define RGB_PANEL_LOGO_B_START   33
+#define RGB_PANEL_LOGO_RUN_COUNT 10
+
+// ledmaps[] covers keys + thumbs: the left half's entries, then the right half's
+#define RGB_LEDMAP_PER_HALF (RGB_KEYS_COUNT + RGB_THUMBS_COUNT)
+
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
-    #define INDICATOR_BRIGHTNESS 90
-    #define INDICATOR_BRIGHTNESS_IDLE 70
-    #define INTAKE_BRIGHTNESS 50
+    #define PANEL_BRIGHTNESS 50
     #define LOGO_BRIGHTNESS 90
     #define INDICATOR_BRIGHTNESS_RING 90
     #define KEYS_BRIGHTNESS 90
-
-    // 103-37 = 66
-    // this is just really ugly.  required by the rgb_range code to handle the split numbering.
-    // 29 keys + 16 ring + 12 (te1, dpad, te2) + 16 indicators = 73, then the 60-led panel
-    #define RGB_LED_COUNT_PANEL 60
-    #define RGB_LEDS_PER_HALF 133 // must match split_count in keyboard.json
-
-    // offset that turns a right-half global led index into its ledmap index (right ledmap entries follow the left's 29)
-    #define RGB_TOT_IND_L (RGB_LEDS_PER_HALF - 29)
-    #define RGB_TOT_IND_R RGB_TOT_IND_L
-
-    // 30 in keys + 4 in dpad + 3 in paddle-keys
-    // 37 + 19 + 8 + 10 + 16 + 12 = 102
-    // 102 - 37 = 65
-    #define RGB_LED_COUNT_KEYS 29
-    #define RGB_LED_COUNT_RING 16
-    #define RGB_LED_COUNT_INDICATOR 16
-    #define RGB_LED_COUNT_INDICATOR_SPLIT 4
-    #define RGB_LED_COUNT_INNER_INTAKE 10
-    #define RGB_LED_COUNT_OUTER_INTAKE 12
-    #define RGB_LED_COUNT_LOGO 12
-
-    // left side led counts
-    // keys
-    #define RGB_KEYS_L_START 0
-    #define RGB_KEYS_L_END RGB_KEYS_L_START + RGB_LED_COUNT_KEYS
-
-    // ring encoder
-    #define RGB_RING_L_START RGB_KEYS_L_END
-    #define RGB_RING_L_END RGB_RING_L_START + RGB_LED_COUNT_RING
-
-    // indicator bar // 8 leds in the indicator
-    #define RGB_INDICATOR_L_START RGB_RING_L_END
-    #define RGB_INDICATOR_L_END RGB_INDICATOR_L_START + RGB_LED_COUNT_INDICATOR - 1 // uncertain why we need the -1, buuut we do!
-
-    // now we split it up for multi-function display
-    #define RGB_INDICATOR_L1_START RGB_INDICATOR_L_START
-    #define RGB_INDICATOR_L1_END RGB_INDICATOR_L_START + RGB_LED_COUNT_INDICATOR_SPLIT
-    #define RGB_INDICATOR_L2_START RGB_INDICATOR_L1_END
-    #define RGB_INDICATOR_L2_END RGB_INDICATOR_L_END
-
-    // intakes
-    #define RGB_INNER_INTAKE_L_START RGB_INDICATOR_L_END // there are 10 leds in the inner intake
-    #define RGB_INNER_INTAKE_L_END RGB_INNER_INTAKE_L_START + RGB_LED_COUNT_INNER_INTAKE
-    #define RGB_OUTER_INTAKE_L_START RGB_INNER_INTAKE_L_END  // there are 24 leds in the outer intake
-    // there are 24 leds in the outer intake
-    #define RGB_OUTER_INTAKE_L_END RGB_OUTER_INTAKE_L_START + RGB_LED_COUNT_OUTER_INTAKE
-    // there are 12 leds in the logo
-    #define RGB_LOGO_L_START RGB_OUTER_INTAKE_L_END
-    #define RGB_LOGO_L_END RGB_LOGO_L_START + RGB_LED_COUNT_LOGO
-
-    // right side
-    // keys
-    #define RGB_KEYS_R_START RGB_LOGO_L_END
-    #define RGB_KEYS_R_END RGB_KEYS_R_START + RGB_LED_COUNT_KEYS
-
-    // ring encoder
-    #define RGB_RING_R_START RGB_KEYS_R_END + 4
-    #define RGB_RING_R_END RGB_RING_R_START + RGB_LED_COUNT_RING
-
-    // indicator bar // 8 leds in the indicator
-    #define RGB_INDICATOR_R_START RGB_RING_R_END
-    #define RGB_INDICATOR_R_END RGB_INDICATOR_R_START + RGB_LED_COUNT_INDICATOR
-
-    // now we split it up for multi-function display
-    #define RGB_INDICATOR_R1_START RGB_INDICATOR_R_START
-    #define RGB_INDICATOR_R1_END RGB_INDICATOR_R_START + RGB_LED_COUNT_INDICATOR_SPLIT
-    #define RGB_INDICATOR_R2_START RGB_INDICATOR_R1_END
-    #define RGB_INDICATOR_R2_END RGB_INDICATOR_R_END
-
-    // intakes
-    #define RGB_INNER_INTAKE_R_START RGB_INDICATOR_R_END // there are 10 leds in the inner intake
-    #define RGB_INNER_INTAKE_R_END RGB_INNER_INTAKE_R_START + RGB_LED_COUNT_INNER_INTAKE
-    #define RGB_OUTER_INTAKE_R_START RGB_INNER_INTAKE_R_END  // there are 24 leds in the outer intake
-    // there are 24 leds in the outer intake
-    #define RGB_OUTER_INTAKE_R_END RGB_OUTER_INTAKE_R_START + RGB_LED_COUNT_OUTER_INTAKE
-    // there are 12 leds in the logo
-    #define RGB_LOGO_R_START RGB_OUTER_INTAKE_R_END
-    #define RGB_LOGO_R_END RGB_LOGO_R_START + RGB_LED_COUNT_LOGO
 #endif

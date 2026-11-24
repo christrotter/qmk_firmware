@@ -6,42 +6,7 @@
 
 #include "quantum.h"
 
-// the naming here is arbitrary.
-// r30-35 = top row somehow...
-// r20-25 = homerow
-//  3,  1, 0, 6, 5, 4
-// so today we have
-// col3,  col2,  col1, col0, col7, col6, col5, col4
-// GREEN,   TOG_NAV,   TOG_SYM, ENTER,   SPACE, BLUE, CYAN, GREEN
-/*
-0 cyan
-1 pink
-2 chart
-3 green
-4 green
-5 cyan
-6 blue 
-7 green
-*/
-/* 
-    copilot says: LEDMAP macro takes in parameters, and then outputs them as an array (in a different order, if you want).
-    essentially it lets you handle any kind of remapping.
-
-    in our case, we are passing in the ledmaps[] arrays like _QWERTY as an ordered array, and 
-    this is sending them to the led driver?... 
-    so what is ingesting the output array?
-
-                    {"matrix": [0, 0], "x": 0, "y": 0},
-                {"matrix": [0, 1], "x": 1, "y": 0},
-                {"matrix": [0, 4], "x": 2, "y": 0},
-                {"matrix": [0, 3], "x": 3, "y": 0},
-                {"matrix": [0, 2], "x": 4, "y": 0},
-                {"matrix": [0, 5], "x": 5, "y": 0},
-                RED, TOG_NAV, RED, ___n___, SPRING, RED,
-                RED, TOG_NAV, ORANGE, ___n___, SPRING, BLUE,
-                red, nav, spring, blank, orange, blue
-
-*/
+// takes colours laid out like the keymap (key rows top to bottom, then thumbs) and reorders them into ws2812 chain order
 #define LEDMAP( \
     L_40, L_41, L_42, L_43, L_44, L_45,                             R_40, R_41, R_42, R_43, R_44, R_45, \
     L_30, L_31, L_32, L_33, L_34, L_35,                             R_30, R_31, R_32, R_33, R_34, R_35, \
@@ -70,8 +35,5 @@
 typedef uint8_t ledmap[RGB_MATRIX_LED_COUNT][3];
 extern const ledmap ledmaps[];
 
-void set_rgb_ledmap(uint16_t first_led, uint16_t last_led, int val, int layer);
-void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int val, int val_override);
-
-void rgb_matrix_layers_enable(void);     // do we need this?
-void rgb_matrix_layers_disable(void);    // do we need this?
+void set_rgb_ledmap(uint16_t start, uint16_t count, uint8_t val);
+void set_rgb_range(uint16_t start, uint16_t count, hsv_t hsv, uint8_t val);

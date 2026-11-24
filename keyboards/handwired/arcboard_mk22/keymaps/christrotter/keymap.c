@@ -131,26 +131,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-/*
-ledmap template
-    [_LAYER] = LAYOUT(
-        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
-        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
-        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
-        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
-        ___t___, ___t___, ___t___, ___t___, ___t___,                    ___t___, ___t___, ___t___, ___t___, ___t___, 
-        ___t___, ___t___, ___t___,                                      ___t___, ___t___, ___t___,
-        ___t___, ___t___, ___t___, ___t___, ___t___,                    ___t___, ___t___, ___t___, ___t___, ___t___
-    ),
-
-    [_QWERTY] = LEDMAP(
-        CYAN, CYAN, ___t___, RED, SPRING, SPRING,                       ORANGE,   SPRING,   GREEN,    PINK,    CYAN,    CYAN,
-        GOLD, ___t___, ___t___, ___t___, ___t___, ___t___,              ___t___, ___t___, ___t___, ___t___, ___t___, CYAN,
-        ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           ___t___, ___t___, ___t___, HRM_ALT, ___t___, ___t___,
-        ORANGE, ___t___, ___t___, ___t___, ___t___, ___t___,            ___t___, HRM_CTL, ___t___, ___t___, ___t___, HRM_GUI,
-        RED, TOG_NAV, RED, SPRING, RED,                                 SPACE, ENTER, TOG_SYM, TOG_NAV, TOG_RECT
-*/
-
 // oooo we can't do dpad here...it's not next in line after keys
 const ledmap ledmaps[] = {
     [_QWERTY] = LEDMAP(

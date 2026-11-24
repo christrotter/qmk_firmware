@@ -4,8 +4,24 @@ Note: using F405 instead of F407 b/c clock defaults.  Have to fix this...
 
 
 # mapping out rgb_matrix
-Total count: 30(keys) + 16(ring) + 4(enc1) + 4(dpad) + 4(enc2) + 16(indicator)
-But we want the indicator to be split up into 4 rows of 4.
+Each half has its own WS2812 chain of 133 leds, in this order:
+
+| Segment                    | Count | Left    | Right   |
+|----------------------------|-------|---------|---------|
+| Main keys (4 rows, 6 cols) | 24    | 0-23    | 133-156 |
+| Thumbs                     | 5     | 24-28   | 157-161 |
+| Ring                       | 16    | 29-44   | 162-177 |
+| Encoder 1                  | 4     | 45-48   | 178-181 |
+| Dpad                       | 4     | 49-52   | 182-185 |
+| Encoder 2                  | 4     | 53-56   | 186-189 |
+| Indicators (4 rows of 4)   | 16    | 57-72   | 190-205 |
+| Wing insert w. logo        | 60    | 73-132  | 206-265 |
+
+The right half's leds follow the left's in the global numbering, so right = left + 133.
+The logo is two runs of 10 inside the wing insert, at panel offsets 17-26 and 33-42 (0-based).
+
+This is all defined once in `config.h`: `RGB_<SEGMENT>_START` / `RGB_<SEGMENT>_COUNT`, `RGB_LEDS_PER_HALF`, and the `RGB_PANEL_LOGO_*` offsets.
+Each start is derived from the previous segment, so changing a count shifts everything after it.
 
 ## actually getting rgb_matrix working
 Big things to check:
@@ -73,9 +89,11 @@ You won't get squarewave unless every last single variable is 100% correct.
 This file requires three things:
 1. the split count (how many per side; could be uneven)
 2. the matrix layout that includes flags and locations; you write it as 'all leds on left half' -> 'all leds on right half'
-3. the total of the split count and the total of the matrix layout must be equal; ideally you'd have this number be generated, and have flags for left/right?... anyways right now it's painful manual work (llm works ok for this)
+3. the total of the split count and the total of the matrix layout must be equal, and each side of the split count must equal `RGB_LEDS_PER_HALF`
+   1. the build fails (static assert in `rgb_ledmaps.c`) if the layout length isn't `2 * RGB_LEDS_PER_HALF`
+   2. `split_count` itself isn't checked, so keep it in sync by hand
 
-i.e. keys + ring + encoders + dpad + indicator + external/aesthetic leds; then the same layout for right half
+i.e. the full chain above for the left half, then the same for the right half
 flag of 1 for keys, 4 for not-keys
 I think you can do custom flag numbers?  But i handle most of that logic in the ledmap functions.  maybe that's bad.
 
@@ -84,26 +102,36 @@ Once that's figured out, you should get lights everywhere you expect, on both ha
 ## next, the logical flow
 The `keyboard.json` stuff just sets the background lighting.  I want all keys to be white unless I specify a colour.
 
-How the leds get updated is via `bool rgb_matrix_indicators_user()`, and there is logic for 'if right, do this, if left, do that'.
-That can probably be simplified.
+How the leds get updated is via `bool rgb_matrix_indicators_user()` in `keymaps/christrotter/rgb_ledmaps.c`.
+Both halves run the same code: each half takes its base index (`0` on the left, `RGB_LEDS_PER_HALF` on the right) and paints its segments relative to that.
+The only left/right difference is the indicator bar - the left indicator pcb is mounted rotated 90deg and its chain snakes, so its leds get remapped.
 
-For each side: c/o `is_keyboard_left()`
-1. set_rgb_ledmap
-2. set_rgb_range (e.g. logo, ring) for static things
-3. set_rgb_range based on layer case
-4. set indicators
+For each side:
+1. `set_rgb_ledmap` - keys + thumbs, coloured per layer from `ledmaps[]`
+2. `set_rgb_range` - static colours for the ring, encoders, dpad, indicator bars, and the wing insert/logo
+3. TODO: `set_rgb_range` based on layer case
+4. TODO: set indicators
    1. if shifted
    2. if dragscroll
    3. if lgui'd
    4. if oneshotted
 
+Both helpers take `(start, count)`, not an inclusive end - that's what used to need the mystery `-1`s.
+
+Brightness per segment comes from `KEYS_BRIGHTNESS`, `INDICATOR_BRIGHTNESS_RING`, `LOGO_BRIGHTNESS`, and `PANEL_BRIGHTNESS` in `config.h`.
+
+Gotcha: any colour with hue 0 and sat 0 is skipped (meant for black/off), which also catches white. So the white parts of the wing insert currently show the base effect, not `HSV_WHITE` at `PANEL_BRIGHTNESS`.
+
 ## ledmaps
 I had to go back to mk17 to dig up ledmap docs, jeepers.
 Also have to remember that for mk20 a lot of improvements were made.
 
-Ok, so the biggest thing to know is that the function `get_color_from_layer_stack` is tied to this variable `RGB_TOT_IND_L`.
-Without that set correctly, you get into crazy situations of buffer overrun and such - like the lighting combos won't make any sense at all - that is the biggest signal that you've got this problem.
-I should fix this.
+`ledmaps[]` only covers keys + thumbs, `RGB_LEDMAP_PER_HALF` (29) per half.
+The `LEDMAP` macro takes colours laid out like the keymap and reorders them into chain order: the left half's 29 entries, then the right half's 29.
+That's also why the dpad/encoders/ring aren't in the ledmap - they aren't next in line after the keys/thumbs.
+
+`get_color_from_layer_stack` turns a global led index into a ledmap index: the local index on the left, `RGB_LEDMAP_PER_HALF` + the local index on the right.
+This used to be the hand-tuned `RGB_TOT_IND_L` offset; when that was wrong it read the wrong ledmap entries and the lighting combos made no sense at all.
 
 There's an electrical oddity too - the cyboard led ordering is kinda wacky due to how they routed the traces (b/c 3x6, 4x, 5x, 6x are all possible, so you need to place the connector somewhere that won't get clipped )
 
@@ -114,9 +142,9 @@ Best order of operations:
 2. get the indicator leds mapped out
 3. at this point the implementation is correct - only counts will mess things up
    1. using left/right flags could really help here...
-4. set your counts as best you can
+4. set your segment counts in `config.h`; the build fails if they don't add up to the `keyboard.json` layout
 5. flip over to the right half, apply the ledmap and indicators
-6. if crazy led colours, you have a count problem
+6. if crazy led colours, check the per-segment counts and the `LEDMAP` ordering
 
 
 # mapping out the layout
