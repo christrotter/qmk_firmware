@@ -40,12 +40,12 @@ template
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        KC_TILD, LGUI(KC_1), _______, KC_TAB_L, _______, _______,        KC_MACSHOT,KC_CHROMEWIN,KC_TAB_R,MAGIPLAY, LGUI(KC_9), KC_EQUAL,
+        KC_TILD, LGUI(KC_1), _______, KC_TAB_L, _______, AM_Toggle,        KC_MACSHOT,KC_CHROMEWIN,KC_TAB_R,MAGIPLAY, LGUI(KC_9), KC_EQUAL,
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T,                           KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
         _______, KC_A, KC_S, KC_D, KC_F, KC_G,                          KC_H, KC_J, KC_K, HOME_L, KC_QUOT, KC_SCLN,
         DRAG_SCROLL_TOGGLE, KC_Z, KC_X, KC_C, KC_V, KC_B,               LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,OSM(MOD_LGUI),
         KC_BSPC, MO(_NAV), KC_DEL, _______, INPUT_CHG,                  KC_SPACE,  KC_ENTER,   MO(_SYMBOLS), MO(_NAV), OSL(_RECT),
-        KC_L, KC_M, KC_R,                                               KC_L, KC_M, KC_R,
+        KC_L, KC_M, OSM(MOD_LSFT),                                               OSM(MOD_LGUI), KC_M, KC_R,
         WHISP_REC, KC_ESC, OSM(MOD_LSFT), KC_FINDER, _______,           KC_UP, KC_RIGHT, KC_DOWN, KC_LEFT, _______
     ),
     [_MOUSE] = LAYOUT(

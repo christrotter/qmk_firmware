@@ -29,6 +29,8 @@
     #define DRAGSCROLL_CPI 100
     #undef LEFT_SCROLL_CPI
     #define LEFT_SCROLL_CPI 100
+    #undef LEFT_SCROLL_DIVISOR
+    #define LEFT_SCROLL_DIVISOR 8   // sensor counts per scroll step on the left trackball; higher = slower
     #define AUTO_MOUSE_DEFAULT_LAYER 1
     #define AUTO_MOUSE_DEBOUNCE 25
     // tuning the scroll responsiveness
@@ -50,8 +52,8 @@
     #define INDICATOR_BRIGHTNESS_RING 90 // ring, dpad
     #define INDICATOR_BRIGHTNESS_FINS 90 // the four indicator fins
     // shift/cmd/mouse fins pulse while lit, starting at INDICATOR_BRIGHTNESS_FINS
-    #define FIN_PULSE_PERIOD 2000        // ms per bright-dim-bright cycle
-    #define FIN_PULSE_FLOOR 75           // dimmest point of the pulse
+    #define FIN_PULSE_PERIOD 5000        // ms per bright-dim-bright cycle
+    #define FIN_PULSE_FLOOR 50           // dimmest point of the pulse
     #define FIN_PULSE_WAVE cubicwave8     // shape: quadwave8 (smooth), cubicwave8 (lingers at the ends), triwave8 (linear)
     #define ENCODER_BRIGHTNESS 200        // enc1 + enc2
     #define LOGO_BRIGHTNESS 90

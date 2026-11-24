@@ -68,6 +68,7 @@
     #define PMW33XX_CPI 600       // your mouse cpi (DPI) setting (how fast the ball tracks); note when usb main is on the left half this config needs to be 900
     #define DRAGSCROLL_CPI 100    // dragscroll cpi - interestingly, can't be set below 100?
     #define LEFT_SCROLL_CPI 100   // the left trackball is always scroll
+    #define LEFT_SCROLL_DIVISOR 8 // sensor counts per scroll step on the left trackball; higher = slower
 #endif
 
 // ws2812 chain, per half; the right half's leds follow the left's, so add RGB_LEDS_PER_HALF on the right

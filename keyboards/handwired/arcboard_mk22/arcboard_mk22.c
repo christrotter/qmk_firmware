@@ -72,9 +72,24 @@ static void debug_kb_config_to_console(kb_config_t* config) {
 }
 #    endif // CONSOLE_ENABLE
 
-static void convert_to_scroll(report_mouse_t* mouse_report) {
-    mouse_report->h -= mouse_report->x; // -= to invert x-axis
-    mouse_report->v =  mouse_report->y;
+// the sensor can't go below 100 cpi, which is still far too many counts per scroll step; divide them down, keeping the remainder
+#ifndef LEFT_SCROLL_DIVISOR
+#    define LEFT_SCROLL_DIVISOR 8
+#endif
+
+static void convert_to_scroll(report_mouse_t* mouse_report, bool reverse) {
+    if (reverse) {
+        static int16_t acc_x = 0, acc_y = 0;
+        acc_x += mouse_report->x;
+        acc_y += mouse_report->y;
+        mouse_report->h += acc_x / LEFT_SCROLL_DIVISOR;
+        mouse_report->v = -(acc_y / LEFT_SCROLL_DIVISOR);
+        acc_x %= LEFT_SCROLL_DIVISOR;
+        acc_y %= LEFT_SCROLL_DIVISOR;
+    } else {
+        mouse_report->h -= mouse_report->x; // -= to invert x-axis
+        mouse_report->v =  mouse_report->y;
+    }
     mouse_report->x = 0;
     mouse_report->y = 0;
 }
@@ -83,9 +98,9 @@ static void convert_to_scroll(report_mouse_t* mouse_report) {
 static report_mouse_t right_report_for_auto_mouse;
 
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
-    convert_to_scroll(&left_report); // left trackball is always scroll
+    convert_to_scroll(&left_report, true); // left trackball is always scroll
     if (kb_config.is_dragscroll_enabled) {
-        convert_to_scroll(&right_report);
+        convert_to_scroll(&right_report, false);
     }
     right_report_for_auto_mouse = right_report;
     return pointing_device_combine_reports(left_report, right_report);
