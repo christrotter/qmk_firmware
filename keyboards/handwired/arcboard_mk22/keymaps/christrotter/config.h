@@ -37,3 +37,11 @@
     #define QUANTUM_PAINTER_NUM_IMAGES 32
     #define SCREEN_TIMEOUT (900 * 1000) // shut off the displays after 15 minutes
 #endif
+
+#if defined(RGB_MATRIX_LEDMAPS_ENABLED)
+    #define KEYS_BRIGHTNESS 90           // keys + thumbs
+    #define INDICATOR_BRIGHTNESS_RING 90 // ring, dpad, indicator bars
+    #define ENCODER_BRIGHTNESS 200        // enc1 + enc2
+    #define LOGO_BRIGHTNESS 90
+    #define PANEL_BRIGHTNESS 50          // wing insert, excluding the logo
+#endif

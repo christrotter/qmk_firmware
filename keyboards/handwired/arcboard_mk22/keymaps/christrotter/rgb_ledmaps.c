@@ -77,9 +77,9 @@ bool rgb_matrix_indicators_user(void) {
     // per-key leds (keys + thumbs) by ledmap
     set_rgb_ledmap(b + RGB_KEYS_START, RGB_LEDMAP_PER_HALF, KEYS_BRIGHTNESS);
     set_rgb_range(b + RGB_RING_START, RGB_RING_COUNT, (hsv_t){HSV_ORANGE}, INDICATOR_BRIGHTNESS_RING);
-    set_rgb_range(b + RGB_ENC1_START, RGB_ENC1_COUNT, (hsv_t){HSV_CYAN}, INDICATOR_BRIGHTNESS_RING);
+    set_rgb_range(b + RGB_ENC1_START, RGB_ENC1_COUNT, (hsv_t){HSV_CYAN}, ENCODER_BRIGHTNESS);
     set_rgb_range(b + RGB_DPAD_START, RGB_DPAD_COUNT, (hsv_t){HSV_BLUE}, INDICATOR_BRIGHTNESS_RING);
-    set_rgb_range(b + RGB_ENC2_START, RGB_ENC2_COUNT, (hsv_t){HSV_YELLOW}, INDICATOR_BRIGHTNESS_RING);
+    set_rgb_range(b + RGB_ENC2_START, RGB_ENC2_COUNT, (hsv_t){HSV_YELLOW}, ENCODER_BRIGHTNESS);
 
     // indicator bars
     if (is_keyboard_left()) {

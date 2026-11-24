@@ -94,10 +94,3 @@
 
 // ledmaps[] covers keys + thumbs: the left half's entries, then the right half's
 #define RGB_LEDMAP_PER_HALF (RGB_KEYS_COUNT + RGB_THUMBS_COUNT)
-
-#if defined(RGB_MATRIX_LEDMAPS_ENABLED)
-    #define PANEL_BRIGHTNESS 50
-    #define LOGO_BRIGHTNESS 90
-    #define INDICATOR_BRIGHTNESS_RING 90
-    #define KEYS_BRIGHTNESS 90
-#endif
