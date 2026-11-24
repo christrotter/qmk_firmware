@@ -81,6 +81,8 @@ void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int 
 
 bool rgb_matrix_indicators_user() {
     static const hsv_t indicator_bar_colors[4] = {{HSV_RED}, {HSV_PINK}, {HSV_CYAN}, {HSV_BLUE}};
+    static const hsv_t panel_color             = {HSV_WHITE};
+    static const hsv_t panel_logo_color        = {HSV_CYAN};
 
     // the right half's leds follow the left half's in the global chain
     const uint16_t b = is_keyboard_left() ? 0 : RGB_LEDS_PER_HALF;
@@ -109,6 +111,12 @@ bool rgb_matrix_indicators_user() {
             set_rgb_range(b + 57 + i, b + 57 + i, c.h, c.s, c.v, INDICATOR_BRIGHTNESS_RING);
         }
     }
-    // b + 73 .. b + 132 is the backlight panel, left to the base rgb_matrix effect for now
+    // backlight panel: b + 73 .. b + 132; panel leds 19-26 and 35-42 (1-based) are the logo
+    for (uint8_t i = 0; i < RGB_LED_COUNT_PANEL; i++) {
+        const uint8_t n = i + 1;
+        const bool is_logo = (n >= 18 && n <= 27) || (n >= 34 && n <= 43);
+        const hsv_t c = is_logo ? panel_logo_color : panel_color;
+        set_rgb_range(b + 73 + i, b + 73 + i, c.h, c.s, c.v, is_logo ? LOGO_BRIGHTNESS : INTAKE_BRIGHTNESS);
+    }
     return true;
 }
