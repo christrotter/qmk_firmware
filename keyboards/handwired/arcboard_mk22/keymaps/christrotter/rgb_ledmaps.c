@@ -5,8 +5,11 @@
 #include "rgb_ledmaps.h"
 #include "arcboard_mk22.h"
 #include "keymap.h"
+#include <lib/lib8tion/lib8tion.h>
 
 _Static_assert(RGB_LEDS_PER_HALF * 2 == RGB_MATRIX_LED_COUNT, "RGB_LEDS_PER_HALF does not match the rgb_matrix layout in keyboard.json");
+_Static_assert(FIN_PULSE_PERIOD > 0, "FIN_PULSE_PERIOD must be positive");
+_Static_assert(FIN_PULSE_FLOOR < INDICATOR_BRIGHTNESS_FINS, "FIN_PULSE_FLOOR must be below INDICATOR_BRIGHTNESS_FINS");
 
 bool is_transparent_color(uint8_t h, uint8_t s) {
     return (h == 255 && s == 255); // Our ___t___ value
@@ -77,12 +80,23 @@ static uint8_t indicator_fin(uint8_t i) {
     return 3 - i / 4;
 }
 
+// brightness of a pulsing fin; phase 128 is the wave's peak, so a fin lights at full brightness and then dims
+static uint8_t fin_pulse_val(uint32_t lit_since) {
+    const uint32_t elapsed = (g_rgb_timer - lit_since) % FIN_PULSE_PERIOD;
+    const uint8_t  phase   = 128 + elapsed * 256 / FIN_PULSE_PERIOD;
+    return FIN_PULSE_FLOOR + scale8(FIN_PULSE_WAVE(phase), INDICATOR_BRIGHTNESS_FINS - FIN_PULSE_FLOOR);
+}
+
 // four fins of four leds: layer colour, shift, cmd, mouse layer held; an unlit fin is explicitly black
 static void set_indicator_fins(uint16_t base) {
     static const hsv_t layer_colors[] = {
         {LAYER_0_COLOUR}, {LAYER_1_COLOUR}, {LAYER_2_COLOUR}, {LAYER_3_COLOUR}, {LAYER_4_COLOUR},
         {LAYER_5_COLOUR}, {LAYER_6_COLOUR}, {LAYER_7_COLOUR}, {LAYER_8_COLOUR}, {LAYER_9_COLOUR},
     };
+    static const bool fin_pulses[4] = {false, true, true, true};
+    static bool       fin_was_lit[4];
+    static uint32_t   fin_lit_since[4];
+
     const uint8_t layer = get_highest_layer(layer_state | default_layer_state);
     const uint8_t mods  = get_mods() | get_weak_mods() | get_oneshot_mods();
 
@@ -94,16 +108,27 @@ static void set_indicator_fins(uint16_t base) {
         {HSV_BLUE},
     };
 
-    for (uint8_t i = 0; i < RGB_INDICATOR_COUNT; i++) {
-        const uint8_t fin = indicator_fin(i);
-        if (fin_lit[fin]) {
-            hsv_t hsv = fin_color[fin];
-            hsv.v     = INDICATOR_BRIGHTNESS_FINS;
-            const rgb_t rgb = hsv_to_rgb(hsv);
-            rgb_matrix_set_color(base + RGB_INDICATOR_START + i, rgb.r, rgb.g, rgb.b);
-        } else {
-            rgb_matrix_set_color(base + RGB_INDICATOR_START + i, 0, 0, 0);
+    rgb_t fin_rgb[4];
+    for (uint8_t fin = 0; fin < 4; fin++) {
+        if (fin_lit[fin] && !fin_was_lit[fin]) {
+            fin_lit_since[fin] = g_rgb_timer;
         }
+        fin_was_lit[fin] = fin_lit[fin];
+
+        hsv_t hsv = fin_color[fin];
+        if (!fin_lit[fin]) {
+            hsv.v = 0;
+        } else if (fin_pulses[fin]) {
+            hsv.v = fin_pulse_val(fin_lit_since[fin]);
+        } else {
+            hsv.v = INDICATOR_BRIGHTNESS_FINS;
+        }
+        fin_rgb[fin] = hsv_to_rgb(hsv);
+    }
+
+    for (uint8_t i = 0; i < RGB_INDICATOR_COUNT; i++) {
+        const rgb_t rgb = fin_rgb[indicator_fin(i)];
+        rgb_matrix_set_color(base + RGB_INDICATOR_START + i, rgb.r, rgb.g, rgb.b);
     }
 }
 
