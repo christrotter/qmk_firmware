@@ -122,6 +122,7 @@ enum custom_keycodes {
 // superwhisper
 #define WHISP_REC   LSFT(LGUI(LALT(KC_R)))
 
+#define BACKGROUND_SILVER 25, 25, 255
 #define LAYER_0_COLOUR BACKGROUND_SILVER         // qwerty
 #define LAYER_1_COLOUR HSV_ORANGE       // mouse
 #define LAYER_2_COLOUR HSV_PINK        // symbols  

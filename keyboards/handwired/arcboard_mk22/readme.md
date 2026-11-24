@@ -110,15 +110,15 @@ For each side:
 1. `set_rgb_ledmap` - keys + thumbs, coloured per layer from `ledmaps[]`
 2. `set_rgb_range` - static colours for the ring, encoders, dpad, indicator bars, and the wing insert/logo
 3. TODO: `set_rgb_range` based on layer case
-4. TODO: set indicators
-   1. if shifted
-   2. if dragscroll
-   3. if lgui'd
-   4. if oneshotted
+4. `set_indicator_fins` - the 16 indicator leds are four fins of four, each lit as one unit (and explicitly black when off):
+   1. layer colour (`LAYER_n_COLOUR` for the highest active layer)
+   2. shift (green) - held, weak or oneshot
+   3. cmd (purple) - held, weak or oneshot
+   4. mouse layer on (blue) - held, toggled or via automouse
 
 Both helpers take `(start, count)`, not an inclusive end - that's what used to need the mystery `-1`s.
 
-Brightness per segment comes from `KEYS_BRIGHTNESS`, `INDICATOR_BRIGHTNESS_RING` (ring, dpad, indicator bars), `ENCODER_BRIGHTNESS` (enc1 + enc2), `LOGO_BRIGHTNESS`, and `PANEL_BRIGHTNESS` in `keymaps/christrotter/config.h` - they're user preferences, so they live with the keymap, while the chain layout (hardware) stays in the keyboard `config.h`.
+Brightness per segment comes from `KEYS_BRIGHTNESS`, `INDICATOR_BRIGHTNESS_RING` (ring, dpad), `INDICATOR_BRIGHTNESS_FINS` (indicator fins), `ENCODER_BRIGHTNESS` (enc1 + enc2), `LOGO_BRIGHTNESS`, and `PANEL_BRIGHTNESS` in `keymaps/christrotter/config.h` - they're user preferences, so they live with the keymap, while the chain layout (hardware) stays in the keyboard `config.h`.
 
 Gotcha: any colour with hue 0 and sat 0 is skipped (meant for black/off), which also catches white. So the white parts of the wing insert currently show the base effect, not `HSV_WHITE` at `PANEL_BRIGHTNESS`.
 
