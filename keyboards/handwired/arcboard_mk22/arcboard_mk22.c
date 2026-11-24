@@ -79,12 +79,30 @@ static void convert_to_scroll(report_mouse_t* mouse_report) {
     mouse_report->y = 0;
 }
 
+// auto mouse only sees the combined report, so remember the right-side movement for it
+static report_mouse_t right_report_for_auto_mouse;
+
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
     convert_to_scroll(&left_report); // left trackball is always scroll
     if (kb_config.is_dragscroll_enabled) {
         convert_to_scroll(&right_report);
     }
+    right_report_for_auto_mouse = right_report;
     return pointing_device_combine_reports(left_report, right_report);
+}
+
+// only the right trackball (and buttons) may activate the auto mouse layer; left scrolling is ignored
+bool auto_mouse_activation(report_mouse_t mouse_report) {
+    static int16_t total_x, total_y, total_h, total_v;
+    total_x += right_report_for_auto_mouse.x;
+    total_y += right_report_for_auto_mouse.y;
+    total_h += right_report_for_auto_mouse.h;
+    total_v += right_report_for_auto_mouse.v;
+    bool activated = abs(total_x) > AUTO_MOUSE_THRESHOLD || abs(total_y) > AUTO_MOUSE_THRESHOLD || abs(total_h) > AUTO_MOUSE_THRESHOLD || abs(total_v) > AUTO_MOUSE_THRESHOLD || mouse_report.buttons;
+    if (activated) {
+        total_x = total_y = total_h = total_v = 0;
+    }
+    return activated;
 }
 
 report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
