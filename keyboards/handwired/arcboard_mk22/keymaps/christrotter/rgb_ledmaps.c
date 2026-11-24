@@ -80,6 +80,7 @@ void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int 
 }
 
 bool rgb_matrix_indicators_user() {
+    static const hsv_t indicator_bar_colors[4] = {{HSV_RED}, {HSV_PINK}, {HSV_CYAN}, {HSV_BLUE}};
 
     // the right half's leds follow the left half's in the global chain
     const uint16_t b = is_keyboard_left() ? 0 : RGB_LEDS_PER_HALF;
@@ -95,10 +96,19 @@ bool rgb_matrix_indicators_user() {
     // te2
     set_rgb_range(b + 53, b + 56, HSV_YELLOW, INDICATOR_BRIGHTNESS_RING);
     // indicator bars
-    set_rgb_range(b + 57, b + 60, HSV_RED, INDICATOR_BRIGHTNESS_RING);
-    set_rgb_range(b + 61, b + 64, HSV_PINK, INDICATOR_BRIGHTNESS_RING);
-    set_rgb_range(b + 65, b + 68, HSV_CYAN, INDICATOR_BRIGHTNESS_RING);
-    set_rgb_range(b + 69, b + 72, HSV_BLUE, INDICATOR_BRIGHTNESS_RING);
+    if (is_keyboard_left()) {
+        // the left indicator pcb is mounted rotated 90deg and its chain snakes: each group of four is a column, and odd columns run the other way
+        for (uint8_t i = 0; i < 16; i++) {
+            const uint8_t row = ((i / 4) % 2) ? 3 - (i % 4) : i % 4;
+            const hsv_t c = indicator_bar_colors[3 - row];
+            set_rgb_range(b + 57 + i, b + 57 + i, c.h, c.s, c.v, INDICATOR_BRIGHTNESS_RING);
+        }
+    } else {
+        for (uint8_t i = 0; i < 16; i++) {
+            const hsv_t c = indicator_bar_colors[i / 4];
+            set_rgb_range(b + 57 + i, b + 57 + i, c.h, c.s, c.v, INDICATOR_BRIGHTNESS_RING);
+        }
+    }
     // b + 73 .. b + 132 is the backlight panel, left to the base rgb_matrix effect for now
     return true;
 }
