@@ -60,12 +60,14 @@
     #define POINTING_DEVICE_TASK_THROTTLE_MS 10 // this ensures that the trackball sensor polling happens only every 10ms
     #define MOUSE_EXTENDED_REPORT
     #define SPLIT_POINTING_ENABLE               // required for telling the master side about slave trackball state, i.e. if usb left, and tb right
-    #define POINTING_DEVICE_RIGHT
+    #define POINTING_DEVICE_COMBINED            // trackballs on both halves; both use CS pin E8 on their own half
     #define POINTING_DEVICE_INVERT_Y
+    #define POINTING_DEVICE_INVERT_Y_RIGHT      // combined mode needs the right half's inversion set separately
     #define ROTATIONAL_TRANSFORM_ANGLE 90
     #define DRAGSCROLL_BUFFER_SIZE 0
     #define PMW33XX_CPI 600       // your mouse cpi (DPI) setting (how fast the ball tracks); note when usb main is on the left half this config needs to be 900
     #define DRAGSCROLL_CPI 100    // dragscroll cpi - interestingly, can't be set below 100?
+    #define LEFT_SCROLL_CPI 100   // the left trackball is always scroll
 #endif
 
 // ws2812 chain, per half; the right half's leds follow the left's, so add RGB_LEDS_PER_HALF on the right

@@ -18,14 +18,12 @@ static kb_config_t kb_config = {0};
 
 #ifdef POINTING_DEVICE_ENABLE
 static void maybe_update_pointing_device_cpi(kb_config_t* config) {
-    if (config->is_dragscroll_enabled) {
-        pointing_device_set_cpi(DRAGSCROLL_CPI);
-    } else {
-        pointing_device_set_cpi(PMW33XX_CPI);
-    }
+    pointing_device_set_cpi_on_side(true, LEFT_SCROLL_CPI);
+    pointing_device_set_cpi_on_side(false, config->is_dragscroll_enabled ? DRAGSCROLL_CPI : PMW33XX_CPI);
 }
 void pointing_device_init_kb(void) {
     pointing_device_init_user(); // set auto mouse layer
+    maybe_update_pointing_device_cpi(&kb_config);
 }
 
 bool kb_get_pointer_dragscroll_enabled(void) {
@@ -74,23 +72,23 @@ static void debug_kb_config_to_console(kb_config_t* config) {
 }
 #    endif // CONSOLE_ENABLE
 
-static void pointing_device_task_arcboard(report_mouse_t* mouse_report) {
+static void convert_to_scroll(report_mouse_t* mouse_report) {
+    mouse_report->h -= mouse_report->x; // -= to invert x-axis
+    mouse_report->v =  mouse_report->y;
+    mouse_report->x = 0;
+    mouse_report->y = 0;
+}
+
+report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
+    convert_to_scroll(&left_report); // left trackball is always scroll
     if (kb_config.is_dragscroll_enabled) {
-        mouse_report->h -= mouse_report->x; // -= to invert x-axis
-        mouse_report->v =  mouse_report->y;
-        mouse_report->x = 0;
-        mouse_report->y = 0;
+        convert_to_scroll(&right_report);
     }
+    return pointing_device_combine_reports(left_report, right_report);
 }
 
 report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
-    if (!is_keyboard_left()) {
-        pointing_device_task_arcboard(&mouse_report);
-        mouse_report = pointing_device_task_user(mouse_report);
-    } else {
-        mouse_report = pointing_device_task_user(mouse_report);
-    }
-    return mouse_report;
+    return pointing_device_task_user(mouse_report);
 }
 
 bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {

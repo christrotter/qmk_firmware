@@ -22,6 +22,13 @@
     #define ROTATIONAL_TRANSFORM_ANGLE 90
     #define POINTING_DEVICE_INVERT_Y
     #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+    // trackball cpi; right = mouse (+ drag-scroll toggle), left = always scroll
+    #undef PMW33XX_CPI
+    #define PMW33XX_CPI 600
+    #undef DRAGSCROLL_CPI
+    #define DRAGSCROLL_CPI 100
+    #undef LEFT_SCROLL_CPI
+    #define LEFT_SCROLL_CPI 100
     #define AUTO_MOUSE_DEFAULT_LAYER 1
     #define AUTO_MOUSE_DEBOUNCE 25
     // tuning the scroll responsiveness
