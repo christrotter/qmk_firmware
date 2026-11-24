@@ -93,8 +93,8 @@ static painter_image_handle_t icon_heart_red;
 #endif
 
 void keyboard_post_init_user(void) {
-    // debug_enable=true;
-    // debug_matrix=true;
+    debug_enable=true;
+    debug_matrix=true;
     // debug_keyboard=true;
     // debug_mouse=true;
     #if defined(QUANTUM_PAINTER_ENABLE)
@@ -261,13 +261,13 @@ void housekeeping_task_user(void) {
         lcd_power = (last_input_activity_elapsed() < SCREEN_TIMEOUT) ? 1 : 0;
         static uint32_t last_draw = 0;
 
-        setPinOutput(DISPLAY_BL_PIN);
+        gpio_set_pin_output(DISPLAY_BL_PIN);
         
         if (lcd_power) {
             // low = on
-            writePinHigh(DISPLAY_BL_PIN);
+            gpio_write_pin_high(DISPLAY_BL_PIN);
         } else {
-            writePinLow(DISPLAY_BL_PIN);
+            gpio_write_pin_low(DISPLAY_BL_PIN);
         }
 
         if (timer_elapsed32(last_draw) > 33) { // Throttle to 30fps

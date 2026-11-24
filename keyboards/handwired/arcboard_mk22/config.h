@@ -69,17 +69,22 @@
 #endif
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
-    #define INDICATOR_BRIGHTNESS 150
+    #define INDICATOR_BRIGHTNESS 90
     #define INDICATOR_BRIGHTNESS_IDLE 70
     #define INTAKE_BRIGHTNESS 50
     #define LOGO_BRIGHTNESS 90
-    #define INDICATOR_BRIGHTNESS_RING 200
+    #define INDICATOR_BRIGHTNESS_RING 90
     #define KEYS_BRIGHTNESS 90
 
     // 103-37 = 66
     // this is just really ugly.  required by the rgb_range code to handle the split numbering.
-    #define RGB_TOT_IND_L 45 // 74-29
-    #define RGB_TOT_IND_R 45
+    // 29 keys + 16 ring + 12 (te1, dpad, te2) + 16 indicators = 73, then the 60-led panel
+    #define RGB_LED_COUNT_PANEL 60
+    #define RGB_LEDS_PER_HALF 133 // must match split_count in keyboard.json
+
+    // offset that turns a right-half global led index into its ledmap index (right ledmap entries follow the left's 29)
+    #define RGB_TOT_IND_L (RGB_LEDS_PER_HALF - 29)
+    #define RGB_TOT_IND_R RGB_TOT_IND_L
 
     // 30 in keys + 4 in dpad + 3 in paddle-keys
     // 37 + 19 + 8 + 10 + 16 + 12 = 102

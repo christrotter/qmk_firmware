@@ -81,40 +81,24 @@ void set_rgb_range(uint16_t first_led, uint16_t last_led, int hue, int sat, int 
 
 bool rgb_matrix_indicators_user() {
 
-    if (is_keyboard_left()) {
-        // set LEFT per-key leds by ledmap
-        set_rgb_ledmap(0, 28, KEYS_BRIGHTNESS, get_highest_layer(layer_state | default_layer_state));
-        // ring
-        set_rgb_range(29, 44, HSV_ORANGE, INDICATOR_BRIGHTNESS_RING);
-        // te1
-        set_rgb_range(45, 48, HSV_CYAN, INDICATOR_BRIGHTNESS_RING); 
-        // dpad
-        set_rgb_range(49, 52, HSV_BLUE, INDICATOR_BRIGHTNESS_RING); 
-        // te2
-        set_rgb_range(53, 56, HSV_YELLOW, INDICATOR_BRIGHTNESS_RING); 
-        // indicator bars
-        set_rgb_range(57, 60, HSV_RED, INDICATOR_BRIGHTNESS_RING); 
-        set_rgb_range(61, 64, HSV_PINK, INDICATOR_BRIGHTNESS_RING);
-        set_rgb_range(65, 68, HSV_CYAN, INDICATOR_BRIGHTNESS_RING); 
-        set_rgb_range(69, 72, HSV_BLUE, INDICATOR_BRIGHTNESS_RING); 
+    // the right half's leds follow the left half's in the global chain
+    const uint16_t b = is_keyboard_left() ? 0 : RGB_LEDS_PER_HALF;
 
-    } else {
-        // set RIGHT per-key leds by ledmap
-        set_rgb_ledmap(73, 102, KEYS_BRIGHTNESS, get_highest_layer(layer_state | default_layer_state));
-        // ring
-        set_rgb_range(103, 118, HSV_ORANGE, INDICATOR_BRIGHTNESS_RING);
-        // te1
-        set_rgb_range(119, 122, HSV_CYAN, INDICATOR_BRIGHTNESS_RING); 
-        // dpad
-        set_rgb_range(123, 126, HSV_BLUE, INDICATOR_BRIGHTNESS_RING); 
-        // te2
-        set_rgb_range(127, 130, HSV_YELLOW, INDICATOR_BRIGHTNESS_RING); 
-        // indicator bars
-        set_rgb_range(131, 134, HSV_RED, INDICATOR_BRIGHTNESS_RING); 
-        set_rgb_range(135, 138, HSV_PINK, INDICATOR_BRIGHTNESS_RING); 
-        set_rgb_range(139, 142, HSV_CYAN, INDICATOR_BRIGHTNESS_RING); 
-        set_rgb_range(143, 146, HSV_BLUE, INDICATOR_BRIGHTNESS_RING); 
-
-    }
+    // per-key leds by ledmap
+    set_rgb_ledmap(b + 0, b + 28, KEYS_BRIGHTNESS, get_highest_layer(layer_state | default_layer_state));
+    // ring
+    set_rgb_range(b + 29, b + 44, HSV_ORANGE, INDICATOR_BRIGHTNESS_RING);
+    // te1
+    set_rgb_range(b + 45, b + 48, HSV_CYAN, INDICATOR_BRIGHTNESS_RING);
+    // dpad
+    set_rgb_range(b + 49, b + 52, HSV_BLUE, INDICATOR_BRIGHTNESS_RING);
+    // te2
+    set_rgb_range(b + 53, b + 56, HSV_YELLOW, INDICATOR_BRIGHTNESS_RING);
+    // indicator bars
+    set_rgb_range(b + 57, b + 60, HSV_RED, INDICATOR_BRIGHTNESS_RING);
+    set_rgb_range(b + 61, b + 64, HSV_PINK, INDICATOR_BRIGHTNESS_RING);
+    set_rgb_range(b + 65, b + 68, HSV_CYAN, INDICATOR_BRIGHTNESS_RING);
+    set_rgb_range(b + 69, b + 72, HSV_BLUE, INDICATOR_BRIGHTNESS_RING);
+    // b + 73 .. b + 132 is the backlight panel, left to the base rgb_matrix effect for now
     return true;
 }
