@@ -49,13 +49,19 @@
 
 #if defined(RGB_MATRIX_LEDMAPS_ENABLED)
     #define KEYS_BRIGHTNESS 90           // keys + thumbs
-    #define INDICATOR_BRIGHTNESS_RING 90 // ring, dpad
+    #define INDICATOR_BRIGHTNESS_RING 90 // ring
+    #define DPAD_BRIGHTNESS 0
     #define INDICATOR_BRIGHTNESS_FINS 90 // the four indicator fins
     // shift/cmd/mouse fins pulse while lit, starting at INDICATOR_BRIGHTNESS_FINS
     #define FIN_PULSE_PERIOD 5000        // ms per bright-dim-bright cycle
     #define FIN_PULSE_FLOOR 50           // dimmest point of the pulse
     #define FIN_PULSE_WAVE cubicwave8     // shape: quadwave8 (smooth), cubicwave8 (lingers at the ends), triwave8 (linear)
     #define ENCODER_BRIGHTNESS 200        // enc1 + enc2
+    // encoder led colours per half, in chain order (enc1 then enc2); hsv initialisers
+    #define LEFT_ENC1_COLOUR HSV_GOLD
+    #define LEFT_ENC2_COLOUR HSV_WHITE
+    #define RIGHT_ENC1_COLOUR HSV_CYAN
+    #define RIGHT_ENC2_COLOUR HSV_WHITE
     #define LOGO_BRIGHTNESS 90
     #define PANEL_BRIGHTNESS 50          // wing insert, excluding the logo
 #endif

@@ -44,8 +44,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T,                           KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
         _______, KC_A, KC_S, KC_D, KC_F, KC_G,                          KC_H, KC_J, KC_K, HOME_L, KC_QUOT, KC_SCLN,
         DRAG_SCROLL_TOGGLE, KC_Z, KC_X, KC_C, KC_V, KC_B,               LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,OSM(MOD_LGUI),
-        KC_BSPC, MO(_NAV), KC_DEL, _______, INPUT_CHG,                  KC_SPACE,  KC_ENTER,   MO(_SYMBOLS), MO(_NAV), OSL(_RECT),
-        KC_L, KC_M, OSM(MOD_LSFT),                                               OSM(MOD_LGUI), KC_M, KC_R,
+        KC_BSPC, MO(_NAV), KC_DEL, KC_ESC, INPUT_CHG,                  KC_SPACE,  KC_ENTER,   MO(_SYMBOLS), MO(_NAV), OSL(_RECT),
+        KC_L, AM_Toggle, SUP_ALT_TAB,                                               OSM(MOD_LGUI), AM_Toggle, KC_R,
         WHISP_REC, KC_ESC, OSM(MOD_LSFT), KC_FINDER, _______,           KC_UP, KC_RIGHT, KC_DOWN, KC_LEFT, _______
     ),
     [_MOUSE] = LAYOUT(
@@ -138,7 +138,7 @@ const ledmap ledmaps[] = {
         GOLD, ___t___, ___t___, ___t___, ___t___, ___t___,              ___t___, ___t___, ___t___, ___t___, ___t___, CYAN,
         ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           ___t___, ___t___, ___t___, HRM_ALT, ___t___, ___t___,
         ORANGE, ___t___, ___t___, ___t___, ___t___, ___t___,            ___t___, HRM_CTL, ___t___, ___t___, ___t___, HRM_GUI,
-        RED, TOG_NAV, RED, SPRING, RED,                                 SPACE, ENTER, TOG_SYM, TOG_NAV, TOG_RECT
+        RED, TOG_NAV, RED, RED, SPRING,                                 SPACE, ENTER, TOG_SYM, TOG_NAV, TOG_RECT
     ),
     [_MOUSE] = LEDMAP(
         ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,
@@ -159,7 +159,7 @@ const ledmap ledmaps[] = {
         ___t___, ___t___, ___t___, ___t___, ___t___, PURPLE,            GREEN,    CYAN,   GREEN,    CYAN,     RED, ___t___,
         ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           YELLOW,   GREEN,   GREEN,   GREEN,  YELLOW, ___t___,
         ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           PURPLE,  ORANGE,  ORANGE,  ORANGE,  PURPLE, ___t___,
-        ___t___, ___t___, ___t___, YELLOW, ___t___,                     ___t___, ___t___, ___t___, ___t___, ___t___
+        ___t___, ___t___, ___t___, ___t___, YELLOW,                     ___t___, ___t___, ___t___, ___t___, ___t___
     ),
     [_RECT] = LEDMAP(
         ___t___, ___t___, ___t___, ___t___, ___t___, ___t___,           GREEN, ORANGE, RED, ___t___, RED,    BLUE,
