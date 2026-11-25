@@ -80,12 +80,12 @@ static uint8_t indicator_fin(uint8_t i) {
 }
 
 // brightness of a fin showing a oneshot mod: full at the start, fading linearly to 0 as the oneshot timeout runs out
-static uint8_t fin_fade_val(uint32_t armed_at) {
+static uint8_t fin_fade_val(uint32_t armed_at, uint8_t brightness) {
     const uint32_t elapsed = timer_elapsed32(armed_at);
     if (elapsed >= ONESHOT_TIMEOUT) {
         return 0;
     }
-    return (uint32_t)INDICATOR_BRIGHTNESS_FINS * (ONESHOT_TIMEOUT - elapsed) / ONESHOT_TIMEOUT;
+    return (uint32_t)brightness * (ONESHOT_TIMEOUT - elapsed) / ONESHOT_TIMEOUT;
 }
 
 // four fins of four leds: layer colour, shift, cmd, mouse layer held; an unlit fin is explicitly black
@@ -102,6 +102,8 @@ static void set_indicator_fins(uint16_t base) {
     const uint8_t layer      = get_highest_layer(layer_state | default_layer_state);
     const uint8_t held_mods  = get_mods() | get_weak_mods() | get_oneshot_locked_mods();
     const uint8_t oneshot    = get_oneshot_mods();
+
+    static const uint8_t fin_brightness[4] = {FIN_BRIGHTNESS_LAYER, FIN_BRIGHTNESS_ONESHOT, FIN_BRIGHTNESS_ONESHOT, FIN_BRIGHTNESS_MOUSE};
 
     const bool  fin_solid[4]  = {true, held_mods & MOD_MASK_SHIFT, held_mods & MOD_MASK_GUI, layer_state_is(_MOUSE)};
     const hsv_t fin_color[4]  = {
@@ -122,9 +124,9 @@ static void set_indicator_fins(uint16_t base) {
 
         hsv_t hsv = fin_color[fin];
         if (fin_solid[fin]) {
-            hsv.v = INDICATOR_BRIGHTNESS_FINS;
+            hsv.v = fin_brightness[fin];
         } else if (pending) {
-            hsv.v = fin_fade_val(fin_armed_at[fin]);
+            hsv.v = fin_fade_val(fin_armed_at[fin], fin_brightness[fin]);
         } else {
             hsv.v = 0;
         }

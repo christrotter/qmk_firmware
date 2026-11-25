@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_A, KC_S, KC_D, KC_F, KC_G,                          KC_H, KC_J, KC_K, HOME_L, KC_QUOT, KC_SCLN,
         DRAG_SCROLL_TOGGLE, KC_Z, KC_X, KC_C, KC_V, KC_B,               LT(0,KC_N),HOME_M,KC_COMM,KC_DOT,KC_SLASH,OSM(MOD_LGUI),
         KC_BSPC, MO(_NAV), KC_DEL, KC_ESC, INPUT_CHG,                  KC_SPACE,  KC_ENTER,   MO(_SYMBOLS), MO(_NAV), OSL(_RECT),
-        KC_L, AM_Toggle, SUP_ALT_TAB,                                               OSM(MOD_LGUI), AM_Toggle, KC_R,
+        KC_L, AM_Toggle, SUP_ALT_TAB,                                               KC_CHROMEWIN, AM_Toggle, KC_MACSHOT,
         WHISP_REC, KC_ESC, OSM(MOD_LSFT), KC_FINDER, _______,           KC_UP, KC_RIGHT, KC_DOWN, KC_LEFT, _______
     ),
     [_MOUSE] = LAYOUT(

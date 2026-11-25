@@ -51,8 +51,9 @@
     #define KEYS_BRIGHTNESS 90           // keys + thumbs
     #define INDICATOR_BRIGHTNESS_RING 90 // ring
     #define DPAD_BRIGHTNESS 90
-    #define INDICATOR_BRIGHTNESS_FINS 120 // the four indicator fins
-    // shift/cmd fins start at INDICATOR_BRIGHTNESS_FINS and fade to 0 over ONESHOT_TIMEOUT while a oneshot is pending
+    #define FIN_BRIGHTNESS_LAYER 90      // layer fin
+    #define FIN_BRIGHTNESS_ONESHOT 150    // shift + cmd fins; a pending oneshot starts here and fades to 0 over ONESHOT_TIMEOUT
+    #define FIN_BRIGHTNESS_MOUSE 90      // automouse fin
     #define ENCODER_BRIGHTNESS 200        // enc1 + enc2
     // encoder led colours per half, in chain order (enc1 then enc2); hsv initialisers
     #define LEFT_ENC1_COLOUR HSV_GOLD

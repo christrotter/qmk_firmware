@@ -118,7 +118,7 @@ For each side:
 
 Both helpers take `(start, count)`, not an inclusive end - that's what used to need the mystery `-1`s.
 
-Brightness per segment comes from `KEYS_BRIGHTNESS`, `INDICATOR_BRIGHTNESS_RING` (ring), `DPAD_BRIGHTNESS` (dpad), `INDICATOR_BRIGHTNESS_FINS` (indicator fins), `ENCODER_BRIGHTNESS` (enc1 + enc2), `LOGO_BRIGHTNESS`, and `PANEL_BRIGHTNESS` in `keymaps/christrotter/config.h` - they're user preferences, so they live with the keymap, while the chain layout (hardware) stays in the keyboard `config.h`.
+Brightness per segment comes from `KEYS_BRIGHTNESS`, `INDICATOR_BRIGHTNESS_RING` (ring), `DPAD_BRIGHTNESS` (dpad), `FIN_BRIGHTNESS_LAYER` / `FIN_BRIGHTNESS_ONESHOT` / `FIN_BRIGHTNESS_MOUSE` (layer, shift+cmd and automouse indicator fins), `ENCODER_BRIGHTNESS` (enc1 + enc2), `LOGO_BRIGHTNESS`, and `PANEL_BRIGHTNESS` in `keymaps/christrotter/config.h` - they're user preferences, so they live with the keymap, while the chain layout (hardware) stays in the keyboard `config.h`.
 
 Gotcha: any colour with hue 0 and sat 0 is skipped (meant for black/off), which also catches white. So the white parts of the wing insert currently show the base effect, not `HSV_WHITE` at `PANEL_BRIGHTNESS`.
 
