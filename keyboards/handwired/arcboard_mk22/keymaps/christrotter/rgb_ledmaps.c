@@ -19,11 +19,9 @@ static uint16_t half_base(void) {
     return is_keyboard_left() ? 0 : RGB_LEDS_PER_HALF;
 }
 
-// Get color from the layer stack
-hsv_t get_color_from_layer_stack(uint16_t led_index) {
-    // ledmaps[] holds the left half's entries, then the right half's
-    const uint16_t ledmap_index  = (is_keyboard_left() ? 0 : RGB_LEDMAP_PER_HALF) + (led_index - half_base());
-    const uint8_t  highest_layer = get_highest_layer(layer_state | default_layer_state);
+// Get color from the layer stack; map is a per-layer table of {h, s, unused} entries, layer_entries long per layer
+static hsv_t layer_stack_color(const uint8_t (*map)[3], uint16_t layer_entries, uint16_t map_index) {
+    const uint8_t highest_layer = get_highest_layer(layer_state | default_layer_state);
 
     // Start from highest active layer and work down
     for (int8_t layer = highest_layer; layer >= 0; layer--) {
@@ -32,8 +30,8 @@ hsv_t get_color_from_layer_stack(uint16_t led_index) {
             continue;
         }
 
-        const uint8_t h = ledmaps[layer][ledmap_index][0];
-        const uint8_t s = ledmaps[layer][ledmap_index][1];
+        const uint8_t h = map[layer * layer_entries + map_index][0];
+        const uint8_t s = map[layer * layer_entries + map_index][1];
 
         // If this key has a defined color on this layer (not transparent)
         if (!is_transparent_color(h, s)) {
@@ -46,15 +44,30 @@ hsv_t get_color_from_layer_stack(uint16_t led_index) {
     return (hsv_t){0, 0, 0};
 }
 
-void set_rgb_ledmap(uint16_t start, uint16_t count, uint8_t val) {
-    for (uint16_t i = start; i < start + count; i++) {
-        hsv_t hsv = get_color_from_layer_stack(i);
-        hsv.v     = val;
+static void set_rgb_from_layer_stack(uint16_t led, hsv_t hsv, uint8_t val) {
+    hsv.v = val;
 
-        if (hsv.h || hsv.s) { // Only set if the color isn't black/off
-            rgb_t rgb = hsv_to_rgb(hsv);
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
-        }
+    if (hsv.h || hsv.s) { // Only set if the color isn't black/off
+        rgb_t rgb = hsv_to_rgb(hsv);
+        rgb_matrix_set_color(led, rgb.r, rgb.g, rgb.b);
+    }
+}
+
+void set_rgb_ledmap(uint16_t start, uint16_t count, uint8_t val) {
+    // ledmaps[] holds the left half's entries, then the right half's
+    const uint16_t half_offset = is_keyboard_left() ? 0 : RGB_LEDMAP_PER_HALF;
+
+    for (uint16_t i = start; i < start + count; i++) {
+        set_rgb_from_layer_stack(i, layer_stack_color(&ledmaps[0][0], RGB_MATRIX_LED_COUNT, half_offset + (i - half_base())), val);
+    }
+}
+
+// same as set_rgb_ledmap, for the dpad leds from dpadmaps[]
+void set_rgb_dpadmap(uint16_t start, uint16_t count, uint8_t val) {
+    const uint16_t half_offset = is_keyboard_left() ? 0 : RGB_DPAD_COUNT;
+
+    for (uint16_t i = start; i < start + count; i++) {
+        set_rgb_from_layer_stack(i, layer_stack_color(&dpadmaps[0][0], RGB_DPAD_COUNT * 2, half_offset + (i - start)), val);
     }
 }
 
@@ -149,7 +162,7 @@ bool rgb_matrix_indicators_user(void) {
     set_rgb_ledmap(b + RGB_KEYS_START, RGB_LEDMAP_PER_HALF, KEYS_BRIGHTNESS);
     set_rgb_range(b + RGB_RING_START, RGB_RING_COUNT, (hsv_t){HSV_GREEN}, INDICATOR_BRIGHTNESS_RING);
     set_rgb_range(b + RGB_ENC1_START, RGB_ENC1_COUNT, is_keyboard_left() ? (hsv_t){LEFT_ENC1_COLOUR} : (hsv_t){RIGHT_ENC1_COLOUR}, ENCODER_BRIGHTNESS);
-    set_rgb_range(b + RGB_DPAD_START, RGB_DPAD_COUNT, (hsv_t){HSV_BLUE}, DPAD_BRIGHTNESS);
+    set_rgb_dpadmap(b + RGB_DPAD_START, RGB_DPAD_COUNT, DPAD_BRIGHTNESS);
     set_rgb_range(b + RGB_ENC2_START, RGB_ENC2_COUNT, is_keyboard_left() ? (hsv_t){LEFT_ENC2_COLOUR} : (hsv_t){RIGHT_ENC2_COLOUR}, ENCODER_BRIGHTNESS);
 
     set_indicator_fins(b);

@@ -30,10 +30,18 @@
     R_04, R_03, R_02, R_01, R_00 \
 }
 
+// the dpad's leds in chain order (left half's, then right half's)
+#define DPADMAP(L_0, L_1, L_2, L_3, R_0, R_1, R_2, R_3) \
+    { L_0, L_1, L_2, L_3, R_0, R_1, R_2, R_3 }
+
 #define ___t___ {255, 255} // Transparent color that inherits from lower layers
 
 typedef uint8_t ledmap[RGB_MATRIX_LED_COUNT][3];
 extern const ledmap ledmaps[];
 
+typedef uint8_t dpadmap[RGB_DPAD_COUNT * 2][3];
+extern const dpadmap dpadmaps[];
+
 void set_rgb_ledmap(uint16_t start, uint16_t count, uint8_t val);
+void set_rgb_dpadmap(uint16_t start, uint16_t count, uint8_t val);
 void set_rgb_range(uint16_t start, uint16_t count, hsv_t hsv, uint8_t val);

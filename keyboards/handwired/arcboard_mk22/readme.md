@@ -108,7 +108,8 @@ The only left/right difference is the indicator bar - the left indicator pcb is 
 
 For each side:
 1. `set_rgb_ledmap` - keys + thumbs, coloured per layer from `ledmaps[]`
-2. `set_rgb_range` - static colours for the ring, encoders, dpad, indicator bars, and the wing insert/logo
+2. `set_rgb_dpadmap` - dpad, coloured per layer from `dpadmaps[]`
+3. `set_rgb_range` - static colours for the ring, encoders, indicator bars, and the wing insert/logo
 3. TODO: `set_rgb_range` based on layer case
 4. `set_indicator_fins` - the 16 indicator leds are four fins of four, each lit as one unit (and explicitly black when off):
    1. layer colour (`LAYER_n_COLOUR` for the highest active layer)
@@ -128,7 +129,7 @@ Also have to remember that for mk20 a lot of improvements were made.
 
 `ledmaps[]` only covers keys + thumbs, `RGB_LEDMAP_PER_HALF` (29) per half.
 The `LEDMAP` macro takes colours laid out like the keymap and reorders them into chain order: the left half's 29 entries, then the right half's 29.
-That's also why the dpad/encoders/ring aren't in the ledmap - they aren't next in line after the keys/thumbs.
+The dpad/encoders/ring aren't in the ledmap - they aren't next in line after the keys/thumbs. The dpad has its own `dpadmaps[]` (`DPADMAP` macro, 4 leds per half, left half first) with the same `___t___` inheritance, drawn by `set_rgb_dpadmap`.
 
 `get_color_from_layer_stack` turns a global led index into a ledmap index: the local index on the left, `RGB_LEDMAP_PER_HALF` + the local index on the right.
 This used to be the hand-tuned `RGB_TOT_IND_L` offset; when that was wrong it read the wrong ledmap entries and the lighting combos made no sense at all.

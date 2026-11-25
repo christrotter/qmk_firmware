@@ -131,7 +131,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-// oooo we can't do dpad here...it's not next in line after keys
+// the dpad isn't next in line after the keys, so it gets its own map: 4 leds per half, left half first
+// ___t___ inherits from the layer below; base layer is blue
+// visually they go counter-clockwise around the dpad, starting at 12 o'clock
+const dpadmap dpadmaps[] = {
+    [_QWERTY] = DPADMAP(___t___, SPRING, GREEN, RED,                         GREEN, GREEN, GREEN, GREEN),
+    [_MOUSE]  = DPADMAP(___t___, ___t___, ___t___, ___t___,             ___t___, ___t___, ___t___, ___t___),
+    [_SYMBOLS] = DPADMAP(___t___, ___t___, ___t___, ___t___,            ___t___, ___t___, ___t___, ___t___),
+    [_NAV]    = DPADMAP(___t___, ___t___, ___t___, ___t___,             ___t___, ___t___, ___t___, ___t___),
+    [_RECT]   = DPADMAP(___t___, ___t___, ___t___, ___t___,             ___t___, ___t___, ___t___, ___t___),
+    [_VSCODE] = DPADMAP(___t___, PURPLE, ___t___, ___t___,             ___t___, ___t___, ___t___, ___t___),
+    [_FUSION] = DPADMAP(___t___, ORANGE, ___t___, ___t___,             ___t___, ___t___, ___t___, ___t___),
+    [_CHROME] = DPADMAP(___t___, CYAN, ___t___, ___t___,             ___t___, ___t___, ___t___, ___t___),
+    [_KICAD]  = DPADMAP(___t___, PINK, ___t___, ___t___,             ___t___, ___t___, ___t___, ___t___),
+    [_MGMT]   = DPADMAP(___t___, ___t___, ___t___, ___t___,             ___t___, ___t___, ___t___, ___t___),
+};
+
 const ledmap ledmaps[] = {
     [_QWERTY] = LEDMAP(
         CYAN, CYAN, ___t___, RED, SPRING, SPRING,                       ORANGE,   SPRING,   GREEN,    PINK,    CYAN,    CYAN,
