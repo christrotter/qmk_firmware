@@ -8,8 +8,7 @@
 #include <lib/lib8tion/lib8tion.h>
 
 _Static_assert(RGB_LEDS_PER_HALF * 2 == RGB_MATRIX_LED_COUNT, "RGB_LEDS_PER_HALF does not match the rgb_matrix layout in keyboard.json");
-_Static_assert(FIN_PULSE_PERIOD > 0, "FIN_PULSE_PERIOD must be positive");
-_Static_assert(FIN_PULSE_FLOOR < INDICATOR_BRIGHTNESS_FINS, "FIN_PULSE_FLOOR must be below INDICATOR_BRIGHTNESS_FINS");
+_Static_assert(ONESHOT_TIMEOUT > 0, "ONESHOT_TIMEOUT must be positive");
 
 bool is_transparent_color(uint8_t h, uint8_t s) {
     return (h == 255 && s == 255); // Our ___t___ value
@@ -80,27 +79,31 @@ static uint8_t indicator_fin(uint8_t i) {
     return 3 - i / 4;
 }
 
-// brightness of a pulsing fin; phase 128 is the wave's peak, so a fin lights at full brightness and then dims
-static uint8_t fin_pulse_val(uint32_t lit_since) {
-    const uint32_t elapsed = (g_rgb_timer - lit_since) % FIN_PULSE_PERIOD;
-    const uint8_t  phase   = 128 + elapsed * 256 / FIN_PULSE_PERIOD;
-    return FIN_PULSE_FLOOR + scale8(FIN_PULSE_WAVE(phase), INDICATOR_BRIGHTNESS_FINS - FIN_PULSE_FLOOR);
+// brightness of a fin showing a oneshot mod: full at the start, fading linearly to 0 as the oneshot timeout runs out
+static uint8_t fin_fade_val(uint32_t armed_at) {
+    const uint32_t elapsed = timer_elapsed32(armed_at);
+    if (elapsed >= ONESHOT_TIMEOUT) {
+        return 0;
+    }
+    return (uint32_t)INDICATOR_BRIGHTNESS_FINS * (ONESHOT_TIMEOUT - elapsed) / ONESHOT_TIMEOUT;
 }
 
 // four fins of four leds: layer colour, shift, cmd, mouse layer held; an unlit fin is explicitly black
+// shift and cmd are solid while held (or locked) and fade out over ONESHOT_TIMEOUT while only a oneshot is pending
 static void set_indicator_fins(uint16_t base) {
     static const hsv_t layer_colors[] = {
         {LAYER_0_COLOUR}, {LAYER_1_COLOUR}, {LAYER_2_COLOUR}, {LAYER_3_COLOUR}, {LAYER_4_COLOUR},
         {LAYER_5_COLOUR}, {LAYER_6_COLOUR}, {LAYER_7_COLOUR}, {LAYER_8_COLOUR}, {LAYER_9_COLOUR},
     };
-    static const bool fin_pulses[4] = {false, true, true, true};
-    static bool       fin_was_lit[4];
-    static uint32_t   fin_lit_since[4];
+    static const uint8_t fin_mod_mask[4] = {0, MOD_MASK_SHIFT, MOD_MASK_GUI, 0};
+    static uint8_t       fin_oneshot_seen[4];
+    static uint32_t      fin_armed_at[4];
 
-    const uint8_t layer = get_highest_layer(layer_state | default_layer_state);
-    const uint8_t mods  = get_mods() | get_weak_mods() | get_oneshot_mods();
+    const uint8_t layer      = get_highest_layer(layer_state | default_layer_state);
+    const uint8_t held_mods  = get_mods() | get_weak_mods() | get_oneshot_locked_mods();
+    const uint8_t oneshot    = get_oneshot_mods();
 
-    const bool  fin_lit[4]    = {true, mods & MOD_MASK_SHIFT, mods & MOD_MASK_GUI, layer_state_is(_MOUSE)};
+    const bool  fin_solid[4]  = {true, held_mods & MOD_MASK_SHIFT, held_mods & MOD_MASK_GUI, layer_state_is(_MOUSE)};
     const hsv_t fin_color[4]  = {
         layer < ARRAY_SIZE(layer_colors) ? layer_colors[layer] : (hsv_t){HSV_WHITE},
         {HSV_GREEN},
@@ -110,18 +113,20 @@ static void set_indicator_fins(uint16_t base) {
 
     rgb_t fin_rgb[4];
     for (uint8_t fin = 0; fin < 4; fin++) {
-        if (fin_lit[fin] && !fin_was_lit[fin]) {
-            fin_lit_since[fin] = g_rgb_timer;
+        // the oneshot timeout restarts whenever the pending oneshot mods change
+        const uint8_t pending = oneshot & fin_mod_mask[fin];
+        if (pending && pending != fin_oneshot_seen[fin]) {
+            fin_armed_at[fin] = timer_read32();
         }
-        fin_was_lit[fin] = fin_lit[fin];
+        fin_oneshot_seen[fin] = pending;
 
         hsv_t hsv = fin_color[fin];
-        if (!fin_lit[fin]) {
-            hsv.v = 0;
-        } else if (fin_pulses[fin]) {
-            hsv.v = fin_pulse_val(fin_lit_since[fin]);
-        } else {
+        if (fin_solid[fin]) {
             hsv.v = INDICATOR_BRIGHTNESS_FINS;
+        } else if (pending) {
+            hsv.v = fin_fade_val(fin_armed_at[fin]);
+        } else {
+            hsv.v = 0;
         }
         fin_rgb[fin] = hsv_to_rgb(hsv);
     }
