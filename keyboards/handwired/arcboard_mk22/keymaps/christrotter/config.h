@@ -55,11 +55,13 @@
     #define FIN_BRIGHTNESS_ONESHOT 150    // shift + cmd fins; a pending oneshot starts here and fades to 0 over ONESHOT_TIMEOUT
     #define FIN_BRIGHTNESS_MOUSE 90      // automouse fin
     #define ENCODER_BRIGHTNESS 200        // enc1 + enc2
-    // encoder led colours per half, in chain order (enc1 then enc2); hsv initialisers
-    #define LEFT_ENC1_COLOUR HSV_GOLD
-    #define LEFT_ENC2_COLOUR HSV_WHITE
+    // ring and encoder led colours per half (hsv initialisers); encoders are in chain order (enc1 then enc2)
+    #define LEFT_RING_COLOUR HSV_GREEN
+    #define RIGHT_RING_COLOUR HSV_ORANGE
+    #define LEFT_ENC1_COLOUR HSV_ORANGE
+    #define LEFT_ENC2_COLOUR HSV_PINK
     #define RIGHT_ENC1_COLOUR HSV_CYAN
-    #define RIGHT_ENC2_COLOUR HSV_WHITE
+    #define RIGHT_ENC2_COLOUR HSV_GREEN
     #define LOGO_BRIGHTNESS 90
     #define PANEL_BRIGHTNESS 50          // wing insert, excluding the logo
 #endif

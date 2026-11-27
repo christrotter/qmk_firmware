@@ -109,7 +109,7 @@ The only left/right difference is the indicator bar - the left indicator pcb is 
 For each side:
 1. `set_rgb_ledmap` - keys + thumbs, coloured per layer from `ledmaps[]`
 2. `set_rgb_dpadmap` - dpad, coloured per layer from `dpadmaps[]`
-3. `set_rgb_range` - static colours for the ring, encoders, indicator bars, and the wing insert/logo
+3. `set_rgb_range` - static colours for the ring, encoders, indicator bars, and the wing insert/logo (ring and encoder colours per half: `LEFT_RING_COLOUR`/`RIGHT_RING_COLOUR`, `LEFT_ENC1_COLOUR`... in `keymaps/christrotter/config.h`)
 3. TODO: `set_rgb_range` based on layer case
 4. `set_indicator_fins` - the 16 indicator leds are four fins of four, each lit as one unit (and explicitly black when off):
    1. layer colour (`LAYER_n_COLOUR` for the highest active layer)
